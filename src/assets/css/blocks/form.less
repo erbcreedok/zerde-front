@@ -1,0 +1,94 @@
+@import (inline) 'reference/fonts.css';
+@import (reference) 'reference/lessmix';
+@import (reference) 'reference/var';
+
+.form {
+	&_field {
+		&+& {
+			margin-top: 1rem;
+		}
+	}
+
+	&_button {
+		margin-top: 1.5rem;
+	}
+
+	&_sublinks {
+		text-align: center;
+		font-size: .75rem;
+		margin-top: 1rem;
+
+		a {
+			text-decoration: underline;
+			color: @c-black-30;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	&_alert {
+		margin-bottom: 1.5rem;
+	}
+}
+
+/*
+ * Состояние загрузки
+ */
+
+.form {
+	position: relative;
+
+	&:before {
+		content: '';
+		position: absolute;
+		display: block;
+		z-index: 98;
+		.transition-all;
+		visibility: hidden;
+		.opacity(0);
+	}
+
+	&:before {
+		background: fade(#fff, 60);
+		.square(100%);
+		left: 0;
+		top: 0;
+	}
+
+	&-loading {
+		&:before {
+			visibility: visible;
+			.opacity(1);
+		}
+
+		.form_button {
+			color: transparent;
+			position: relative;
+		}
+
+		.form_button:before {
+			content: '';
+			display: block;
+			.square(1.5rem);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -.75rem;
+			margin-top: -.75rem;
+			mask-image: url(../img/icons/loader.svg);
+			mask-repeat: no-repeat;
+			mask-position: center center;
+			mask-size: cover;
+			background-color: #fff;
+		}
+	}
+}
+
+
+
+
+
+
+

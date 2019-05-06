@@ -1,0 +1,24 @@
+@import (reference) 'var';
+@import (reference) 'lessmix';
+
+/*
+ * Layout
+ */
+
+.cols-width(@n) {
+	@cols-width: (@l-col-w * @n) + (@l-col-gap * (@n - 1));
+}
+
+.cols(@n) {
+	.cols-width(@n);
+	width: @cols-width;
+	max-width: 100%;
+}
+
+/*
+ * Transitions
+ */
+
+.transition-elastic() {
+	transition-timing-function: cubic-bezier(0.64, 0.57, 0.67, 1.53);
+}

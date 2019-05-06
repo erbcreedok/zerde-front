@@ -1,0 +1,18 @@
+@import (inline) 'reference/fonts.css';
+@import (reference) 'reference/lessmix';
+@import (reference) 'reference/var';
+
+.overlay {
+	visibility: hidden;
+	.opacity(0);
+
+	background: fade(#000, 70);
+	.square(100%);
+	
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 100;
+
+	.transition-all;
+}

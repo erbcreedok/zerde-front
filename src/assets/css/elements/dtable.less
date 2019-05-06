@@ -1,0 +1,58 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.dtable {
+	font-size: .875rem;
+
+	&_row {
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+
+		padding: .5rem 0px;
+		border-top: 1px solid @c-grey-10;
+
+		@media @v-m {
+			flex-direction: column;
+		}
+
+		&:last-of-type {
+			border-bottom: 1px solid @c-grey-10;
+		}
+	}
+
+	&_col {
+		@media @v-m {
+			margin: .5rem 0;
+		}
+		
+		.dtable_cols_width (@i) when (@i > 0) {
+			&-@{i} {
+				.cols(@i);
+			}
+			.dtable_cols_width(@i - 1);
+		}.dtable_cols_width(12);
+
+		&-muted {
+			color: @c-black-30;
+		}
+	}
+}
+
+/*
+ */
+
+.dtable {
+	&-justify {
+		.dtable {
+			&_row {
+				justify-content: space-between;
+			}
+		}
+	}
+
+
+}

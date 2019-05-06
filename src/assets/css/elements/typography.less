@@ -1,0 +1,164 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.title {
+	font-size: 2rem;
+	line-height: 1.5em;
+	font-weight: bold;
+
+	@media @v-t {
+
+	}
+
+	@media @v-m {
+		font-size: 1.5rem;
+	}
+}
+
+.caption {
+	font-size: 1.125rem;
+	line-height: 1.5em;
+	font-weight: 600;
+	margin-bottom: 1.5rem;
+}
+
+.muted {
+	color: @c-black-30;
+}
+
+.typeset {
+	line-height: 2em;
+
+	strong, b {
+		font-weight: 600;
+	}
+
+	em, i {
+		font-style: italic;
+	}
+
+	a {
+		color: @c-primary;
+		border-bottom: 1px solid @c-primary-20;
+		.transition-all;
+
+		&:hover {
+			border-bottom-color: @c-primary-50;
+		}
+	}
+
+	p {
+		&.brief {
+			font-size: 1.125rem;
+			font-weight: 500;
+		}
+
+		&.quote {
+			padding: 1.5rem 3rem;
+			background: @c-grey-10;
+			.rounded(@b-radius);
+			font-size: 1.125rem;
+			position: relative;
+
+			&:before {
+				content: '«';
+				left: -1rem;
+			}
+
+			&:after {
+				content: '»';
+				right: -1rem;
+			}
+
+			&:before, &:after {
+				font-size: 5rem;
+				font-weight: 100;
+				position: absolute;
+				color: @c-grey;
+				top: 50%;
+				margin-top: -1.5rem;
+			}
+		}
+	}
+
+	p+p, p+ul, ul+p, p+ol, ol+p, ul+ul, ol+ol, ul+ol, ol+ul {
+		margin-top: 1.5rem;
+	}
+
+	img, .img {
+		display: block;
+		max-width: 100%;
+		height: auto;
+	}
+
+	h2, h3, h4, h5, h6, .h2, .h2, .h3, .h4, .h5, .h6 {
+		display: block;
+		font-size: 1.5rem;
+		line-height: normal;
+		font-weight: bold;
+		margin-bottom: 0.66em;
+		margin-top: 2em;
+
+		&+.list-icons {
+			margin-top: 1.5rem;
+		}
+	}
+
+	h3, .h3 {
+		font-size: 1.3rem;
+	}
+
+	h4, h5, h6, .h4, .h5, .h6 {
+		font-size: 1.1rem;
+	}
+
+	ul, ol {
+		li {
+			padding-left: 1.5rem;
+			position: relative;
+
+			@media @v-m {
+				padding-left: 24px;
+			}
+		}
+
+		li+li {
+			margin-top: 16px;
+		}
+	}
+
+	ol {
+		counter-reset: ol;
+
+		li {
+			counter-increment: ol;
+
+			&:before {
+				content: counter(ol);
+				width: .5rem;
+				text-align: center;
+				position: absolute;
+				top: 0;
+				left: 0;
+				color: @c-grey;
+				font-weight: 500;
+			}
+		}
+	}
+
+	ul {
+		li {
+			&:before {
+				content: '';
+				display: block;
+				position: absolute;
+				.square(8px);
+				.rounded(3px);
+				border: 2px solid @c-grey;
+				top: .7em;
+				left: 0;
+			}
+		}
+	}
+}

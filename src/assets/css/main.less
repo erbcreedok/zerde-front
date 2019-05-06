@@ -1,0 +1,112 @@
+@import (inline) 'reference/fonts.css';
+@import (reference) 'reference/lessmix';
+@import (reference) 'reference/var';
+@import (inline) 'external/reset.min.css';
+
+
+main, section, nav, article {display: block;}
+
+*, *:after, *:before {-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -ms-box-sizing: border-box; -o-box-sizing: border-box; }
+.clearfix {&:after, &:before {display: table;content: '';} &:after {clear: both;}}
+a {text-decoration: none;color: inherit;}
+
+body, html {
+	font-family: @fonts;
+	font-size: 16px;
+	line-height: 1;
+	background: #fff;
+	color: @c-black;
+
+	@media @v-m {
+		font-size: 14px;
+	}
+}
+
+.wrap {
+	width: @l-width-d;
+	max-width: 100%;
+	padding: 0 @l-col-gap;
+	.center;
+
+	@media @v-t {
+		width: @l-width-t;
+	}
+
+	@media @v-m {
+		width: @l-width-m;
+	}
+}
+
+.page {
+	padding-top: 3.5rem;
+	padding-bottom: 3.5rem;
+
+	@media @v-t {
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+	}
+
+	@media @v-m {
+		padding-top: 5.5rem;
+	}
+
+	&-post {
+		background: @c-grey-10;
+
+		@media @v-t {
+			background: none;
+		}
+	}
+}
+
+
+/*
+ * Import elements
+ */
+
+@import 'elements/buttons';
+@import 'elements/typography';
+@import 'elements/tabs';
+@import 'elements/inputs';
+@import 'elements/user';
+@import 'elements/rating';
+@import 'elements/comments';
+@import 'elements/dropdown';
+@import 'elements/overlay';
+@import 'elements/modal';
+@import 'elements/alerts';
+@import 'elements/tags';
+@import 'elements/dtable';
+@import 'elements/menu';
+@import 'elements/pagination';
+
+
+
+/*
+ * Import blocks
+ */
+
+@import 'blocks/header';
+@import 'blocks/mainmenu';
+@import 'blocks/form';
+
+
+
+/*
+ * Import sections
+ */
+
+@import 'sections/qa';
+@import 'sections/login';
+@import 'sections/blog';
+@import 'sections/profile';
+
+
+/*
+ * Import librares
+ */
+
+@import (inline) 'external/swiper.min.css';
+@import (inline) 'external/notyf.min.css';
+
+

@@ -1,0 +1,47 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+
+.alert {
+	display: block;
+	padding: 1.5rem 2rem;
+	font-weight: 500;
+	border: 2px solid @c-grey;
+	background-color: @c-grey-10;
+	color: @c-black;
+	.rounded(@b-radius);
+	line-height: 1.5rem;
+	font-size: .875rem;
+
+	a {
+		text-decoration: underline;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	b, strong {
+		font-weight: 500;
+	}
+
+	@colors: 'danger', 'warning', 'success';
+
+	each(@colors, {
+		@classname: ~"@{value}";
+		@colorname: "c-@{value}";
+		@bgcolorname: "c-@{value}-5";
+		@bordercolorname: "c-@{value}-20";
+
+		&-@{classname} {
+			@currentColor: @@colorname;
+			@bgColor: @@bgcolorname;
+			@borderColor: @@bordercolorname;
+
+			color: @currentColor;
+			background-color: @bgColor;
+			border-color: @borderColor;
+		}
+	});
+}

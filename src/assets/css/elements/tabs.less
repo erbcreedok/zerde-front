@@ -1,0 +1,105 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.tabs {
+	border-bottom: @b-width solid @c-grey;
+
+	&_list {
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
+
+		&_right {
+			
+		}
+
+		@media @v-m {
+			overflow: auto;
+		}
+	}
+
+	&_item {
+		font-size: 1.125rem;
+		font-weight: 500;
+		padding-bottom: .75rem;
+		border-bottom: @b-width solid transparent;
+		.transition-all;
+		margin-bottom: -2px;
+
+		@media @v-m {
+			font-size: 1rem;
+		}
+
+		& + & {
+			margin-left: 2rem;
+
+			@media @v-t {
+				margin-left: 1.5rem;
+			}
+		}
+
+		&:not(&-active):hover {
+			border-color: darken(@c-grey, 10%);
+		}
+
+		&-active {
+			cursor: default;
+			color: @c-primary;
+			border-color: currentColor;
+		}
+
+		&-icon {
+			padding-left: 2rem;
+			position: relative;
+
+			@media @v-m {
+				padding-left: 1.5rem;
+			}
+
+			&:before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 50%;
+				.square(24px);
+				margin-top: -18px;
+				background-color: @c-black;
+				mask-size: contain;
+				mask-repeat: no-repeat;
+				mask-position: center center;
+
+				@media @v-m {
+					.square(16px);
+					margin-top: -12px;
+				}
+			}
+
+			each(@icons, {
+				@classname: ~"@{value}";
+				@url: "../img/icons/@{value}.svg";
+
+				&-@{classname}:before {
+					mask-image: url(@url);
+				}
+			});
+		}
+
+		&-active&-icon:before {
+			background-color: currentColor;
+		}
+
+		&-right {
+			margin-left: auto !important;
+
+			@media @v-t {
+				margin-left: 1.5rem !important;
+			}
+		}
+	}
+}

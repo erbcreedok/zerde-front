@@ -1,0 +1,298 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+::placeholder {
+	color: @c-black-30;
+}
+
+/*
+ * Text
+ */
+
+.textfield {
+	position: relative;
+	font-size: 1rem;
+
+	&-block &_input {
+		display: block;
+		width: 100%;
+	}
+
+	&_input {
+		height: 3rem;
+		line-height: 3rem;
+		padding: 0 3rem 0 1rem;
+
+		font-size: inherit;
+		font-family: @fonts;
+		outline: none;
+
+		border: @b-width solid @c-grey;
+		.rounded(@b-radius);
+		.transition-all;
+
+		&:focus, &:not(:placeholder-shown) {
+			& ~ .textfield_label {
+				top: 0;
+				font-size: .75rem;
+				background-color: #fff;
+				padding-right: .5rem;
+			}
+		}
+
+		&:focus {
+			border-color: darken(@c-grey, 5%);
+
+			& ~ .textfield_button {
+				background-color: darken(@c-black-30, 5%);
+			}
+
+			& ~ .textfield_label {
+				color: darken(@c-black-30, 10%);
+			}
+		}
+
+		textarea& {
+			resize: none;
+			height: auto;
+			line-height: 1.5rem;
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
+	}
+
+	&_label {
+		position: absolute;
+		top: 1.5rem;
+		left: .5rem;
+
+		display: block;
+		width: auto;
+		max-width: 100%;
+		padding: 0 3rem 0 .5rem;
+		overflow: hidden;
+		pointer-events: none;
+
+		color: @c-black-30;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		.transition-all;
+		.transform(translateY(-50%));
+	}
+
+	&_button {
+		position: absolute;
+		.square(3rem);
+		bottom: 0;
+		right: @b-width;
+		background-color: @c-black-30;
+		cursor: pointer;
+		mask-repeat: no-repeat;
+		mask-size: 24px 24px;
+		mask-position: 50% 50%;
+		.transition-all;
+
+		&:hover {
+			.transform(scale(.95));
+		}
+
+		@icons: search;
+
+		each(@icons, {
+			@classname: ~"@{value}";
+			@url: "../img/icons/@{value}.svg";
+
+			&-@{classname} {
+				mask-image: url(@url);
+			}
+		});
+	}
+}
+
+
+.textfield {
+	&-required {
+		&:after {
+			content: '';
+			position: absolute;
+			.square(3rem);
+			top: 0;
+			right: @b-width;
+			background-color: @c-danger;
+			mask-repeat: no-repeat;
+			mask-size: 12px 12px;
+			mask-position: 50% 50%;
+			mask-image: url(../img/icons/asterisk.svg);
+		}
+	}
+}
+
+
+/*
+ * File
+ */
+
+.fileinput {
+	display: inline-block;
+	width: auto;
+
+	&-loading {
+		pointer-events: none;
+		.opacity(.7);
+	}
+
+	input {
+		.opacity(0);
+		height: 0;
+		width: 0;
+	}
+
+	&_message {
+		font-weight: 500;
+		font-size: .75rem;
+		display: block;
+		color: @c-black-60;
+		margin-bottom: .5rem;
+	}
+}
+
+
+
+/*
+ * Checkboxes / Radio / Toggles / Switches
+ */
+
+.checkbox {
+	display: inline-block;
+	cursor: pointer;
+	.transition-all;
+
+	input {
+		display: none;
+	}
+
+	&_icon, &_toggle {
+		height: 1.5rem;
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		background-color: #fff;
+		border: @b-width solid @c-grey;
+		.rounded(@b-radius);
+		.transition-all;
+	}
+
+	&_icon {
+		width: 1.5rem;
+
+		&:before {
+			content: '';
+			display: block;
+			.square(1rem);
+			position: absolute;
+			top: 50%;
+			left: 50%;	
+			margin-top: -.5rem;
+			margin-left: -.5rem;
+			background-color: @c-primary;
+			.opacity(0);
+			mask: url(../img/icons/checkmark.svg) no-repeat center center;
+			mask-size: cover;
+			.transition-all;
+			.transition-elastic();
+			.transform(scale(.5));
+		}
+		
+		input[type=radio] + & {
+			.rounded(100%);
+		}
+
+		input:checked ~ & {
+			border-color: @c-primary;
+
+			&:before {
+				.transform(scale(1));
+				.opacity(1);
+			}
+		}
+	}
+
+	&_toggle {
+		width: 2.5rem;
+		.rounded(1.5rem);
+
+		&:before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: @c-grey;
+			top: 2px;
+			left: 2px;
+			.square(1rem);
+			.rounded(100%);
+			.transition-all;
+			.transition-elastic();
+		}
+
+		input:checked ~ & {
+			border-color: @c-primary;
+
+			&:before {
+				background-color: @c-primary;
+				left: 100%;
+				margin-left: calc(-1rem - 2px);
+			}
+		}
+	}
+
+	&_label {
+		display: inline-block;
+		vertical-align: middle;
+		font-size: .875rem;
+		font-weight: 500;
+		.transition-all;
+		margin-left: .75rem;
+
+		input:checked ~ & {
+			color: @c-primary;
+		}
+	}
+
+	&:hover {
+		.opacity(.7);
+	}
+
+	&+& {
+		margin-top: .5rem;
+	}
+}
+
+.checkbox-block {
+	display: block;
+	width: 100%;
+}
+
+.checkbox-nowrap {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+		
+	.checkbox {
+		&_icon {
+			flex-shrink: 0;
+		}
+
+		&_label {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			max-width: 100%;
+		}
+	}
+}

@@ -1,0 +1,92 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+@media @v-d {
+	.mainmenu {
+		margin-left: -1rem;
+		font-size: 0;
+
+		&:hover &_item {
+			color: fade(#fff, 50);
+
+			&:hover {
+				color: #fff;
+			}
+		}
+
+		&_overlay, &_toggle {
+			display: none;
+		}
+
+		&_item {
+			font-weight: 500;
+			display: inline-block;
+			font-size: 1rem;
+			line-height: 2rem;
+			.transition-all;
+		}
+
+		&_link {
+			display: inline-block;
+			padding: 0 1rem;
+		}
+	}
+}
+
+@media @v-t {
+	.mainmenu {
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 101;
+		height: 100%;
+		width: 300px;
+		background: #fff;
+		color: @c-black;
+		.transform(translateX(100%));
+		.box-shadow(-10px 0 20px fade(#000, 20));
+		.transition-all;
+		visibility: hidden;
+
+		&-visible {
+			.transform(none);
+			visibility: visible;
+
+			+ .overlay {
+				visibility: visible;
+				.opacity(1);
+			}
+		}
+		
+		&_link {
+			display: block;
+			height: 4rem;
+			padding: 0 2rem;
+			line-height: 4rem;
+			font-weight: 600;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			cursor: pointer;
+			border-bottom: @b-width solid @c-grey-50;			
+		}
+
+		&_toggle {
+			.square(32px);
+			margin-left: 1rem;
+
+			background: #fff;
+			mask-repeat: no-repeat;
+			mask-size: cover;
+			mask-position: center center;
+			mask-image: url(../img/icons/menu.svg);
+		}
+	}
+}
+
+@media @v-m {
+	.mainmenu {
+		width: 240px;
+	}
+}

@@ -1,0 +1,64 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.menu {
+	&_item {
+		display: block;
+		position: relative;
+		border-top: 1px solid @c-grey-10;
+		font-size: .875rem;
+		font-weight: 600;
+		line-height: 2.5rem;
+		padding-left: 2.5rem;
+		.transition-all;
+
+		&:last-child {
+			border-bottom: 1px solid @c-grey-10;
+		}
+
+		&-active {
+			color: @c-primary;
+			pointer-events: none;
+		}
+
+		&:hover {
+			color: @c-primary;
+		}
+	}
+
+	&_item {
+		&:before {
+			content: '';
+
+			position: absolute;
+			top: 50%;
+			left: 0;
+
+			.square(1.5rem);
+			margin-top: -.75rem;
+			background: currentColor;
+
+			mask-repeat: no-repeat;
+			mask-position: center center;
+			mask-size: cover;
+		}
+
+		each(@icons, {
+			@classname: ~"@{value}";
+			@url: "../img/icons/@{value}.svg";
+
+			&-@{classname}:before {
+				mask-image: url(@url);
+			}
+		});
+	}
+
+	&_counter {
+		position: absolute;
+		right: 0;
+		top: 0;
+		color: @c-black-30;
+		font-weight: normal;
+	}
+}

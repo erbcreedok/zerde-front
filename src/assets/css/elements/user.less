@@ -1,0 +1,231 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.avatar {
+	position: relative;
+	overflow: hidden;
+	.rounded(@b-radius);
+	flex-shrink: 0;
+	background: @c-grey-50;
+
+	img {
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: auto;
+		min-height: 100%;
+		top: 50%;
+		left: 50%;
+		.transform(translateX(-50%) translateY(-50%));
+	}
+}
+
+.user {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+	max-width: 100%;
+
+	&_photo {
+		.square(2.5rem);
+		margin-right: 1rem;
+
+		@media @v-m {
+
+		}
+	}
+
+	&_info {
+		min-width: 0;
+	}
+
+	&_name {
+		display: block;
+		font-size: .875rem;
+		font-weight: 600;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+
+		a&:hover {
+			color: @c-primary;
+		}
+	}
+
+	&_details {
+		font-size: .75rem;
+		color: @c-black-60;
+		margin-top: .5rem;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		
+		li {
+			display: inline-block;
+
+			@media @v-m {
+				display: block;
+			}
+		}
+
+		li+li {
+			&:before {
+				content: '   •   ';
+				margin: 0 .25rem;
+			}
+
+			@media @v-m {
+				&:before {
+					content: none;
+				}
+
+				margin: .25rem 0;
+			}
+		}
+
+		a {
+			text-decoration: underline;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.user {
+	&-small {
+		.user {
+			&_photo {
+				.square(2rem);
+			}
+
+			&_name {
+				font-size: .75rem;
+			}
+
+			&_details {
+				font-size: .625rem;
+			}
+		}
+	}
+}
+
+.user {
+	&-block {
+		.user {
+			&_name {
+				max-width: 100%;
+			}
+
+			&_details {
+				li {
+					display: inline-block;
+				}
+
+				li+li {
+					&:before {
+						content: '   •   ';
+						margin: 0 .25rem;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+/*
+ * Activity
+ */
+
+.level {
+	position: relative;
+	cursor: default;
+	width: 100%;
+	height: 2rem;
+	.rounded(@b-radius);
+
+	&_number {
+		display: inline-block;
+		margin-right: .5rem;
+		padding: 0 .75rem;
+		border-right: 1px solid fade(@c-primary, 20);
+		font-weight: bold;
+	}
+
+	&_title {
+		display: inline-block;
+		font-weight: 600;
+	}
+
+	&_pane {
+		position: absolute;
+		left: 0;
+		top: 0;
+
+		.square(100%);
+		.rounded(@b-radius);
+		border: @b-width solid @c-primary;
+
+		white-space: nowrap;
+		overflow: hidden;
+		color: @c-primary;
+		line-height: calc(2rem - @b-width * 2);
+		font-size: .875rem;
+		
+
+		&-above {
+			padding-left: @b-width;
+
+			background-color: @c-primary;
+			.box-shadow(0px 4px 10px rgba(48, 79, 254, 0.25));
+			border: none;
+			border-radius: 3px 0 0 3px;
+
+			color: #fff;
+			line-height: 2rem;
+
+			.level_number {
+				border-color: fade(#fff, 20);
+			}
+		}
+	}
+}
+
+.points {
+	cursor: default;
+	position: relative;
+
+	height: 2rem;
+	padding: 0 .5rem 0px 1.75rem;
+
+	background: @c-warning;
+	.rounded(@b-radius);
+
+	color: #fff;
+	line-height: 2rem;
+	font-size: .875rem;
+	font-weight: 600;
+
+	&:before {
+		content: '';
+
+		position: absolute;
+		top: 50%;
+		left: .5rem;
+
+		.square(1rem);
+		margin-top: -.5rem;
+		background: #fff;
+
+		mask-repeat: no-repeat;
+		mask-position: center center;
+		mask-size: cover;
+		mask-image: url(../img/icons/trophy.svg);
+	}
+}

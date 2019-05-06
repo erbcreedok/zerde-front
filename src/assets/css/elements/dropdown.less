@@ -1,0 +1,94 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+
+	&_window {
+		position: absolute;
+		z-index: 999;
+		left: 0;
+		top: 100%;
+		margin-top: 8px;
+
+		width: 210px;
+		overflow: hidden;
+
+		background: #fff;
+		.rounded(@b-radius);
+		.box-shadow(0px 5px 10px rgba(0, 0, 0, 0.05));
+
+		color: @c-black;
+
+		.transition-all;
+		.transform(translateY(-1rem) scale(.95));
+		.opacity(0);
+		visibility: hidden;
+
+		&-visible {
+			.transform(translateY(0) scale(1));
+			.opacity(1);
+			visibility: visible;
+		}
+
+		&-right {
+			left: auto;
+			right: 0;
+		}
+	}
+
+	&_menu {
+		&_item {
+			display: block;
+			width: 100%;
+			height: 3rem;
+
+			font-size: .75rem;
+			font-weight: 600;
+			line-height: 3rem;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+
+			padding: 0 1rem 0 3rem;
+			position: relative;
+
+			border-top: @b-width solid @c-grey-50;
+
+			.transition-all;
+
+			&:before {
+				content: '';
+				display: block;
+				.square(1.5rem);
+				margin-top: -.75rem;
+
+				position: absolute;
+				top: 50%;
+				left: 1rem;
+
+				mask-repeat: no-repeat;
+				mask-size: cover;
+				mask-position: center center;
+
+				background-color: currentColor;
+			}
+
+			&:hover {
+				background-color: @c-grey-10;
+				border-color: @c-grey;
+			}
+
+			each(@icons, {
+				@classname: ~"@{value}";
+				@url: "../img/icons/@{value}.svg";
+
+				&-@{classname}:before {
+					mask-image: url(@url);
+				}
+			});
+		}
+	}
+}

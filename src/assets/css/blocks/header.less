@@ -1,0 +1,82 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.header {
+	background: @c-primary;
+	color: #fff;
+	height: 5rem;
+
+	@media @v-t {
+		height: 4.5rem;
+	}
+
+	@media @v-m {
+		width: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 99;
+
+		height: 4rem;
+	}
+
+	&_wrap {
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		align-items: center;
+		height: 100%;
+	}
+
+	&_brand {
+		.cols(3);
+
+		@media @v-t {
+			width: auto;
+		}
+	}
+
+	&_logo {
+		display: block;
+		.size(130px, 48px);
+		background: url(../img/logo.svg) no-repeat center center / contain;
+
+		@media @v-m {
+			background-image: url(../img/logo-small.svg);
+			.square(32px);
+		}
+	}
+
+	&_controls {
+		margin-left: auto;
+		font-size: 0;
+
+		.button + .button {
+			margin-left: 1rem;
+		}
+	}
+
+	&_user {
+		margin-left: 1rem;
+
+		&_button {
+			max-width: 220px;
+
+			@media @v-t {
+				font-size: 0;
+				padding-left: 1.5rem !important;
+			}
+		}
+	}
+
+	&_language {
+		@media @v-m {
+			span {
+				display: none;
+			}
+		}
+	}
+}

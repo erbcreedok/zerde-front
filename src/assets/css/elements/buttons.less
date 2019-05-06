@@ -1,0 +1,221 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+
+/*
+ * Основа
+ */
+
+.button {
+	display: inline-block;
+	vertical-align: middle;
+	height: 48px;
+	padding: 0 32px;
+	overflow: hidden;
+
+	font-size: 16px;
+	color: #fff;
+	line-height: 48px;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 100%;
+
+	background: @c-black-60;
+	.rounded(@b-radius);
+
+	cursor: pointer;
+	.transition-all;
+
+	&:before {
+		background-color: currentColor;
+	}
+
+	&:hover {
+		background: lighten(@c-black-60, 5);
+	}
+}
+
+
+
+/*
+ * Размеры
+ */
+
+.button {
+	&-small {
+		padding: 0 16px;
+		font-size: 14px;
+		height: 32px;
+		line-height: 32px;
+
+		&.button-icon {
+			&:before {
+				.square(16px);
+				margin-top: -8px;
+			}
+
+			&-left {
+				padding-left: 2.25rem;
+
+				&:before {
+					left: .75rem;
+				}
+			}
+
+			&-right {
+				padding-right: 2.25rem;
+
+				&:before {
+					right: .75rem;
+				}
+			}
+		}
+	}
+}
+
+
+
+/*
+ * Цвета
+ */
+
+.button {
+	@main-colors: 'primary', 'danger', 'warning', 'success';
+
+	each(@main-colors, {
+		@classname: ~"@{value}";
+		@colorname: "c-@{value}";
+
+		&-@{classname} {
+			@currentColor: @@colorname;
+
+			background-color: @currentColor;
+			.box-shadow(0px 4px 10px fade(@currentColor, 25));
+
+			&:hover {
+				background-color: lighten(@currentColor, 4%);
+				.box-shadow(0px 4px 15px fade(@currentColor, 40));
+			}
+
+			&.button-outline {
+				border-color: fade(@currentColor, 20);
+				color: @currentColor;
+
+				&:hover {
+					border-color: fade(@currentColor, 40);
+				}
+			}
+
+			&.button-inverse {
+				color: @currentColor;
+
+				&:hover {
+					color: lighten(@currentColor, 4%);
+				}
+			}
+		}
+	});
+}
+
+
+/*
+ * Типы
+ */
+
+.button {
+	&-block {
+		display: block;
+		width: 100%;
+		text-align: center;
+	}
+	
+	&-inverse {
+		background: #fff;
+		color: currentColor;
+		.box-shadow(none);
+
+		&:hover {
+			background: fade(#fff, 90);
+			.box-shadow(none);
+		}
+	}
+
+	&-outline {
+		color: @c-black;
+		background-color: transparent;
+		border: @b-width solid @c-grey;
+		.box-shadow(none);
+		line-height: 48px - (@b-width * 2);
+
+		&.button-small {
+			line-height: 32px - (@b-width * 2);
+		}
+
+		&:hover {
+			background-color: transparent;
+			.box-shadow(none);
+			border-color: darken(@c-grey, 6%);
+		}
+	}
+
+	&-inverse&-outline {
+		border-color: fade(#fff,40);
+		color: #fff;
+
+		&:hover {
+			border-color: fade(#fff,60);
+		}
+	}
+
+	&-icon {
+		position: relative;
+
+		&:before {
+			content: '';
+			position: absolute;
+			display: block;
+			.square(24px);
+			margin-top: -12px;
+			top: 50%;
+			mask-size: cover;
+			mask-position: 50% 50%;
+		}
+
+		&-left {
+			padding-left: 3.5rem;
+
+			&:before {
+				left: 1rem;
+			}
+		}
+
+		&-right {
+			padding-right: 3.5rem;
+
+			&:before {
+				right: 1rem;
+			}
+		}
+
+		each(@icons, {
+			@classname: ~"@{value}";
+			@url: "../img/icons/@{value}.svg";
+
+			&-@{classname}:before {
+				mask-image: url(@url);
+			}
+		});
+	}
+}
+
+
+
+/*
+ * Состояния
+ */
+
+.button {
+
+}

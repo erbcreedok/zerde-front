@@ -1,0 +1,98 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.modal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	.transform(translateX(-50%) translateY(-45%));
+	background: #fff;
+	.rounded(@b-radius);
+	.cols(6);
+	z-index: 102;
+	.opacity(0);
+	visibility: hidden;
+	.transition-all;
+
+	@media @v-m {
+		.cols(3);
+	}
+
+	&-visible {
+		visibility: visible;
+		.opacity(1);
+		.transform(translateX(-50%) translateY(-50%));
+
+		& + .overlay {
+			visibility: visible;
+			.opacity(1);
+		}
+	}
+
+	&_header {
+		border-bottom: 1px solid @c-grey;
+		padding: 1rem 1.5rem;
+		position: relative;
+	}
+
+	&_title {
+		font-weight: 600;
+	}
+
+	&_close {
+		position: absolute;
+		display: block;
+		.square(16px);
+		right: 24px;
+		top: 50%;
+		margin-top: -8px;
+		background: url(../img/icons/multiply.svg) no-repeat center center;
+		background-size: 16px 16px;
+		cursor: pointer;
+		.opacity(.5);
+		.transition-all;
+
+		&:hover {
+			.opacity(.8);
+		}
+	}
+
+	&_wrap {
+		max-height: 400px;
+		overflow-y: auto;
+	}
+
+	&_body {
+		padding: 1rem 1.5rem;
+
+		&-hl {
+			background: @c-grey-10;
+		}
+
+		&-div {
+			.modal_body + & {
+				border-top: 1px solid @c-grey-50;
+			}
+
+			& + .modal_body {
+				border-top: 1px solid @c-grey-50;
+			}
+		}
+	}
+
+	&_footer {
+		padding: 16px 24px;
+		border-top: 1px solid @c-grey-50;
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		justify-content: flex-start;
+
+		&_right {
+			margin-left: auto;
+		}
+	}
+}
