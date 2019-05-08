@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import('./views/BlogPage.vue')
+      component: () => import('./views/Home.vue')
     },
     {
       path: '/about',
@@ -24,6 +24,16 @@ export default new Router({
       path: '/blog:slug',
       name: 'blog',
       component: () => import('./views/BlogPage.vue')
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: () => import('./views/Signin.vue')
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('./views/Signup.vue')
     }
   ]
 })
