@@ -10,29 +10,16 @@
             </section>
 
             <form class="login_section login_form form">
-                <div class="alert alert-danger form_alert">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, esse.</div>
+                <template v-if="errors.length">
+                    <div v-for="error in errors" class="alert alert-danger form_alert" :key="error.code">{{error.message}}</div>
+                </template>
 
-                <div class="textfield textfield-required textfield-block form_field">
-                    <input type="text" class="textfield_input" placeholder=" ">
-                    <div class="textfield_label">Эл. почта</div>
-                </div>
+                <ui-input class="textfield-block form_field" name="email" v-model="email" required label="Эл. Почта" placeholder="Введите почту" />
+                <ui-input class="textfield-block form_field" name="password" v-model="password" type="password" required label="Пароль" placeholder="Введите пароль" />
+                <ui-input class="textfield-block form_field" name="name" v-model="name" required label="Имя" placeholder="Введите ваше имя" />
+                <ui-input class="textfield-block form_field" name="surname" v-model="surname" required label="Фамилия" placeholder="Введите вашу фамилию" />
 
-                <div class="textfield textfield-required textfield-block form_field">
-                    <input type="password" class="textfield_input" placeholder=" ">
-                    <div class="textfield_label">Пароль</div>
-                </div>
-
-                <div class="textfield textfield-required textfield-block form_field">
-                    <input type="text" class="textfield_input" placeholder=" ">
-                    <div class="textfield_label">Имя</div>
-                </div>
-
-                <div class="textfield textfield-required textfield-block form_field">
-                    <input type="text" class="textfield_input" placeholder=" ">
-                    <div class="textfield_label">Фамилия</div>
-                </div>
-
-                <button type="submit" class="button button-primary button-block form_button">Зарегистрироваться</button>
+                <ui-button type="submit" color="primary" class="button-block form_button">Зарегистрироваться</ui-button>
             </form>
 
             <section class="login_section login_section-secondary">
@@ -42,3 +29,20 @@
         </main>
     </div>
 </template>
+<script>
+  import UiInput from '../components/ui/UiInput'
+  import UiButton from '../components/ui/UiButton'
+  export default {
+    components: {UiButton, UiInput},
+    data() {
+      return {
+        email: '',
+        password: '',
+        name: '',
+        surname: '',
+        errors: [
+        ],
+      }
+    }
+  }
+</script>

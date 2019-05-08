@@ -7,18 +7,13 @@
                 <a href="#" class="login_socbutton login_socbutton-fb"></a>
             </section>
 
-            <form class="login_section login_form form">
-                <div class="textfield textfield-block form_field">
-                    <input type="text" class="textfield_input" placeholder=" ">
-                    <div class="textfield_label">Эл. почта</div>
-                </div>
+            <form class="login_section login_form form" @submit.prevent="submitForm">
 
-                <div class="textfield textfield-block form_field">
-                    <input type="password" class="textfield_input" placeholder=" ">
-                    <div class="textfield_label">Пароль</div>
-                </div>
+                <ui-input class="textfield-block form_field" name="email" label="Эл. Почта" placeholder="Введите почту" v-model="email"/>
 
-                <button type="submit" class="button button-primary button-block form_button">Войти</button>
+                <ui-input class="textfield-block form_field" name="password" label="Пароль" placeholder="Введите пароль" type="password" v-model="password"/>
+
+                <ui-button type="submit" color="primary" class="button-block form_button">Войти</ui-button>
 
                 <div class="form_sublinks"><router-link :to="{name: 'forgot-password'}">Восстановить пароль</router-link></div>
             </form>
@@ -30,3 +25,25 @@
         </main>
     </div>
 </template>
+<script>
+  import UiButton from '../components/ui/UiButton'
+  import UiInput from '../components/ui/UiInput'
+  import authService from '../services/auth.service'
+  export default {
+    components: {UiInput, UiButton},
+    data() {
+      return {
+        email: '',
+        password: ''
+      }
+    },
+    methods: {
+      submitForm() {
+        authService.login(this.email, this.password)
+          .then(data => {
+            console.log(data);
+          })
+      }
+    }
+  }
+</script>
