@@ -7,7 +7,7 @@
                 <a href="#" class="login_socbutton login_socbutton-fb"></a>
             </section>
 
-            <form class="login_section login_form form" @submit.prevent="submitForm">
+            <form class="login_section login_form form" @submit.prevent="onSubmit">
 
                 <ui-input class="textfield-block form_field" name="email" label="Эл. Почта" placeholder="Введите почту" v-model="email"/>
 
@@ -38,7 +38,7 @@
       }
     },
     methods: {
-      submitForm() {
+      onSubmit() {
         authService.login(this.email, this.password)
           .then(data => {
             console.log(data);

@@ -9,15 +9,15 @@
                 </div>
             </section>
 
-            <form class="login_section login_form form">
+            <form class="login_section login_form form" @submit.prevent="onSubmit">
                 <template v-if="errors.length">
                     <div v-for="error in errors" class="alert alert-danger form_alert" :key="error.code">{{error.message}}</div>
                 </template>
 
-                <ui-input class="textfield-block form_field" name="email" v-model="email" required label="Эл. Почта" placeholder="Введите почту" />
-                <ui-input class="textfield-block form_field" name="password" v-model="password" type="password" required label="Пароль" placeholder="Введите пароль" />
-                <ui-input class="textfield-block form_field" name="name" v-model="name" required label="Имя" placeholder="Введите ваше имя" />
-                <ui-input class="textfield-block form_field" name="surname" v-model="surname" required label="Фамилия" placeholder="Введите вашу фамилию" />
+                <ui-input class="textfield-block form_field" name="email" v-model="data.email" required label="Эл. Почта" placeholder="Введите почту" />
+                <ui-input class="textfield-block form_field" name="password" v-model="data.password" type="password" required label="Пароль" placeholder="Введите пароль" />
+                <ui-input class="textfield-block form_field" name="name" v-model="data.name" required label="Имя" placeholder="Введите ваше имя" />
+                <ui-input class="textfield-block form_field" name="surname" v-model="data.surname" required label="Фамилия" placeholder="Введите вашу фамилию" />
 
                 <ui-button type="submit" color="primary" class="button-block form_button">Зарегистрироваться</ui-button>
             </form>
@@ -32,16 +32,26 @@
 <script>
   import UiInput from '../components/ui/UiInput'
   import UiButton from '../components/ui/UiButton'
+  import authService from '../services/auth.service'
   export default {
     components: {UiButton, UiInput},
     data() {
       return {
-        email: '',
-        password: '',
-        name: '',
-        surname: '',
+        data: {
+          email: '',
+          password: '',
+          name: '',
+          surname: '',
+        },
         errors: [
         ],
+      }
+    },
+    methods: {
+      onSubmit() {
+        authService.register(this.data).then(data => {
+          console.log(data);
+        })
       }
     }
   }
