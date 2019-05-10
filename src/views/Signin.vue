@@ -7,13 +7,14 @@
                 <a href="#" class="login_socbutton login_socbutton-fb"></a>
             </section>
 
-            <form class="login_section login_form form" @submit.prevent="onSubmit">
+            <form class="login_section login_form form" @submit.prevent="onSubmit" v-loading="status === 'loading'">
+                <ui-input class="textfield-block form_field" name="email" label="Эл. Почта" placeholder="Введите почту" v-model="data.email"/>
 
-                <ui-input class="textfield-block form_field" name="email" label="Эл. Почта" placeholder="Введите почту" v-model="email"/>
+                <!--<ui-input class="textfield-block form_field" name="phone" label="Телефон" placeholder="Введите номер телефона" v-model="data.phone" mask="+7(7##)###-##-##"/>-->
 
-                <ui-input class="textfield-block form_field" name="password" label="Пароль" placeholder="Введите пароль" type="password" v-model="password"/>
+                <ui-input class="textfield-block form_field" name="password" label="Пароль" placeholder="Введите пароль" type="password" v-model="data.password"/>
 
-                <ui-button type="submit" color="primary" class="button-block form_button">Войти</ui-button>
+                <ui-button type="submit" color="primary" class="button-block form_button" :disabled="status === 'loading'">Войти</ui-button>
 
                 <div class="form_sublinks"><router-link :to="{name: 'forgot-password'}">Восстановить пароль</router-link></div>
             </form>
@@ -28,20 +29,34 @@
 <script>
   import UiButton from '../components/ui/UiButton'
   import UiInput from '../components/ui/UiInput'
-  import authService from '../services/auth.service'
+  import authService from '../_services/auth.service'
+  import 'vue-loading-overlay/dist/vue-loading.css'
+
   export default {
     components: {UiInput, UiButton},
     data() {
       return {
-        email: '',
-        password: ''
+        data: {
+          email: '',
+          phone: '',
+          password: '',
+        },
+        status: 'clear',
+        errors: [],
       }
     },
     methods: {
       onSubmit() {
-        authService.login(this.email, this.password)
+        this.status = 'loading';
+        this.errors = [];
+        authService.login(this.data.email, this.data.password)
           .then(data => {
+            this.status = 'success';
             console.log(data);
+          })
+          .catch(err => {
+            this.status = 'error';
+            this.errors.push(err);
           })
       }
     }

@@ -9,6 +9,7 @@
            :autocomplete="autocomplete"
            :required="required"
            @input="updateInput"
+           v-mask="mask"
            @focus="focused = true"
            @blur="focused = false">
     <div v-if="label" class="textfield_label">{{label}}</div>
@@ -42,7 +43,11 @@
       autocomplete: {
         type: String,
         default: ''
-      }
+      },
+      mask: {
+        type: String,
+        default: '',
+      },
     },
     data() {
       return {

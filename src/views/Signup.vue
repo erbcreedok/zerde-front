@@ -32,7 +32,7 @@
 <script>
   import UiInput from '../components/ui/UiInput'
   import UiButton from '../components/ui/UiButton'
-  import authService from '../services/auth.service'
+  import authService from '../_services/auth.service'
   export default {
     components: {UiButton, UiInput},
     data() {

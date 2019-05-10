@@ -1,6 +1,6 @@
 <template>
   <button class="button"
-  :class="allClasses">
+          :class="allClasses">
     <slot></slot>
   </button>
 </template>
@@ -22,7 +22,7 @@
       outline: {
         type: Boolean,
         default: false
-      }
+      },
     },
     computed: {
       colorClass() {
