@@ -13,6 +13,7 @@
            @focus="focused = true"
            @blur="focused = false">
     <div v-if="label" class="textfield_label">{{label}}</div>
+    <slot name="right-content"></slot>
   </div>
 </template>
 

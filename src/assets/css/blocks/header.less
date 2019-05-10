@@ -2,22 +2,29 @@
 @import (reference) '../reference/lessmix';
 @import (reference) '../reference/classes';
 
+header {
+	height: 5rem;
+	@media @v-t {
+		height: 4.5rem;
+	}
+	@media @v-m {
+		height: 4rem;
+	}
+}
 .header {
 	background: @c-primary;
 	color: #fff;
 	height: 5rem;
-
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 99;
 	@media @v-t {
 		height: 4.5rem;
 	}
 
 	@media @v-m {
-		width: 100%;
-		position: fixed;
-		top: 0;
-		left: 0;
-		z-index: 99;
-
 		height: 4rem;
 	}
 

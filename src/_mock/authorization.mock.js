@@ -39,7 +39,14 @@ const AuthMock = {
         reject({status: 400, message: BAD_CREDENTIALS});
       }, 1000)
     });
-  }
+  },
+  logout() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({status: 200, data: {}})
+      })
+    });
+  },
 };
 
 export default AuthMock;

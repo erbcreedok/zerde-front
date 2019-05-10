@@ -8,6 +8,11 @@
             </section>
 
             <form class="login_section login_form form" @submit.prevent="onSubmit" v-loading="status === 'loading'">
+
+                <template v-if="errors.length">
+                    <div v-for="(error, i) in errors" class="alert alert-danger form_alert" :key="error.status + ' ' + i">{{error.message}}</div>
+                </template>
+
                 <ui-input class="textfield-block form_field" name="email" label="Эл. Почта" placeholder="Введите почту" v-model="data.email"/>
 
                 <!--<ui-input class="textfield-block form_field" name="phone" label="Телефон" placeholder="Введите номер телефона" v-model="data.phone" mask="+7(7##)###-##-##"/>-->
@@ -48,15 +53,15 @@
     methods: {
       onSubmit() {
         this.status = 'loading';
-        this.errors = [];
         authService.login(this.data.email, this.data.password)
-          .then(data => {
+          .then(() => {
             this.status = 'success';
-            console.log(data);
+            this.errors = [];
+            this.$router.push({name: 'home'});
           })
           .catch(err => {
             this.status = 'error';
-            this.errors.push(err);
+            this.errors = err;
           })
       }
     }

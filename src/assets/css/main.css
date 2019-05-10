@@ -2156,10 +2156,28 @@ a.user_name:hover {
 /*
  * Import blocks
  */
+header {
+  height: 5rem;
+}
+@media (max-width: 1176px) {
+  header {
+    height: 4.5rem;
+  }
+}
+@media (max-width: 600px) {
+  header {
+    height: 4rem;
+  }
+}
 .header {
   background: #304FFE;
   color: #fff;
   height: 5rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
 }
 @media (max-width: 1176px) {
   .header {
@@ -2168,11 +2186,6 @@ a.user_name:hover {
 }
 @media (max-width: 600px) {
   .header {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
     height: 4rem;
   }
 }
