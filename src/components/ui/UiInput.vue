@@ -1,5 +1,5 @@
 <template>
-  <div class="textfield" :class="{'textfield-required': required}">
+  <div class="textfield" :class="{'textfield-required': required, 'textfield-error': error}">
     <input class="textfield_input"
            :title="name"
            :name="name"
@@ -10,10 +10,10 @@
            :required="required"
            @input="updateInput"
            v-mask="mask"
-           @focus="focused = true"
-           @blur="focused = false">
+           @focus="handleFocus"
+           @blur="handleBlur">
     <div v-if="label" class="textfield_label">{{label}}</div>
-    <slot name="right-content"></slot>
+    <p v-if="error" v-html="error" class="textfield_subtitle"></p>
   </div>
 </template>
 
@@ -49,6 +49,9 @@
         type: String,
         default: '',
       },
+      error: {
+        type: String,
+      }
     },
     data() {
       return {
@@ -64,7 +67,15 @@
     methods: {
       updateInput(e) {
         this.$emit('input', e.target.value)
+      },
+      handleFocus(e) {
+        this.focused = true;
+        this.$emit('focus', e);
+      },
+      handleBlur(e) {
+        this.focused = false;
+        this.$emit('blur', e);
       }
-    }
+    },
   }
 </script>

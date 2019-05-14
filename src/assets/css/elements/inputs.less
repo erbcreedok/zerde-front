@@ -109,6 +109,11 @@
 			}
 		});
 	}
+	&_subtitle {
+		font-size: .85rem;
+		padding: .6rem 0;
+		color: @c-black-60;
+	}
 }
 
 
@@ -125,6 +130,21 @@
 			mask-size: 12px 12px;
 			mask-position: 50% 50%;
 			mask-image: url(../img/icons/asterisk.svg);
+		}
+	}
+
+	&-error {
+		.textfield_input {
+			border-color: @c-danger-20;
+			&:focus ~ .textfield_label {
+				color: @c-danger-50;
+			}
+		}
+		.textfield_label {
+			color: @c-danger-50;
+		}
+		.textfield_subtitle {
+			color: @c-danger;
 		}
 	}
 }
@@ -193,7 +213,7 @@
 			.square(1rem);
 			position: absolute;
 			top: 50%;
-			left: 50%;	
+			left: 50%;
 			margin-top: -.5rem;
 			margin-left: -.5rem;
 			background-color: @c-primary;
@@ -204,7 +224,7 @@
 			.transition-elastic();
 			.transform(scale(.5));
 		}
-		
+
 		input[type=radio] + & {
 			.rounded(100%);
 		}
@@ -282,7 +302,7 @@
 	display: -o-flex;
 	display: flex;
 	align-items: center;
-		
+
 	.checkbox {
 		&_icon {
 			flex-shrink: 0;

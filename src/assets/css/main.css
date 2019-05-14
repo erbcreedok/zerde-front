@@ -939,6 +939,11 @@ textarea.textfield_input {
 .textfield_button-search {
   mask-image: url("../img/icons/search.svg");
 }
+.textfield_subtitle {
+  font-size: 0.85rem;
+  padding: 0.6rem 0;
+  color: #757575;
+}
 .textfield-required:after {
   content: '';
   position: absolute;
@@ -951,6 +956,18 @@ textarea.textfield_input {
   mask-size: 12px 12px;
   mask-position: 50% 50%;
   mask-image: url(../img/icons/asterisk.svg);
+}
+.textfield-error .textfield_input {
+  border-color: #F6CFCF;
+}
+.textfield-error .textfield_input:focus ~ .textfield_label {
+  color: #E88787;
+}
+.textfield-error .textfield_label {
+  color: #E88787;
+}
+.textfield-error .textfield_subtitle {
+  color: #D11010;
 }
 /*
  * File
