@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <Header class="mb-5"/>
-    <router-view/>
+    <router-view>
+      <Header class="mb-5"/>
+    </router-view>
   </div>
 </template>
 

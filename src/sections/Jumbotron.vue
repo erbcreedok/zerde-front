@@ -1,8 +1,8 @@
 <template>
     <section class="jumbotron">
         <h1>
-            <span class="h1">Академия Атамекен</span> <br/>
-            <span class="jumbotron-subtitle">для начинающих и действующих предпринимателей</span>
+            <span class="h1">{{ 'atameken academy' | translate | capitalizeEach }}</span> <br/>
+            <span class="jumbotron-subtitle">{{ 'for beginners and acting entrepreneurs' | translate }}</span>
         </h1>
     </section>
 </template>

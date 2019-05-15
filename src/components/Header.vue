@@ -7,23 +7,23 @@
                 </div>
 
                 <ul class="mainmenu" :class="{'mainmenu-visible': mainMenuVisible}">
-                    <li class="mainmenu_item"><router-link to="/faq" class="mainmenu_link">Вопросы и ответы</router-link></li>
-                    <li class="mainmenu_item"><router-link to="/blogs" class="mainmenu_link">Знания</router-link></li>
+                    <li class="mainmenu_item"><router-link :to="{name: 'faq'}" class="mainmenu_link">{{ 'faq' | translate | capitalize }}</router-link></li>
+                    <li class="mainmenu_item"><router-link :to="{name: 'blog', params: {slug: 's'}}" class="mainmenu_link">{{ 'knowledge' | translate | capitalize }}</router-link></li>
                 </ul>
                 <div class="overlay" @click="mainMenuVisible = false"></div>
-
                 <div class="header_controls">
-                    <a href="#" class="header_language button button-small button-inverse button-outline">Қазақ тілінде</a>
+                    <router-link :to="{...$route, params: {...$route.params, locale: 'kk'}}" v-if="$route.params.locale === 'ru'" class="header_language button button-small button-inverse button-outline">Қазақ тілінде</router-link>
+                    <router-link :to="{...$route, params: {...$route.params, locale: 'ru'}}" v-if="$route.params.locale === 'kk'" class="header_language button button-small button-inverse button-outline">На русском</router-link>
 
                     <template v-if="!authorized">
-                     <router-link :to="{name: 'signin'}" class="button button-small button-primary button-inverse button-icon button-icon-left button-icon-user header_user_button">Личный кабинет</router-link>
+                     <router-link :to="{name: 'signin'}" class="button button-small button-primary button-inverse button-icon button-icon-left button-icon-user header_user_button">{{ 'cabinet' | translate | capitalize }}</router-link>
                     </template>
                     <template v-else>
                         <div class="dropdown header_user">
                             <button class="dropdown_toggle header_user_button button button-small button-primary button-inverse button-icon button-icon-left button-icon-user" @click="openDropdown">Юрий</button>
                             <div v-if="dropDownVisible" class="dropdown_window dropdown_window-right dropdown_window-visible" v-click-outside="closeDropdown">
                                 <div class="dropdown_menu">
-                                    <a @click="logout" href="#" class="dropdown_menu_item dropdown_menu_item-exit">Выйти</a>
+                                    <a @click="logout" href="#" class="dropdown_menu_item dropdown_menu_item-exit">{{ 'signout' | translate | capitalize }}</a>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
       computed: {
         authorized() {
           return this.$store.state.auth.authorized;
-        },
+        }
       },
       methods: {
         openDropdown() {

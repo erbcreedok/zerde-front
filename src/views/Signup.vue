@@ -15,7 +15,6 @@
                 </template>
                 <ui-input class="textfield-block form_field"
                           v-validate="'required|email'"
-                          data-vv-as="эл. почта"
                           :error="fields.email && fields.email.dirty && fields.email.touched ? errors.first('email') : ''"
                           name="email"
                           type="email"
@@ -24,7 +23,19 @@
                           label="Эл. Почта"
                           placeholder="Введите почту"
                 />
-                <ui-input class="textfield-block form_field" name="password" v-model="data.password" type="password" required label="Пароль" placeholder="Введите пароль" />
+                <ui-input class="textfield-block form_field"
+                          v-validate="'required|min:8'"
+                          :error="fields.password && fields.password.dirty && fields.password.touched ? errors.first('password') : ''"
+                          name="password"
+                          v-model="data.password"
+                          type="password"
+                          required
+                          label="Пароль"
+                          placeholder="Введите пароль"
+                />
+                <blockquote v-if="fields">
+                    {{fields}}
+                </blockquote>
                 <ui-input class="textfield-block form_field" name="name" v-model="data.name" required label="Имя" placeholder="Введите ваше имя" />
                 <ui-input class="textfield-block form_field" name="surname" v-model="data.surname" required label="Фамилия" placeholder="Введите вашу фамилию" />
 
@@ -49,7 +60,7 @@
   Vue.use(VeeValidate);
 
   Validator.localize(dictionary);
-  Validator.localize('ru');
+  Validator.localize('kz');
 
   export default {
     components: {UiButton, UiInput},

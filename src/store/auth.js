@@ -12,7 +12,7 @@ const mutations = {
   [RESET_AUTH](state) {
     state.authorized = !!localStorage.getItem(LS_USERS);
   }
-}
+};
 
 export default {
   namespaced: true,
