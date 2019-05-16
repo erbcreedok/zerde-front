@@ -1,4 +1,4 @@
-const dictionary = {
+const _validators = {
   ru: {
     attributes: {
       email: 'эл. почта',
@@ -16,7 +16,7 @@ const dictionary = {
       min: (val, args) => `Минимум ${args[0]} символов`,
     },
   },
-  kz: {
+  kk: {
   
     attributes: {
       email: 'эл. пошта',
@@ -36,4 +36,4 @@ const dictionary = {
   }
 };
 
-export default dictionary;
+export default _validators;

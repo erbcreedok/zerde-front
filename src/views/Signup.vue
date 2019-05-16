@@ -1,50 +1,33 @@
 <template>
     <div class="page wrap">
         <main class="login_wrap">
-            <section class="login_section login_section-secondary">
-                Регистрация через
-                <div class="login_socbuttons">
-                    <a href="#" class="login_socbutton login_socbutton-vk"></a>
-                    <a href="#" class="login_socbutton login_socbutton-fb"></a>
-                </div>
+            <section class="login_section login_section-secondary" v-html="$t('signup by', {links})">
             </section>
 
             <form class="login_section login_form form" @submit.prevent="onSubmit">
                 <template v-if="globalErrors.length">
                     <div v-for="error in globalErrors" class="alert alert-danger form_alert" :key="error.code">{{error.message}}</div>
                 </template>
-                <ui-input class="textfield-block form_field"
-                          v-validate="'required|email'"
-                          :error="fields.email && fields.email.dirty && fields.email.touched ? errors.first('email') : ''"
-                          name="email"
-                          type="email"
-                          v-model="data.email"
-                          required
-                          label="Эл. Почта"
-                          placeholder="Введите почту"
-                />
-                <ui-input class="textfield-block form_field"
-                          v-validate="'required|min:8'"
-                          :error="fields.password && fields.password.dirty && fields.password.touched ? errors.first('password') : ''"
-                          name="password"
-                          v-model="data.password"
-                          type="password"
-                          required
-                          label="Пароль"
-                          placeholder="Введите пароль"
-                />
-                <blockquote v-if="fields">
-                    {{fields}}
-                </blockquote>
-                <ui-input class="textfield-block form_field" name="name" v-model="data.name" required label="Имя" placeholder="Введите ваше имя" />
-                <ui-input class="textfield-block form_field" name="surname" v-model="data.surname" required label="Фамилия" placeholder="Введите вашу фамилию" />
 
-                <ui-button type="submit" color="primary" class="button-block form_button">Зарегистрироваться</ui-button>
+                <ui-input class="textfield-block form_field"
+                          v-for="input in inputs"
+                          :key="'input_' + input.name"
+                          v-validate="input.validators"
+                          :error="fields[input.name] && fields[input.name].dirty && fields[input.name].touched ? errors.first(input.name) : ''"
+                          :name="input.name"
+                          :type="input.type ? input.type : ''"
+                          v-model="data[input.name]"
+                          required
+                          :label="capitalize($t(input.name))"
+                          :placeholder="capitalize($t(`enter ${input.name}`))"
+                />
+
+                <ui-button type="submit" color="primary" class="button-block form_button">{{'signup' | translate | capitalize }}</ui-button>
             </form>
 
             <section class="login_section login_section-secondary">
-                <p>Уже зарегистрированы?</p>
-                <router-link :to="{name: 'signin'}" class="login_subbuton button button-small button-primary button-outline">Войти в аккаунт</router-link>
+                <p>{{'already have an account?' | translate | capitalize }}</p>
+                <router-link :to="{name: 'signin'}" class="login_subbuton button button-small button-primary button-outline">{{'signin account' | translate | capitalize }}</router-link>
             </section>
         </main>
     </div>
@@ -54,13 +37,10 @@
   import UiButton from '../components/ui/UiButton'
   import authService from '../_services/auth.service'
   import Vue from 'vue'
-  import VeeValidate, { Validator } from 'vee-validate'
-  import dictionary from "../_validators/dictionary";
+  import VeeValidate from 'vee-validate'
+  import {capitalize} from "../_filters/capitalize";
 
   Vue.use(VeeValidate);
-
-  Validator.localize(dictionary);
-  Validator.localize('kz');
 
   export default {
     components: {UiButton, UiInput},
@@ -72,11 +52,36 @@
           name: '',
           surname: '',
         },
+        inputs: [
+          {
+            val: '',
+            name: 'email',
+            validators: 'required|email',
+            type: 'email'
+          },
+          {
+            val: '',
+            name: 'password',
+            validators: 'required|min:8',
+            type: 'password'
+          },
+          {
+            val: '',
+            name: 'name',
+            validators: 'required',
+          },
+          {
+            val: '',
+            name: 'surname',
+            validators: 'required',
+          },
+        ],
         globalErrors: [],
-
+        links: `<a href="#" class="login_socbutton login_socbutton-vk"></a><a href="#" class="login_socbutton login_socbutton-fb"></a>`,
       }
     },
     methods: {
+      capitalize,
       onSubmit() {
         authService.register(this.data).then(data => {
           console.log(data);

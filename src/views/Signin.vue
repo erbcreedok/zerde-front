@@ -1,7 +1,7 @@
 <template>
     <div class="page wrap">
         <main class="login_wrap">
-            <section class="login_section login_section-secondary" v-html="$t('sign by', {links})">
+            <section class="login_section login_section-secondary" v-html="$t('signin by', {links})">
             </section>
 
             <form class="login_section login_form form" @submit.prevent="onSubmit" v-loading="status === 'loading'">
