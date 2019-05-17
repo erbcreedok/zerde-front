@@ -20,6 +20,7 @@
                           required
                           :label="capitalize($t(input.name))"
                           :placeholder="capitalize($t(`enter ${input.name}`))"
+                          :mask="input.mask ? input.mask : ''"
                 />
 
                 <ui-button type="submit" color="primary" class="button-block form_button">{{'signup' | translate | capitalize }}</ui-button>
@@ -40,14 +41,17 @@
   import VeeValidate from 'vee-validate'
   import {capitalize} from "../_filters/capitalize";
 
-  Vue.use(VeeValidate);
+  Vue.use(VeeValidate, {
+    mode: 'eager'
+  });
 
   export default {
     components: {UiButton, UiInput},
     data() {
       return {
+        status: 'clear',
         data: {
-          email: '',
+          phone: '',
           password: '',
           name: '',
           surname: '',
@@ -55,9 +59,10 @@
         inputs: [
           {
             val: '',
-            name: 'email',
-            validators: 'required|email',
-            type: 'email'
+            name: 'phone',
+            validators: 'required|length:16',
+            type: 'phone',
+            mask: '+7(7##)###-##-##',
           },
           {
             val: '',
@@ -83,8 +88,17 @@
     methods: {
       capitalize,
       onSubmit() {
-        authService.register(this.data).then(data => {
-          console.log(data);
+        this.$validator.validateAll().then(valid => {
+          if (valid) {
+            authService.register(this.data).then(data => {
+              console.log(data);
+            });
+          } else {
+            this.globalErrors.push({
+              message: 'Форма заполнена неверно, проверьте валидность всех полей',
+              code: 1,
+            })
+          }
         })
       }
     }

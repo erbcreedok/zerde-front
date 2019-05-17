@@ -10,9 +10,9 @@
                     <div v-for="(error, i) in errors" class="alert alert-danger form_alert" :key="error.status + ' ' + i">{{error.message}}</div>
                 </template>
 
-                <ui-input class="textfield-block form_field" name="email" :label="capitalize($t('email'))" :placeholder="capitalize($t('enter email'))" v-model="data.email"/>
+                <!--<ui-input class="textfield-block form_field" name="email" :label="capitalize($t('email'))" :placeholder="capitalize($t('enter email'))" v-model="data.email"/>-->
 
-                <!--<ui-input class="textfield-block form_field" name="phone" label="Телефон" placeholder="Введите номер телефона" v-model="data.phone" mask="+7(7##)###-##-##"/>-->
+                <ui-input class="textfield-block form_field" name="phone" :label="capitalize($t('phone'))" :placeholder="capitalize($t('enter phone'))" v-model="data.phone" mask="+7(7##)###-##-##"/>
 
                 <ui-input class="textfield-block form_field" name="password" :label="capitalize($t('password'))" :placeholder="capitalize($t('enter password'))"  type="password" v-model="data.password"/>
 

@@ -9,6 +9,7 @@ export default {
   'signin by': 'Войти через {links}',
   'signup by': 'Регистрация через {links}',
   email: 'эл. почта',
+  phone: 'телефон',
   password: 'пароль',
   signin: 'войти',
   signup: 'зарегистрироваться',
@@ -19,6 +20,7 @@ export default {
   lastName: 'фамилия',
   last_name: 'фамилия',
   'enter email': 'введите почту',
+  'enter phone': 'введите телефон',
   'enter password': 'введите пароль',
   'enter name': 'введите имя',
   'enter surname': 'введите фамилию',
@@ -26,6 +28,6 @@ export default {
   'don\'t have an account?': 'еще не зарегистрированы?',
   'already have an account?': 'уже зарегистрированы?',
   'create account': 'создать аккаунт',
-  'signin account': 'создать аккаунт',
+  'signin account': 'войти в аккаунт',
   
 }
