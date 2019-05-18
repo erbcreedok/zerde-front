@@ -34,5 +34,6 @@ export default {
   'there are not enough fields': 'недостотачно информации',
   'this phone is already in use': 'Этот телефон уже используется',
   'not less than {count} symbols': 'минимум {count} символов',
-
+  'no answers': 'нет ответов',
+  '{count} answers': '{count} ответ ::: {count} ответа ::: {count} ответов',
 }

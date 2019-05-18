@@ -34,4 +34,6 @@ export default {
   'there are not enough fields': 'енгізілген ақпарат жеткіліксіз',
   'this phone is already in use': 'енгізілген телефон қолдануда',
   'not less than {count} symbols': 'Кем дегенде {count} таңба',
+  'no answers': 'жауабы жоқ',
+  '{count} answers': '{count} жауап',
 }

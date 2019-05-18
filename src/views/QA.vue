@@ -25,29 +25,7 @@
           </div>
         </div>
 
-        <article class="qaCard">
-          <div class="qaCard_wrap">
-            <div class="qa_tags">
-              <a href="#">Старт бизнеса</a>
-            </div>
-
-            <a href="/single-qa.html" class="qaCard_title">Как правильно выбрать торговую точку для магазина бижутерии?</a>
-          </div>
-
-          <div class="qaCard_footer">
-            <div class="qaCard_answers">нет ответов</div>
-
-            <ul class="qaCard_details">
-              <li>22 марта</li>
-              <li>245 просмотров</li>
-              <li>2 подписчика</li>
-            </ul>
-
-            <div class="qaCard_author avatar">
-              <img src="https://thispersondoesnotexist.com/image" alt="">
-            </div>
-          </div>
-        </article>
+        <question-card/>
 
         <article class="qaCard">
           <div class="qaCard_wrap">
@@ -128,7 +106,8 @@
 </template>
 <script>
   import UiSearchInput from '../components/ui/UiSearchInput'
+  import QuestionCard from '../components/QuestionCard'
   export default {
-    components: {UiSearchInput},
+    components: {QuestionCard, UiSearchInput},
   }
 </script>

@@ -2569,6 +2569,11 @@ header {
   font-weight: 600;
   color: #304FFE;
 }
+.qa_tags > a {
+  margin-right: 1em;
+  margin-bottom: 0.3em;
+  display: inline-block;
+}
 /*
  * Single Page
  */
