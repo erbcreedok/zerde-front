@@ -35,8 +35,8 @@ export default [
     component: () => import('../views/Signin.vue')
   },
   {
-    path: 'faq',
-    name: 'faq',
-    component: () => import('../views/FAQ.vue')
+    path: 'qa',
+    name: 'qa',
+    component: () => import('../views/QA.vue')
   },
 ];

@@ -1,5 +1,5 @@
 <template>
-    <div class="locale" :class="'locale-' + currentLocale" v-if="currentLocale">
+    <div class="localization-provider" :class="'locale-' + currentLocale" v-if="currentLocale">
         <slot/>
         <router-view/>
     </div>

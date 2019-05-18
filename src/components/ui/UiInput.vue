@@ -1,5 +1,6 @@
 <template>
-  <div class="textfield" :class="{'textfield-required': required, 'textfield-error': error}">
+  <div class="textfield"
+       :class="{'textfield-required': required, 'textfield-error': error}">
     <input class="textfield_input"
            :title="name"
            :name="name"
@@ -13,7 +14,8 @@
            @focus="handleFocus"
            @blur="handleBlur">
     <div v-if="label" class="textfield_label">{{label}}</div>
-    <p v-if="error" v-html="error" class="textfield_subtitle"></p>
+    <p v-if="error" v-html="error" class="textfield_subtitle textfield_subtitle-error"></p>
+    <p v-if="notification && focused" v-html="notification" class="textfield_subtitle"></p>
   </div>
 </template>
 
@@ -50,6 +52,9 @@
         default: '',
       },
       error: {
+        type: String,
+      },
+      notification: {
         type: String,
       }
     },

@@ -7,7 +7,7 @@
                 </div>
 
                 <ul class="mainmenu" :class="{'mainmenu-visible': mainMenuVisible}">
-                    <li class="mainmenu_item"><router-link :to="{name: 'faq'}" class="mainmenu_link">{{ 'faq' | translate | capitalize }}</router-link></li>
+                    <li class="mainmenu_item"><router-link :to="{name: 'qa'}" class="mainmenu_link">{{ 'questions and answers' | translate | capitalize }}</router-link></li>
                     <li class="mainmenu_item"><router-link :to="{name: 'blog', params: {slug: 's'}}" class="mainmenu_link">{{ 'knowledge' | translate | capitalize }}</router-link></li>
                 </ul>
                 <div class="overlay" @click="mainMenuVisible = false"></div>
@@ -20,7 +20,7 @@
                     </template>
                     <template v-else>
                         <div class="dropdown header_user">
-                            <button class="dropdown_toggle header_user_button button button-small button-primary button-inverse button-icon button-icon-left button-icon-user" @click="openDropdown">Юрий</button>
+                            <button class="dropdown_toggle header_user_button button button-small button-primary button-inverse button-icon button-icon-left button-icon-user" @click="openDropdown">{{username}}</button>
                             <div v-if="dropDownVisible" class="dropdown_window dropdown_window-right dropdown_window-visible" v-click-outside="closeDropdown">
                                 <div class="dropdown_menu">
                                     <a @click="logout" href="#" class="dropdown_menu_item dropdown_menu_item-exit">{{ 'signout' | translate | capitalize }}</a>
@@ -38,6 +38,7 @@
 
 <script>
     import authService from '../_services/auth.service'
+    import {USER} from '../_types/store-types'
 
     export default {
       data() {
@@ -49,6 +50,12 @@
       computed: {
         authorized() {
           return this.$store.state.auth.authorized;
+        },
+        username() {
+          if (this.authorized) {
+            return this.$store.getters[USER + 'getUserName'];
+          }
+          return 'not authorised';
         }
       },
       methods: {

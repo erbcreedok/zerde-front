@@ -1,7 +1,8 @@
 import AuthMock from '../_mock/authorization.mock'
-import {BAD_CREDENTIALS, LS_USERS, NO_DATA} from '../_types'
+import {BAD_CREDENTIALS, LS_TOKEN, LS_USERS, NO_DATA} from '../_types'
 import store from '../store/index'
-import {AUTH, RESET_AUTH} from '../_types/store-types'
+import {AUTH, RESET} from '../_types/store-types'
+import userService from './user.service'
 
 const authService = {
   isLogged() {
@@ -16,11 +17,13 @@ const authService = {
     return await AuthMock.login(username, password)
       .catch(handleError)
       .then(handleSuccess)
-      .then(user => {
+      .then(({user, token}) => {
         if (user) {
           user.authdata = window.btoa(username + ':' + password);
           localStorage.setItem(LS_USERS, JSON.stringify(user));
-          store.commit(AUTH + RESET_AUTH);
+          localStorage.setItem(LS_TOKEN, token);
+          userService.setUserToStore(user);
+          store.commit(AUTH + RESET);
         }
         return user;
       });
@@ -28,26 +31,33 @@ const authService = {
   async logout() {
     return await AuthMock.logout().then(() => {
       localStorage.removeItem(LS_USERS);
-      store.commit(AUTH + RESET_AUTH);
+      localStorage.removeItem(LS_TOKEN);
+      userService.removeUserFromStore();
+      store.commit(AUTH + RESET);
     });
   },
   async register(data) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if ( data.password.length >= 6) {
-          resolve({status: 200, data: {token: 'SOME_TOKEN_ASD'}})
-        } else {
-          reject({status: 400, data: {message: 'Validation error'}})
-        }
-      }, 300)
-    })
+    data.first_name = data.name;
+    data.last_name = data.surname;
+    delete data.name;
+    delete data.surname;
+    console.log({data});
+    return await AuthMock.register(data)
+      .catch(handleError)
+      .then(handleSuccess)
+      .then(user => {
+        return user;
+      })
   }
 };
 
 function handleError({status, message}) {
   const errors = [];
-  if(status === 400 && message === BAD_CREDENTIALS)
-    errors.push({status, message: 'Неверный логин или пароль'});
+  if(status === 400 && message === BAD_CREDENTIALS) {
+    errors.push({status, message: 'wrong username or password'});
+  } else {
+    errors.push({status, message});
+  }
   return Promise.reject(errors)
 }
 

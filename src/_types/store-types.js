@@ -1,4 +1,6 @@
 export const AUTH = 'auth/';
+export const USER = 'user/';
 
-export const SET_AUTH = 'SET_AUTH';
-export const RESET_AUTH = 'RESET_AUTH';
+export const SET = 'SET';
+export const CLEAR = 'CLEAR';
+export const RESET = 'RESET';

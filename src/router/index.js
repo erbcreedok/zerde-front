@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from "./routes";
 import {checkLocale} from "./router-guards";
-import Localizer from "../components/Localizer";
+import Localizer from "../providers/LocalizationProvider";
 import i18nService from "../_services/i18n.service";
 
 Vue.use(Router);

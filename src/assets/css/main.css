@@ -966,7 +966,7 @@ textarea.textfield_input {
 .textfield-error .textfield_label {
   color: #E88787;
 }
-.textfield-error .textfield_subtitle {
+.textfield-error .textfield_subtitle.textfield_subtitle-error {
   color: #D11010;
 }
 /*

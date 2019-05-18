@@ -4,7 +4,6 @@ import router from './router/index'
 import store from './store/index'
 import './_plugins/i18n'
 import './assets/css/main.css'
-import './_directives/v-loading'
 import './_directives'
 import './_filters'
 

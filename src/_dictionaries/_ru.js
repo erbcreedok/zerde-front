@@ -1,5 +1,5 @@
 export default {
-  faq: 'вопросы и ответы',
+  'questions and answers': 'вопросы и ответы',
   knowledge: 'знания',
   toKk: 'қазақ тілінде',
   cabinet: 'личный кабинет',
@@ -29,5 +29,10 @@ export default {
   'already have an account?': 'уже зарегистрированы?',
   'create account': 'создать аккаунт',
   'signin account': 'войти в аккаунт',
-  
+  'wrong form filling, please check if all fields are valid': 'Форма заполнена неверно, проверьте валидность всех полей',
+  'wrong username or password': 'неверный пользователь или пароль',
+  'there are not enough fields': 'недостотачно информации',
+  'this phone is already in use': 'Этот телефон уже используется',
+  'not less than {count} symbols': 'минимум {count} символов',
+
 }

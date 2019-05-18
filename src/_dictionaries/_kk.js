@@ -1,5 +1,5 @@
 export default {
-  faq: 'сұрақтар мен жауаптар',
+  'questions and answers': 'сұрақтар мен жауаптар',
   knowledge: 'білім',
   toRu: 'на русском',
   cabinet: 'жеке кабинет',
@@ -29,4 +29,9 @@ export default {
   'already have an account?': 'тіркелгенсіз бе?',
   'create account': 'тіркелу',
   'signin account': 'кіру',
+  'wrong form filling, please check if all fields are valid': 'Форма қәте толтырылған, форманы қайта тексеріуіңізді өтінеміз',
+  'wrong username or password': 'телефон немесе құпия сөз қәте',
+  'there are not enough fields': 'енгізілген ақпарат жеткіліксіз',
+  'this phone is already in use': 'енгізілген телефон қолдануда',
+  'not less than {count} symbols': 'Кем дегенде {count} таңба',
 }

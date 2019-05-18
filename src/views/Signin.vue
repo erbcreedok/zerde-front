@@ -6,8 +6,10 @@
 
             <form class="login_section login_form form" @submit.prevent="onSubmit" v-loading="status === 'loading'">
 
-                <template v-if="errors.length">
-                    <div v-for="(error, i) in errors" class="alert alert-danger form_alert" :key="error.status + ' ' + i">{{error.message}}</div>
+                <template v-if="globalErrors.length">
+                    <div v-for="(error, i) in globalErrors"
+                         class="alert alert-danger form_alert"
+                         :key="error.status + ' ' + i">{{error.message | translate | capitalize}}</div>
                 </template>
 
                 <!--<ui-input class="textfield-block form_field" name="email" :label="capitalize($t('email'))" :placeholder="capitalize($t('enter email'))" v-model="data.email"/>-->
@@ -34,6 +36,7 @@
   import authService from '../_services/auth.service'
   import 'vue-loading-overlay/dist/vue-loading.css'
   import {capitalize} from "../_filters/capitalize";
+  import {dismaskPhone} from '../_helpers/stringManipulations'
 
   export default {
     components: {UiInput, UiButton},
@@ -45,7 +48,7 @@
           password: '',
         },
         status: 'clear',
-        errors: [],
+        globalErrors: [],
         links: `<a href="#" class="login_socbutton login_socbutton-vk"></a><a href="#" class="login_socbutton login_socbutton-fb"></a>`,
       }
     },
@@ -53,15 +56,17 @@
       capitalize,
       onSubmit() {
         this.status = 'loading';
-        authService.login(this.data.email, this.data.password)
+        const phone = dismaskPhone(this.data.phone);
+        const password = this.data.password;
+        authService.login(phone, password)
           .then(() => {
             this.status = 'success';
-            this.errors = [];
+            this.globalErrors = [];
             this.$router.push({name: 'home'});
           })
           .catch(err => {
             this.status = 'error';
-            this.errors = err;
+            this.globalErrors = err;
           })
       }
     }

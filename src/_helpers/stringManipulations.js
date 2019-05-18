@@ -1,0 +1,1 @@
+export const dismaskPhone = (phone) => phone.match(/\d+/g).join('');

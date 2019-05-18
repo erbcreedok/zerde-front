@@ -1,16 +1,19 @@
-import {RESET_AUTH, SET_AUTH} from '../_types/store-types'
-import {LS_USERS} from '../_types'
+import {RESET, SET} from '../_types/store-types'
+import {LS_TOKEN, LS_USERS} from '../_types'
 
 const state = {
-  authorized: !!localStorage.getItem(LS_USERS)
+  authorized: !!localStorage.getItem(LS_USERS),
+  token: localStorage.getItem(LS_TOKEN),
 };
 
 const mutations = {
-  [SET_AUTH](state, payload) {
-    state.authorized = payload;
+  [SET](state, {authorised=false, token=null}) {
+    state.authorized = authorised;
+    state.token = token;
   },
-  [RESET_AUTH](state) {
+  [RESET](state) {
     state.authorized = !!localStorage.getItem(LS_USERS);
+    state.token = localStorage.getItem(LS_TOKEN);
   }
 };
 

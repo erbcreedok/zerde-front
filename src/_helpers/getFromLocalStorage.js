@@ -12,3 +12,8 @@ export function getListFromLocalStorage(localStorageNaming, defData) {
   localStorage.setItem(localStorageNaming, JSON.stringify(data));
   return data;
 }
+
+export function setListToLocalStorage(localStorageNaming, data) {
+  localStorage.setItem(localStorageNaming, JSON.stringify(data));
+  return data;
+}

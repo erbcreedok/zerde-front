@@ -4,16 +4,17 @@
             <section class="login_section login_section-secondary" v-html="$t('signup by', {links})">
             </section>
 
-            <form class="login_section login_form form" @submit.prevent="onSubmit">
+            <form class="login_section login_form form" @submit.prevent="onSubmit" v-loading="status === 'loading'">
                 <template v-if="globalErrors.length">
-                    <div v-for="error in globalErrors" class="alert alert-danger form_alert" :key="error.code">{{error.message}}</div>
+                    <div v-for="error in globalErrors" class="alert alert-danger form_alert" :key="error.status">{{error.message | translate | capitalize}}</div>
                 </template>
 
                 <ui-input class="textfield-block form_field"
                           v-for="input in inputs"
                           :key="'input_' + input.name"
                           v-validate="input.validators"
-                          :error="fields[input.name] && fields[input.name].dirty && fields[input.name].touched ? errors.first(input.name) : ''"
+                          :error="status!=='clear' && fields[input.name] && fields[input.name].dirty && fields[input.name].touched ? errors.first(input.name) : ''"
+                          :notification="capitalize(input.notification)"
                           :name="input.name"
                           :type="input.type ? input.type : ''"
                           v-model="data[input.name]"
@@ -40,6 +41,7 @@
   import Vue from 'vue'
   import VeeValidate from 'vee-validate'
   import {capitalize} from "../_filters/capitalize";
+  import {dismaskPhone} from '../_helpers/stringManipulations'
 
   Vue.use(VeeValidate, {
     mode: 'eager'
@@ -68,7 +70,8 @@
             val: '',
             name: 'password',
             validators: 'required|min:8',
-            type: 'password'
+            type: 'password',
+            notification: this.$t('not less than {count} symbols', {count:8}),
           },
           {
             val: '',
@@ -89,14 +92,25 @@
       capitalize,
       onSubmit() {
         this.$validator.validateAll().then(valid => {
+          this.status = 'loading';
+          this.globalErrors = [];
           if (valid) {
-            authService.register(this.data).then(data => {
+            const data = {
+              ...this.data,
+              phone: dismaskPhone(this.data.phone),
+            };
+            authService.register(data).then(data => {
+              this.status = 'success';
               console.log(data);
+            }).catch(err => {
+              this.status = 'error';
+              this.globalErrors = err;
             });
           } else {
+            this.status = 'error';
             this.globalErrors.push({
-              message: 'Форма заполнена неверно, проверьте валидность всех полей',
-              code: 1,
+              message: 'wrong form filling, please check if all fields are valid',
+              status: 1,
             })
           }
         })
