@@ -36,4 +36,6 @@ export default {
   'not less than {count} symbols': 'минимум {count} символов',
   'no answers': 'нет ответов',
   '{count} answers': '{count} ответ ::: {count} ответа ::: {count} ответов',
+  '{count} views': '{count} просмотр ::: {count} просмотра ::: {count} просмотров',
+  '{count} subscribers': '{count} подписчик ::: {count} подписчика ::: {count} подписчиков',
 }

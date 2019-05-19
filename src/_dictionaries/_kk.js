@@ -36,4 +36,6 @@ export default {
   'not less than {count} symbols': 'Кем дегенде {count} таңба',
   'no answers': 'жауабы жоқ',
   '{count} answers': '{count} жауап',
+  '{count} views': '{count} адам көрді',
+  '{count} subscribers': '{count} подписчик',
 }

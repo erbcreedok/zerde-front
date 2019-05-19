@@ -27,7 +27,8 @@
       },
       methods: {
         setLocale(locale) {
-          i18nService.setCurrentLocale(locale)
+          i18nService.setCurrentLocale(locale);
+          this.$moment.locale(locale);
         }
       },
       beforeRouteUpdate: checkLocale

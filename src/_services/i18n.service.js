@@ -3,6 +3,8 @@ import {LS_LOCALE} from "../_types";
 import {defaultLocale, locales} from "../_configs/i18n";
 import {Validator} from "vee-validate";
 import _validators from "../_dictionaries/_validators";
+import 'moment/locale/kk';
+import 'moment/locale/ru';
 
 Validator.localize(_validators);
 

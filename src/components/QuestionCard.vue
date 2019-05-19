@@ -12,13 +12,13 @@
       <div class="qaCard_answers" v-if="question.answers.count">{{$t('{count} answers', {count: question.answers.count}, question.answers.count)}}</div>
       <div class="qaCard_answers" v-if="!question.answers.count">{{$t('no answers')}}</div>
       <ul class="qaCard_details">
-        <li>23 марта</li>
-        <li>245 просмотров</li>
-        <li>2 подписчика</li>
+        <li>{{question.createdAt | moment('D MMMM')}}</li>
+        <li>{{$t('{count} views', {count: question.views}, question.views)}}</li>
+        <li>{{$t('{count} subscribers', {count: question.subscribers}, question.subscribers)}}</li>
       </ul>
 
       <div class="qaCard_author avatar">
-        <img src="https://thispersondoesnotexist.com/image" alt="">
+        <img :src="question.author.avatar_src" alt="">
       </div>
     </div>
   </article>
@@ -42,9 +42,10 @@
             success: false,
           },
           createdAt: new Date(),
-          views: 245,
-          subscribers: 2,
+          views: 241,
+          subscribers: 20,
           author: {
+            id: 244,
             full_name: 'Some author',
             avatar_src: 'https://thispersondoesnotexist.com/image'
           }
