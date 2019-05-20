@@ -13,6 +13,9 @@ const authService = {
       return false;
     }
   },
+  getToken() {
+    return localStorage.getItem(LS_TOKEN);
+  },
   async login(username, password) {
     return await AuthMock.login(username, password)
       .catch(handleError)

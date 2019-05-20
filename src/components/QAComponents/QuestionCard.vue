@@ -9,8 +9,8 @@
     </div>
 
     <div class="qaCard_footer">
-      <div class="qaCard_answers" :class="{'qaCard_answers-success': question.answers.success}" v-if="question.answers.count">{{$t('{count} answer ::: {count} answers', {count: question.answers.count}, question.answers.count)}}</div>
-      <div class="qaCard_answers" v-if="!question.answers.count">{{$t('no answers')}}</div>
+      <router-link :to="{name: 'qa-single', params: {slug: question.id+''}}" class="qaCard_answers" :class="{'qaCard_answers-success': question.answers.success}" v-if="question.answers.count">{{$t('{count} answer ::: {count} answers', {count: question.answers.count}, question.answers.count)}}</router-link>
+      <router-link :to="{name: 'qa-single', params: {slug: question.id+''}}" class="qaCard_answers" v-if="!question.answers.count">{{$t('no answers')}}</router-link>
       <ul class="qaCard_details" v-if="!isSmall">
         <li>{{question.createdAt | moment('D MMMM')}}</li>
         <li>{{$t('{count} view ::: {count} views', {count: question.views}, question.views)}}</li>

@@ -19,6 +19,10 @@ const _validators = {
         return `Длина поля должна быть равна ${val} символам`
       },
       min: (val, args) => `Минимум ${args[0]} символов`,
+      confirmed: (field) => {
+        if(field==='password_confirm') return 'Пароли не совпадают';
+        return `Поле ${field} заполнена неверно`;
+      }
     },
   },
   kk: {
@@ -41,6 +45,10 @@ const _validators = {
         return `${val} таңба болу керек`
       },
       min: (val, args) => `Кем дегенде ${args[0]} таңба болу керек`,
+      confirmed: (field) => {
+        if(field==='password_confirm') return 'құпия сөздер сәйкес келмейді';
+        return `${field} дұрыс толтырылмаған`;
+      }
     },
   }
 };

@@ -490,6 +490,14 @@
 			&:hover + & {
 				border-top-color: @c-grey;
 			}
+			&-selected > .qa_threads_link:before {
+				color: @c-primary;
+				font-weight: bold;
+			}
+			&-selected:hover > .qa_threads_link:before {
+				color: @c-danger;
+				font-weight: bold;
+			}
 		}
 
 		&_link {
@@ -588,7 +596,7 @@
 		&_item {
 			width: 50%;
 			padding: 1.5rem 2rem;
-			
+
 			&:nth-child(2n) {
 				border-left: 2px solid;
 				border-color: inherit;

@@ -33,36 +33,11 @@
               <button class="qa_question_control qa_question_control-share">поделиться</button>
             </div>
 
-            <div class="qa_question_rating rating">
-              <button class="rating_control rating_control-decrease" :class="{'rating_control-selected': question.liked<0}" @click="putLike(question.liked-1)"></button>
-              <div class="rating_counter" :class="{'rating_counter-positive': question.liked>0, 'rating_counter-negative': question.liked<0}">{{question.likes + question.liked}}</div>
-              <button class="rating_control rating_control-increase" :class="{'rating_control-selected': question.liked>0}" @click="putLike(question.liked+1)"></button>
-            </div>
+            <ui-rating class="qa_question_rating" :rate="question.likes" :rated="question.liked" @change="putLike"/>
           </footer>
         </main>
 
-        <qa-answers v-if="question"/>
-
-        <div class="qa_submit">
-          <div class="qa_subtitle caption">Ваш ответ</div>
-
-          <form class="comment_form">
-            <div class="textfield textfield-block">
-              <textarea rows="4" class="textfield_input" placeholder=" "></textarea>
-              <div class="textfield_label">Напишите свой ответ</div>
-            </div>
-
-            <div class="comment_form_controls">
-              <div class="comment_form_user avatar">
-                <img src="https://thispersondoesnotexist.com/image" alt="">
-              </div>
-
-              <div class="comment_form_buttons">
-                <button type="submit" class="button button-small button-primary">Ответить</button>
-              </div>
-            </div>
-          </form>
-        </div>
+        <qa-answers v-if="question" :question="question"/>
       </div>
 
       <aside class="qa_sidebar" v-if="question">
@@ -79,12 +54,12 @@
 
           <div class="qa_stats_item">
             <div class="qa_stats_title">Ответы</div>
-            <div class="qa_stats_value qa_stats_value-answers">1</div>
+            <div class="qa_stats_value qa_stats_value-answers">{{question.answers.count}}</div>
           </div>
 
           <div class="qa_stats_item">
             <div class="qa_stats_title">Комментарии</div>
-            <div class="qa_stats_value qa_stats_value-comments">24</div>
+            <div class="qa_stats_value qa_stats_value-comments">{{question.commentsCount}}</div>
           </div>
         </div>
 
@@ -103,9 +78,10 @@
   import qaService from '../_services/qa.service'
   import QuestionCard from '../components/QAComponents/QuestionCard'
   import QaAnswers from '../components/QAComponents/QAAnswers'
+  import UiRating from "../components/ui/UIRating";
 
   export default {
-    components: {QaAnswers, QuestionCard},
+    components: {UiRating, QaAnswers, QuestionCard},
     props: {
       slug: {
         required: true,
@@ -124,15 +100,12 @@
       }
     },
     mounted() {
-      this.loadQuestion().then(data => {
-        qaService.getQuestionAnswers(data.id).then(data => {
-          console.log(data)
-        });
-      });
+      this.loadQuestion();
     },
     methods: {
       loadQuestion(slug=this.slug) {
         this.status = 'loading';
+        this.question = null;
         return qaService.getQuestion(slug).then(data => {
           this.status = 'success';
           this.question = data;
@@ -152,7 +125,7 @@
         qaService.subscribeToQuestion(this.question.id, value).then(question => {
           this.question.subscribed = question.subscribed;
         })
-      }
+      },
     }
   }
 </script>

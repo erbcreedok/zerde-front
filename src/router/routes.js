@@ -1,4 +1,4 @@
-import {unrequireAuth} from "./router-guards";
+import {requireAuth, unrequireAuth} from "./router-guards";
 
 export default [
   {
@@ -40,7 +40,14 @@ export default [
     component: () => import('../views/QA.vue')
   },
   {
-    path: 'qa/:slug',
+    path: 'qa/new',
+    name: 'qa-create',
+    props: true,
+    beforeEnter: requireAuth,
+    component: () => import('../views/QACreate.vue')
+  },
+  {
+    path: 'qa/question-:slug',
     name: 'qa-single',
     props: true,
     component: () => import('../views/QASingle.vue')

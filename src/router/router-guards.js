@@ -5,13 +5,13 @@ export const requireAuth = (to, from, next)  => {
   if (store.state.auth.authorized) {
     next()
   } else {
-    next({name: 'home'})
+    next({name: 'signin'})
   }
 };
 
 export const unrequireAuth = (to, from, next) => {
   if (store.state.auth.authorized) {
-    next({name: 'home'})
+    next(from ? from : {name: 'home'})
   } else {
     next()
   }

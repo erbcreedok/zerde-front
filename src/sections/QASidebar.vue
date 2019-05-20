@@ -15,7 +15,7 @@
         </li>
       </ul>
 
-      <a href="#" class="button button-small button-primary button-outline button-icon button-icon-left button-icon-dots">Все темы</a>
+      <router-link :to="{name: 'qa-create'}" class="button button-small button-primary button-outline button-icon button-icon-left button-icon-dots">Все темы</router-link>
     </section>
     <qa-leaders/>
   </aside>

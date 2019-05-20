@@ -83,10 +83,10 @@ const usersMock = {
     const users = this.getUsers();
     user.roleID = 0;
     user.id = 'id' + (new Date()).getTime();
-    if (users.find(u => u.phone === user.phone)) {
+    if (users.find(u => u.phone && user.phone && u.phone === user.phone)) {
       throw {code: 400, message: 'this phone is already in use'};
     }
-    if (users.find(u => u.email === user.email)) {
+    if (users.find(u => u.email && user.email && u.email === user.email)) {
       throw {code: 400, message: 'this email is already in use'};
     }
     users.push(user);

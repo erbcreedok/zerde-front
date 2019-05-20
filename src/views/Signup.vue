@@ -19,9 +19,11 @@
                           :type="input.type ? input.type : ''"
                           v-model="data[input.name]"
                           required
-                          :label="capitalize($t(input.name))"
-                          :placeholder="capitalize($t(`enter ${input.name}`))"
+                          show-required
+                          :label="capitalize($t(input.label ? input.label : input.name))"
+                          :placeholder="capitalize($t(input.placeholder ? input.placeholder : `enter ${input.name}`))"
                           :mask="input.mask ? input.mask : ''"
+                          :ref="input.name"
                 />
 
                 <ui-button type="submit" color="primary" class="button-block form_button">{{'signup' | translate | capitalize }}</ui-button>
@@ -75,6 +77,15 @@
           },
           {
             val: '',
+            name: 'password_confirm',
+            label: 'confirm password',
+            placeholder: 'confirm password',
+            validators: 'required|confirmed:password',
+            type: 'password',
+            notification: this.$t('not less than {count} symbols', {count:8}),
+          },
+          {
+            val: '',
             name: 'name',
             validators: 'required',
           },
@@ -102,6 +113,7 @@
             authService.register(data).then(data => {
               this.status = 'success';
               console.log(data);
+              this.$router.push({name: 'signin'});
             }).catch(err => {
               this.status = 'error';
               this.globalErrors = err;

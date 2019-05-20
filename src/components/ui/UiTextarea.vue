@@ -1,18 +1,19 @@
 <template>
   <div class="textfield"
        :class="{'textfield-required': required && showRequired, 'textfield-error': error}">
-    <input class="textfield_input"
-           :title="name"
-           :name="name"
-           :type="type"
-           :value="value"
-           :placeholder="placeholderValue"
-           :autocomplete="autocomplete"
-           :required="required"
-           @input="updateInput"
-           v-mask="mask"
-           @focus="handleFocus"
-           @blur="handleBlur">
+    <textarea class="textfield_input"
+              :title="name"
+              :name="name"
+              :type="type"
+              :value="value"
+              :placeholder="placeholderValue"
+              :autocomplete="autocomplete"
+              :required="required"
+              :rows="rows"
+              @input="updateInput"
+              v-mask="mask"
+              @focus="handleFocus"
+              @blur="handleBlur"></textarea>
     <label v-if="label" class="textfield_label">{{label}}</label>
     <p v-if="error" v-html="error" class="textfield_subtitle textfield_subtitle-error"></p>
     <p v-if="notification && focused" v-html="notification" class="textfield_subtitle"></p>
@@ -32,6 +33,10 @@
       placeholder: {
         type: String,
         default: ''
+      },
+      rows: {
+        type: [String, Number],
+        default: 1,
       },
       type: {
         type: String,
@@ -68,7 +73,7 @@
       placeholderValue() {
         if (!this.label) return this.placeholder;
         return this.placeholder && this.focused ? this.placeholder : ' ';
-      },
+      }
     },
     methods: {
       updateInput(e) {

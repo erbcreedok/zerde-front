@@ -1,7 +1,7 @@
 import {getListFromLocalStorage, setListToLocalStorage} from '../_helpers/getFromLocalStorage'
 import usersMock from './users.mock'
 import {generateRandomInt} from '../_helpers'
-const tags = ['Старт бизнеса', 'Онлайн продажи', 'SEO оптимизация', 'Кадровый вопрос', 'Открытие бизнеса',]
+export const tags = ['Старт бизнеса', 'Онлайн продажи', 'SEO оптимизация', 'Кадровый вопрос', 'Открытие бизнеса',]
 const questionsTitles = [
   'Как правильно выбрать торговую точку для магазина бижутерии?',
   'В каком городе лучше начать стартап по продаже носков?',
@@ -71,9 +71,37 @@ const questionsMock = {
     qs[index] = question;
     this.setQuestions(qs);
   },
-  fetchQuestions(page=0, limit=10, {filters={}, sortBy={field: 'createdAt', dir: 'DESC'}, ...options} = {}) {
+  addQuestion(question) {
+    const qs = this.getQuestions();
+    qs.push(question);
+    this.setQuestions(qs);
+    return question;
+  },
+  createQuestion(question, token) {
+    const user = usersMock.getUserByToken(token);
+    if (!user) {
+      throw ({status: 403, message: 'no user with provided token'})
+    }
+    const q = {
+      id: 'question-' + (new Date()).getTime(),
+      answers: {
+        count: 0,
+        success: 0,
+      },
+      createdAt: new Date(),
+      views: 0,
+      subscribers: 0,
+      authorId: user.id,
+      categories: ['all', 'my'],
+      likes: 0,
+      liked: 0,
+      subscribed: 0,
+      ...question
+    };
+    return this.addQuestion(q);
+  },
+  fetchQuestions(page=1, limit=10, {filters={}, sortBy={field: 'createdAt', dir: 'DESC'}} = {}) {
     return new Promise((resolve) => {
-      console.log({page, limit, filters, sortBy, options})
       setTimeout(() => {
         let qs = this.getQuestions();
         if (Object.keys(filters).length > 0) {
@@ -132,9 +160,7 @@ const questionsMock = {
     return new Promise((resolve) => {
       setTimeout(() => {
         let user = usersMock.getUserById(4);
-        console.log(user);
         if (!user) {
-          console.log('we are here');
           const users = usersMock.getUsers();
           user = users[users.length - 1];
         }
@@ -174,6 +200,17 @@ const questionsMock = {
         resolve({status: 200, data: q});
       }, 300);
     });
+  },
+  sendQuestion(question, token) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          resolve({status: 200, data: this.createQuestion(question, token)});
+        } catch (e) {
+          reject(e);
+        }
+      }, 1000);
+    })
   }
 };
 

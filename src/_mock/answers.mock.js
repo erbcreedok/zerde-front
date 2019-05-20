@@ -63,9 +63,14 @@ const answersMock = {
     });
   },
   getAnswerById(id) {
-    return this.getAnswers().find(q => q.id+'' === id+'');
+    const answer = this.getAnswers().find(q => q.id+'' === id+'');
+    if (!answer) {
+      return undefined;
+    }
+    answer.children = this.getChildAnswers(answer);
+    return answer;
   },
-  getAnswerByQuestionId(questionId) {
+  getAnswersByQuestionId(questionId) {
     const answers = this.getAnswers().filter(a => a.questionId === questionId && !a.replyTo);
     if (answers.length > 0) {
       answers.map(a => {
@@ -99,14 +104,98 @@ const answersMock = {
     answers[index] = answer;
     this.setAnswers(answers);
   },
+  addAnswer(answer) {
+    const answers = this.getAnswers();
+    answers.push(answer);
+    this.setAnswers(answers);
+  },
+  createReply(answerId, message, token) {
+    const answer = this.getAnswerById(answerId);
+    const user = usersMock.getUserByToken(token);
+    if (!answer) {
+      throw ({status: 404, message: 'answer not found'})
+    }
+    if (!user) {
+      throw ({status: 403, message: 'no user with provided token'})
+    }
+    const reply = {
+      ...answer,
+      id: 'answer-' + (new Date()).getTime(),
+      answerText: message,
+      createdAt:  new Date(),
+      author: user,
+      likes: 0,
+      liked: 0,
+      replyTo: answer,
+    };
+    this.addAnswer(reply);
+    return reply;
+  },
+  createAnswer(questionId, message, token) {
+    const user = usersMock.getUserByToken(token);
+    if (!user) {
+      throw ({status: 403, message: 'no user with provided token'})
+    }
+    const answer = {
+      id: 'answer-' + (new Date()).getTime(),
+      questionId: questionId,
+      answerText: message,
+      createdAt:  new Date(),
+      author: user,
+      likes: 0,
+      liked: 0,
+      children: [],
+      replyTo: null,
+    };
+    this.addAnswer(answer);
+    return answer;
+  },
+  
+  //fetchers
   fetchQuestionAnswers(questionId) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const answers = this.getAnswerByQuestionId(questionId);
+        const answers = this.getAnswersByQuestionId(questionId);
         resolve({status: 200, data: answers});
       }, 1000)
     });
-  }
+  },
+  sendAnswer(questionId, message, token) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          resolve({status: 200, data: this.createAnswer(questionId, message, token)});
+        } catch (e) {
+          reject(e);
+        }
+      }, 1000)
+    });
+  },
+  addAnswerReply(answerId, message, token) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        try {
+          resolve({status: 200, data: this.createReply(answerId, message, token)});
+        } catch (e) {
+          reject(e);
+        }
+      }, 1000)
+    });
+  },
+  setLikeToAnswer(id, value) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const a = this.getAnswerById(id);
+        if (!a) {
+          reject({status: 404, message: 'answer not found'});
+          return;
+        }
+        a.liked = value;
+        this.setAnswer(a);
+        resolve({status: 200, data: a});
+      }, 300);
+    });
+  },
 };
 
 window.mockAcademyAnswers = {...answersMock};

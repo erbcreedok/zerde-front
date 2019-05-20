@@ -14,9 +14,9 @@
 
                 <!--<ui-input class="textfield-block form_field" name="email" :label="capitalize($t('email'))" :placeholder="capitalize($t('enter email'))" v-model="data.email"/>-->
 
-                <ui-input class="textfield-block form_field" name="phone" :label="capitalize($t('phone'))" :placeholder="capitalize($t('enter phone'))" v-model="data.phone" mask="+7(7##)###-##-##"/>
+                <ui-input class="textfield-block form_field" required name="phone" :label="capitalize($t('phone'))" :placeholder="capitalize($t('enter phone'))" v-model="data.phone" mask="+7(7##)###-##-##"/>
 
-                <ui-input class="textfield-block form_field" name="password" :label="capitalize($t('password'))" :placeholder="capitalize($t('enter password'))"  type="password" v-model="data.password"/>
+                <ui-input class="textfield-block form_field" required name="password" :label="capitalize($t('password'))" :placeholder="capitalize($t('enter password'))"  type="password" v-model="data.password"/>
 
                 <ui-button type="submit" color="primary" class="button-block form_button" :disabled="status === 'loading'">{{'signin' | translate | capitalize }}</ui-button>
 

@@ -24,6 +24,7 @@ export default {
   'enter password': 'құпия сөзді еңгізіңіз',
   'enter name': 'атыңызды енгізіңіз',
   'enter surname': 'тегіңізді енгізіңіз',
+  'confirm password': 'құпия сөзді қайта енгізіңіз',
   'restore password': 'құпия сөзді ұмыттым',
   'don\'t have an account?': 'әлі тіркелмегенсіз бе?',
   'already have an account?': 'тіркелгенсіз бе?',

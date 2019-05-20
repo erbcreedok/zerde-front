@@ -1,11 +1,11 @@
 import usersMock from '../_mock/users.mock'
-import {LS_TOKEN} from '../_types'
 import store from '../store'
 import {CLEAR, SET, USER} from '../_types/store-types'
+import authService from "./auth.service";
 
 const userService = {
   getMyUser() {
-    const token = localStorage.getItem(LS_TOKEN);
+    const token = authService.getToken();
     return usersMock.fetchMyUser(token).then(user => {
       this.setUserToStore(user);
     });

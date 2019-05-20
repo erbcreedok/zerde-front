@@ -1765,7 +1765,6 @@ a.user_name:hover {
   transition: all 0.2s ease;
 }
 .modal {
-  position: fixed;
   top: 50%;
   left: 50%;
   -webkit-transform: translateX(-50%) translateY(-45%);
@@ -1788,6 +1787,7 @@ a.user_name:hover {
   -moz-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
+  position: fixed;
 }
 @media (max-width: 600px) {
   .modal {
@@ -2918,6 +2918,14 @@ header {
 }
 .qa_threads_item:hover + .qa_threads_item {
   border-top-color: #EEEEEE;
+}
+.qa_threads_item-selected > .qa_threads_link:before {
+  color: #304FFE;
+  font-weight: bold;
+}
+.qa_threads_item-selected:hover > .qa_threads_link:before {
+  color: #D11010;
+  font-weight: bold;
 }
 .qa_threads_link {
   display: block;

@@ -8,7 +8,7 @@ const getters = {
   getUserName(state) {
     return state.user.first_name;
   }
-}
+};
 
 const mutations = {
   [SET](state, user) {

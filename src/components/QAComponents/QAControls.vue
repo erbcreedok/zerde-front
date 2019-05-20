@@ -10,7 +10,7 @@
       <li style="width: 75px; height: 10px" class="loading_placeholder loading_placeholder-round loading_placeholder-animate"></li>
     </ul>
 
-    <a href="add-qa.html" class="qa_controls_button button button-primary">Задать вопрос</a>
+    <router-link :to="{name: 'qa-create'}" class="qa_controls_button button button-primary">Задать вопрос</router-link>
   </div>
 </template>
 
