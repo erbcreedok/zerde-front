@@ -6,16 +6,21 @@ Vue.use(Loading);
 
 let loader;
 
-const VueLoadingDirective = {
-  update(el, binding) {
-    if (binding.value) {
-      loader = Vue.$loading.show({
-        container: el,
-      });
-    } else if(loader) {
-      loader.hide();
-    }
+function drawLoading(el, binding) {
+  if (binding.value) {
+    el.style.position = 'relative';
+    loader = Vue.$loading.show({
+      container: el,
+    });
+  } else if(loader) {
+    el.style.position = '';
+    loader.hide();
   }
+}
+
+const VueLoadingDirective = {
+  bind: drawLoading,
+  update: drawLoading,
 };
 
 export default VueLoadingDirective;

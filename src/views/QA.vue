@@ -1,113 +1,102 @@
 <template>
   <div class="page wrap">
-    <h1 class="title qa_title">Вопросы и ответы</h1>
+    <h1 class="title qa_title">{{'questions and answers' | translate | capitalize}}</h1>
 
     <section class="qa_header">
-      <ui-search-input/>
-
-      <div class="qa_controls">
-        <ul class="qa_controls_counters">
-          <li>1254 вопросов</li>
-          <li>3255 ответов</li>
-        </ul>
-
-        <a href="add-qa.html" class="qa_controls_button button button-primary">Задать вопрос</a>
-      </div>
+      <ui-search-input :value="searchText" @submit="handleSearch"/>
+      <qa-controls/>
     </section>
 
     <div class="qa_grid">
+
       <main class="qa_main">
-        <div class="tabs qa_menu">
-          <div class="tabs_list">
-            <a href="#" class="tabs_item tabs_item-active">Моя лента</a>
-            <a href="#" class="tabs_item">Все вопросы</a>
-            <a href="#" class="tabs_item">Интересные</a>
-          </div>
-        </div>
 
-        <question-card/>
+        <tabs class="qa_menu"
+              :tabs="tabs"
+              active-class="tabs_item-active"/>
 
-        <article class="qaCard">
-          <div class="qaCard_wrap">
-            <div class="qa_tags">
-              <a href="#">Старт бизнеса</a>
-            </div>
+        <div style="height: 200px" v-loading="true" v-if="status==='loading'"></div>
+        <question-card v-for="question in questions"
+                       :key="question.id"
+                       :question="question"/>
 
-            <a href="/single-qa.html" class="qaCard_title">Как правильно выбрать торговую точку для магазина бижутерии?</a>
-          </div>
-
-          <div class="qaCard_footer">
-            <div class="qaCard_answers">нет ответов</div>
-
-            <ul class="qaCard_details">
-              <li>22 марта</li>
-              <li>245 просмотров</li>
-              <li>2 подписчика</li>
-            </ul>
-
-            <div class="qaCard_author avatar">
-              <img src="https://thispersondoesnotexist.com/image" alt="">
-            </div>
-          </div>
-        </article>
-
-        <nav class="navigation pagination" role="navigation">
-          <div class="nav-links">
-            <a class="prev page-numbers" href="http://test.rocketstudy.kz/q/page/2">Назад</a>
-            <span aria-current="page" class="page-numbers current">1</span>
-            <a class="page-numbers" href="http://test.rocketstudy.kz/q/page/2">2</a>
-            <span class="page-numbers dots">…</span>
-            <a class="page-numbers" href="http://test.rocketstudy.kz/q/page/5">5</a>
-            <a class="next page-numbers" href="http://test.rocketstudy.kz/q/page/2">Далее</a>
-          </div>
-        </nav>
+        <list-pagination v-if="totalCount > perPage"
+                         :active-page="activePage-0"
+                         :limit="perPage"
+                         :total="totalCount"
+                         :route="$route"/>
       </main>
-
-      <aside class="qa_sidebar">
-        <section class="qa_sidesection">
-          <h3 class="qa_sidesection_title caption">Темы вопросов</h3>
-
-          <ul class="qa_threads">
-            <li class="qa_threads_item">
-              <a href="#" class="qa_threads_link">Открытие бизнеса</a>
-              <button class="qa_threads_fav"></button>
-            </li>
-
-            <li class="qa_threads_item">
-              <a href="#" class="qa_threads_link">Нужен совет</a>
-              <button class="qa_threads_fav qa_threads_fav-selected"></button>
-            </li>
-          </ul>
-
-          <a href="#" class="button button-small button-primary button-outline button-icon button-icon-left button-icon-dots">Все темы</a>
-        </section>
-
-        <section class="qa_sidesection">
-          <h3 class="qa_sidesection_title caption">Лидеры ответов</h3>
-
-          <ul class="qa_leaders">
-            <li class="qa_leaders_item user user-block">
-              <div class="user_photo avatar"><img src="https://thispersondoesnotexist.com/image" alt=""></div>
-
-              <div class="user_info">
-                <a href="#" class="user_name">Сергей Горностаев</a>
-                <ul class="user_details">
-                  <li>32 ответа</li>
-                  <li>3 комментария</li>
-                  <li>542 лайка</li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </section>
-      </aside>
+      <qa-sidebar/>
     </div>
   </div>
 </template>
 <script>
   import UiSearchInput from '../components/ui/UiSearchInput'
-  import QuestionCard from '../components/QuestionCard'
+  import QuestionCard from '../components/QAComponents/QuestionCard'
+  import qaService from '../_services/qa.service'
+  import ListPagination from '../components/ListPagination'
+  import Tabs from '../components/Tabs'
+  import QaSidebar from '../sections/QASidebar'
+  import QaControls from '../components/QAComponents/QAControls'
   export default {
-    components: {QuestionCard, UiSearchInput},
+    components: {QaControls, QaSidebar, Tabs, ListPagination, QuestionCard, UiSearchInput},
+    data() {
+      return {
+        questions: [],
+        status: 'clean',
+        totalCount: 0,
+        perPage: 5,
+      }
+    },
+    computed: {
+      tabs() {
+        return [
+          {title: 'my feed',  route: { ...this.$route, query: {...this.$route.query, page: 1, category: 'my'}},          isActive: 'my'===this.activeTab},
+          {title: 'all questions', route: { ...this.$route, query: {...this.$route.query, page: 1, category: 'all'}},         isActive: 'all'===this.activeTab},
+          {title: 'interesting', route: { ...this.$route, query: {...this.$route.query, page: 1, category: 'interesting'}}, isActive: 'interesting'===this.activeTab},
+        ]
+      },
+      activePage() {
+        return this.$route.query && this.$route.query['page'] ? this.$route.query['page']-0 : 1;
+      },
+      activeTab() {
+        return this.$route.query && this.$route.query['category'] ? this.$route.query['category'] : 'my';
+      },
+      searchText() {
+        return this.$route.query && this.$route.query['search'] ? this.$route.query['search'] : '';
+      }
+    },
+    watch: {
+      activePage() {
+        this.loadQuestions();
+      },
+      activeTab() {
+        this.loadQuestions();
+      },
+      searchText() {
+        this.loadQuestions();
+      }
+    },
+    methods: {
+      handleSearch(value) {
+        this.$router.push({...this.$route, query: {...this.$route.query, page: 1, category: 'all', search: value}});
+      },
+      loadQuestions(page=this.activePage, limit=this.perPage, {categories=[this.activeTab], searchText=this.searchText}={}) {
+        if (page < 1) {
+          this.$router.push({...this.$route, query: {...this.$route.query, page: 1}});
+        }
+        this.status = 'loading';
+        this.questions = [];
+        qaService.getQuestions(page, limit, {categories, searchText}).then(({questions, totalCount}) => {
+          this.status = 'success';
+          this.questions = questions;
+          this.totalCount = totalCount;
+        });
+      }
+    },
+    mounted() {
+      console.log(this.$route.query)
+      this.loadQuestions();
+    },
   }
 </script>

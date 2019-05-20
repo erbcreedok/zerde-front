@@ -262,6 +262,14 @@
 
 				&:before {mask-image: url(../img/icons/heart-outline.svg);}
 			}
+			&-sub-active {
+				color: @c-danger;
+				&:hover {
+					color: @c-black-60;
+				}
+				&:before {mask-image: url(../img/icons/heart-filled.svg);}
+			}
+
 
 			&-share {
 				@media @v-m {
@@ -411,6 +419,11 @@
 		height: 2rem;
 
 		line-height: calc(2rem - @b-width * 2);
+		&-success {
+			color: white;
+			background: @c-success;
+			border-color: @c-success;
+		}
 	}
 
 	&_details {

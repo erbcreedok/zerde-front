@@ -1,0 +1,18 @@
+.loading_placeholder {
+  background: rgb(228, 228, 228);
+  &-round {
+    border-radius: .1rem;
+  }
+  &-animate {
+    animation: changeBg 4s infinite;
+  }
+}
+
+@keyframes changeBg {
+  from, to {
+    background: rgb(228, 228, 228);
+  }
+  50% {
+    background: rgb(245, 245, 245);
+  }
+}

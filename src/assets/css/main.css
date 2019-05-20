@@ -1779,6 +1779,7 @@ a.user_name:hover {
   border-radius: 3px;
   width: 552px;
   max-width: 100%;
+  position: relative;
   z-index: 102;
   opacity: 0;
   filter: alpha(opacity=0);
@@ -1792,6 +1793,7 @@ a.user_name:hover {
   .modal {
     width: 264px;
     max-width: 100%;
+    position: relative;
   }
 }
 .modal-visible {
@@ -1974,50 +1976,62 @@ a.user_name:hover {
 .dtable_col-12 {
   width: 1128px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-11 {
   width: 1032px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-10 {
   width: 936px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-9 {
   width: 840px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-8 {
   width: 744px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-7 {
   width: 648px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-6 {
   width: 552px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-5 {
   width: 456px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-4 {
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-3 {
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-2 {
   width: 168px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-1 {
   width: 72px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-muted {
   color: #B3B3B3;
@@ -2157,9 +2171,6 @@ a.user_name:hover {
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.pagination a.prev {
-  display: none;
-}
 .pagination a.next {
   margin-left: auto;
   margin-right: 0;
@@ -2169,6 +2180,60 @@ a.user_name:hover {
 .pagination a:hover {
   opacity: 0.7;
   filter: alpha(opacity=70);
+}
+.loading_placeholder {
+  background: #e4e4e4;
+}
+.loading_placeholder-round {
+  border-radius: 0.1rem;
+}
+.loading_placeholder-animate {
+  animation: changeBg 4s infinite;
+}
+@keyframes changeBg {
+  from,
+  to {
+    background: #e4e4e4;
+  }
+  50% {
+    background: #f5f5f5;
+  }
+}
+.hover-provider:not(:hover) .block-no-hover {
+  display: block;
+}
+.hover-provider:not(:hover) .inline-block-no-hover {
+  display: inline-block;
+}
+.hover-provider:not(:hover) .inline-no-hover {
+  display: inline;
+}
+.hover-provider:not(:hover) .flex-no-hover {
+  display: flex;
+}
+.hover-provider:not(:hover) .inline-flex-no-hover {
+  display: inline-flex;
+}
+.hover-provider:not(:hover) .none-no-hover {
+  display: none;
+}
+.hover-provider:hover .block-on-hover {
+  display: block;
+}
+.hover-provider:hover .inline-block-on-hover {
+  display: inline-block;
+}
+.hover-provider:hover .inline-on-hover {
+  display: inline;
+}
+.hover-provider:hover .flex-on-hover {
+  display: flex;
+}
+.hover-provider:hover .inline-flex-on-hover {
+  display: inline-flex;
+}
+.hover-provider:hover .none-on-hover {
+  display: none;
 }
 /*
  * Import blocks
@@ -2218,6 +2283,7 @@ header {
 .header_brand {
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .header_brand {
@@ -2460,10 +2526,12 @@ header {
 .qa_search {
   width: 648px;
   max-width: 100%;
+  position: relative;
 }
 .qa_controls {
   width: 360px;
   max-width: 100%;
+  position: relative;
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
@@ -2543,10 +2611,12 @@ header {
 .qa_main {
   width: 648px;
   max-width: 100%;
+  position: relative;
 }
 .qa_sidebar {
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .qa_sidebar {
@@ -2665,6 +2735,15 @@ header {
 .qa_question_control-sub:before {
   mask-image: url(../img/icons/heart-outline.svg);
 }
+.qa_question_control-sub-active {
+  color: #D11010;
+}
+.qa_question_control-sub-active:hover {
+  color: #757575;
+}
+.qa_question_control-sub-active:before {
+  mask-image: url(../img/icons/heart-filled.svg);
+}
 @media (max-width: 600px) {
   .qa_question_control-share {
     font-size: 0;
@@ -2711,6 +2790,7 @@ header {
 .qa_similar_item {
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 /*
  * Item Card
@@ -2782,6 +2862,11 @@ header {
   border-radius: 3px;
   height: 2rem;
   line-height: calc(2rem - 2px * 2);
+}
+.qaCard_answers-success {
+  color: white;
+  background: #0ABE07;
+  border-color: #0ABE07;
 }
 .qaCard_details {
   white-space: nowrap;
@@ -2949,6 +3034,7 @@ header {
 .login_wrap {
   width: 360px;
   max-width: 100%;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
 }
@@ -3196,6 +3282,7 @@ header {
 .post {
   width: 936px;
   max-width: 100%;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
   background: #fff;
@@ -3400,6 +3487,7 @@ header {
 .bSearch_filters {
   width: 360px;
   max-width: 100%;
+  position: relative;
   border: 2px solid #F7F7F7;
   background-color: #FAFAFA;
   -webkit-border-radius: 3px;
@@ -3493,6 +3581,7 @@ header {
 .bSearch_results {
   width: 744px;
   max-width: 100%;
+  position: relative;
   align-self: stretch;
 }
 @media (max-width: 1176px) {
@@ -3636,6 +3725,7 @@ header {
 .blogcard-wide {
   width: 552px;
   max-width: 100%;
+  position: relative;
 }
 .blogcard-wide .blogcard_title {
   font-size: 1.375rem;
@@ -3698,6 +3788,7 @@ header {
   .blogcard-h .blogcard_cover {
     width: 168px;
     max-width: 100%;
+    position: relative;
     flex-grow: 0 !important;
     flex-shrink: 0;
   }
@@ -3710,6 +3801,7 @@ header {
 .blogQaCard {
   width: 264px;
   max-width: 100%;
+  position: relative;
   height: 373px;
   border: 2px solid #F7F7F7;
   -webkit-border-radius: 3px;
@@ -3795,6 +3887,7 @@ header {
 .profile_sidebar {
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .profile_sidebar {
@@ -3805,6 +3898,7 @@ header {
 .profile_main {
   width: 744px;
   max-width: 100%;
+  position: relative;
 }
 /*
  * Sidebar

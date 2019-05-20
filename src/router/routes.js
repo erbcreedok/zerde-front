@@ -39,4 +39,10 @@ export default [
     name: 'qa',
     component: () => import('../views/QA.vue')
   },
+  {
+    path: 'qa/:slug',
+    name: 'qa-single',
+    props: true,
+    component: () => import('../views/QASingle.vue')
+  },
 ];

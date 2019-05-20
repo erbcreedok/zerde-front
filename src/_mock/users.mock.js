@@ -1,23 +1,50 @@
 import {getListFromLocalStorage, setListToLocalStorage} from '../_helpers/getFromLocalStorage'
+import {generateRandomInt} from '../_helpers'
 
 const defUsers = [
   {
-    email: 'erbol@gmail.com',
-    phone: '77021113438',
-    first_name: 'Yerbol',
-    last_name: 'Syzdyk',
+    id: 1,
+    email: 'john@doe.com',
+    phone: '77011232323',
+    first_name: 'John',
+    last_name: 'Doe',
     password: '123123',
     roleID: 0,
-    tokens: []
+    tokens: [],
+    avatar_src: 'https://thispersondoesnotexist.com/image',
   },
   {
+    id: 2,
     email: 'admin@academy.kz',
     phone: '77777777777',
     first_name: 'Admin',
     last_name: '',
     password: 'admin',
     roleID: 2,
-    tokens: []
+    tokens: [],
+    avatar_src: 'https://thispersondoesnotexist.com/image',
+  },
+  {
+    id: 3,
+    email: 'vasya@pupkin.kz',
+    phone: '77071232323',
+    first_name: 'Василий',
+    last_name: 'Пупкин',
+    password: 'password',
+    roleID: 1,
+    tokens: [],
+    avatar_src: 'https://thispersondoesnotexist.com/image',
+  },
+  {
+    id: 4,
+    email: 'olzhas@zharkyn.kz',
+    phone: '77021113438',
+    first_name: 'Олжас',
+    last_name: 'Жаркын',
+    password: 'password',
+    roleID: 1,
+    tokens: [],
+    avatar_src: 'https://thispersondoesnotexist.com/image',
   }
 ];
 
@@ -30,7 +57,15 @@ const usersMock = {
     setListToLocalStorage(localStorageNaming, defUsers);
   },
   getUsers() {
-    return getListFromLocalStorage(localStorageNaming, defUsers);
+    const users = getListFromLocalStorage(localStorageNaming, defUsers);
+    return users.map(user => {
+      user.full_name = user.first_name + ' ' + user.last_name;
+      return user;
+    });
+  },
+  getRandomUser() {
+    const users = this.getUsers();
+    return users[generateRandomInt(users.length)];
   },
   getUser(username) {
     return this.getUsers().find(u => (u.phone === username || u.email === username));
@@ -41,9 +76,13 @@ const usersMock = {
   getUserByToken(token) {
     return this.getUsers().find(u => u.tokens && u.tokens.find(t => t.token === token));
   },
+  getUserById(id) {
+    return this.getUsers().find(u => u.id === id);
+  },
   createUser(user) {
     const users = this.getUsers();
     user.roleID = 0;
+    user.id = 'id' + (new Date()).getTime();
     if (users.find(u => u.phone === user.phone)) {
       throw {code: 400, message: 'this phone is already in use'};
     }
