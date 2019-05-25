@@ -29,6 +29,10 @@
                 <ui-button type="submit" color="primary" class="button-block form_button">{{'signup' | translate | capitalize }}</ui-button>
             </form>
 
+            <modal-block v-if="modalVisible" :visible.sync="modalVisible" title="Подтверждение номера телефона" with-header width="400px">
+                <PhoneConfirmationForm v-loading="modalStatus==='loading'"  :phone="data.phone" @resendSMS="resendSMS" @submit="confirmSMS"/>
+            </modal-block>
+
             <section class="login_section login_section-secondary">
                 <p>{{'already have an account?' | translate | capitalize }}</p>
                 <router-link :to="{name: 'signin'}" class="login_subbuton button button-small button-primary button-outline">{{'signin account' | translate | capitalize }}</router-link>
@@ -37,22 +41,26 @@
     </div>
 </template>
 <script>
-  import UiInput from '../components/ui/UiInput'
+  import UiInput from '../components/ui/UiInputField'
   import UiButton from '../components/ui/UiButton'
   import authService from '../_services/auth.service'
   import Vue from 'vue'
   import VeeValidate from 'vee-validate'
   import {capitalize} from "../_filters/capitalize";
   import {dismaskPhone} from '../_helpers/stringManipulations'
+  import ModalBlock from '../components/ModalBlock'
+  import PhoneConfirmationForm from '../components/PhoneConfirmationForm'
 
   Vue.use(VeeValidate, {
     mode: 'eager'
   });
 
   export default {
-    components: {UiButton, UiInput},
+    components: {PhoneConfirmationForm, ModalBlock, UiButton, UiInput},
     data() {
       return {
+        modalVisible: false,
+        modalStatus: 'clean',
         status: 'clear',
         data: {
           phone: '',
@@ -66,7 +74,7 @@
             name: 'phone',
             validators: 'required|length:16',
             type: 'phone',
-            mask: '+7(7##)###-##-##',
+            mask: '+#(###)###-##-##',
           },
           {
             val: '',
@@ -99,8 +107,53 @@
         links: `<a href="#" class="login_socbutton login_socbutton-vk"></a><a href="#" class="login_socbutton login_socbutton-fb"></a>`,
       }
     },
+    computed: {
+      rawPhone() {
+        return dismaskPhone(this.data.phone);
+      }
+    },
     methods: {
       capitalize,
+      handlePhoneFocus() {
+        if(this.data.phone === '') {
+          this.data.phone = '+7(7';
+        }
+      },
+      handlePhoneBlur() {
+        if(this.data.phone.length < 5) {
+          this.data.phone = '';
+        }
+      },
+      resendSMS() {
+        console.log('resend');
+        this.modalVisible = false;
+        this.status = 'loading';
+        const phone = this.rawPhone;
+        this.globalErrors = [];
+        authService.resendSMS(phone).then(res => {
+          console.log(res);
+          this.status = 'success';
+          this.modalVisible = true;
+        }).catch(err => {
+          console.error(err);
+          this.globalErrors.push(err);
+          this.status = 'error';
+          this.modalVisible = false;
+        })
+      },
+      confirmSMS(code) {
+        const phone = this.rawPhone;
+        this.modalStatus = 'loading';
+        authService.confirmSMS(phone, code).then(res => {
+          console.log(res);
+          this.modalStatus = 'success';
+          this.modalVisible = false;
+          this.$router.push({name: 'signin'});
+        }).catch(() => {
+          this.modalStatus = 'error';
+          alert('Неверный код');
+        })
+      },
       onSubmit() {
         this.$validator.validateAll().then(valid => {
           this.status = 'loading';
@@ -108,12 +161,12 @@
           if (valid) {
             const data = {
               ...this.data,
-              phone: dismaskPhone(this.data.phone),
+              phone: this.rawPhone,
             };
             authService.register(data).then(data => {
               this.status = 'success';
+              this.modalVisible = true;
               console.log(data);
-              this.$router.push({name: 'signin'});
             }).catch(err => {
               this.status = 'error';
               this.globalErrors = err;

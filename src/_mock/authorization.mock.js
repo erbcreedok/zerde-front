@@ -31,6 +31,28 @@ const AuthMock = {
       }, 1000);
     });
   },
+  confirmSMS(phone, code) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (phone && code==='1111') {
+            resolve({status: 200, message: 'Phone confirmed'})
+          } else {
+            reject({status: 400, message: 'Code is invalid'});
+          }
+        }, 1000);
+    });
+  },
+  resendSMS(phone) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (phone) {
+          resolve({status: 200, message: 'SMS send'})
+        } else {
+          reject({status: 400, message: 'Phone is invalid'});
+        }
+      }, 300);
+    });
+  },
   logout() {
     return new Promise((resolve) => {
       setTimeout(() => {

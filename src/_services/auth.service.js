@@ -51,6 +51,12 @@ const authService = {
       .then(user => {
         return user;
       })
+  },
+  async confirmSMS(phone, code) {
+    return await AuthMock.confirmSMS(phone, code);
+  },
+  async resendSMS(phone) {
+    return await AuthMock.resendSMS(phone);
   }
 };
 

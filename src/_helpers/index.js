@@ -13,3 +13,7 @@ export const generateRandomInt = (min, max) => {
   }
   return Math.floor(Math.random() * (max-min) + min);
 }
+
+export const handlePhoneFocus = (e) => {
+  console.log(e);
+}

@@ -43,37 +43,28 @@
             <button class="button button-primary" type="submit" :disabled="!isValid">Опубликовать</button>
         </div>
 
-        <div class="modal" id="themes" :class="{'modal-visible': modalVisible}">
-            <div class="modal_header">
-                <div class="modal_title">Выберите тему вопроса</div>
-                <button class="modal_close" @click="modalVisible = false"></button>
-            </div>
-
-            <div class="modal_wrap">
-                <div class="modal_body">
-                    <ul class="qa_threads">
-                        <li class="qa_threads_item" v-for="tag in allTags" :key="tag.value" :class="{'qa_threads_item-selected': tag.selected}" @click="toggleTag(tag.value)">
-                            <a href="#" class="qa_threads_link">{{tag.value}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="overlay" @click="modalVisible = false"></div>
+        <modal-block :visible.sync="modalVisible" with-header title="Выберите тему вопроса" id="themes">
+            <ul class="qa_threads">
+                <li class="qa_threads_item" v-for="tag in allTags" :key="tag.value" :class="{'qa_threads_item-selected': tag.selected}" @click="toggleTag(tag.value)">
+                    <a href="#" class="qa_threads_link">{{tag.value}}</a>
+                </li>
+            </ul>
+        </modal-block>
     </form>
 </template>
 
 <script>
     import qaMock from "../_mock/qa.mock";
     import QuestionCard from "../components/QAComponents/QuestionCard";
-    import UiInput from "../components/ui/UiInput";
+    import UiInput from "../components/ui/UiInputField";
     import UiTextarea from "../components/ui/UiTextarea";
     import {tags} from "../_mock/questions.mock";
     import qaService from "../_services/qa.service";
+    import ModalBlock from '../components/ModalBlock'
 
     export default {
       name: 'qa-create',
-      components: {UiTextarea, UiInput, QuestionCard},
+      components: {ModalBlock, UiTextarea, UiInput, QuestionCard},
       data() {
         return {
           swiperOptions: {
