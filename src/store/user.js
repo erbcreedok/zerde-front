@@ -6,7 +6,7 @@ const state = {
 
 const getters = {
   getUserName(state) {
-    return state.user.first_name;
+    return state.user.firstname;
   }
 };
 

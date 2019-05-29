@@ -1,13 +1,14 @@
 import usersMock from '../_mock/users.mock'
 import store from '../store'
 import {CLEAR, SET, USER} from '../_types/store-types'
-import authService from "./auth.service";
+import userApi from "../_api/user.api";
 
 const userService = {
   getMyUser() {
-    const token = authService.getToken();
-    return usersMock.fetchMyUser(token).then(user => {
+    return userApi.getMyUser().then(({user}) => {
+      console.log(user);
       this.setUserToStore(user);
+      return user;
     });
   },
   getUserByToken(token) {
@@ -24,6 +25,6 @@ const userService = {
   removeUserFromStore() {
     store.commit(USER + CLEAR);
   }
-}
+};
 
 export default userService;

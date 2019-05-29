@@ -20,6 +20,7 @@
   import ErrorBlock from '../components/ErrorBlock'
   import FullPageLoading from '../components/FullPageLoading'
   import authService from '../_services/auth.service'
+  import {setTokenToClient} from "../_api";
 
   export default {
     components: {ErrorBlock, FullPageLoading},
@@ -48,6 +49,7 @@
     },
     methods: {
       getUser() {
+        setTokenToClient(authService.getToken());
         this.status = 'loading';
         userService.getMyUser().then(() => {
           this.status = 'success';

@@ -1,11 +1,11 @@
 <template>
-  <article class="qaCard" :class="{'qaCard-small': isSmall}">
+  <router-link :to="{name: 'qa-single', params: {slug: question.id+''}}" class="qaCard" :class="{'qaCard-small': isSmall}">
     <div class="qaCard_wrap">
       <div class="qa_tags" v-if="!isSmall">
-        <a href="#" v-for="tag in question.tags" :key="tag">{{tag}}</a>
+        <router-link to="#tag" v-for="tag in question.tags" :key="tag" @click="handleTagClick">{{tag}}</router-link>
       </div>
 
-      <router-link :to="{name: 'qa-single', params: {slug: question.id+''}}" class="qaCard_title">{{question.questionTitle}}</router-link>
+      <span class="qaCard_title">{{question.questionTitle}}</span>
     </div>
 
     <div class="qaCard_footer">
@@ -21,7 +21,7 @@
         <img :src="question.author.avatar_src" alt="">
       </div>
     </div>
-  </article>
+  </router-link>
 </template>
 
 <script>
@@ -32,6 +32,11 @@
       question: {
         type: Object,
         required: true
+      }
+    },
+    methods: {
+      handleTagClick(e) {
+        e.stopPropagation();
       }
     }
   }

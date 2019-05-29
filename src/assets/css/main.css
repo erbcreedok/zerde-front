@@ -1813,7 +1813,7 @@ a.user_name:hover {
 }
 .modal_header {
   border-bottom: 1px solid #EEEEEE;
-  padding: 1rem 1.5rem;
+  padding: 1rem 3rem 1rem 1.5rem;
   position: relative;
 }
 .modal_title {
@@ -2796,6 +2796,7 @@ header {
  * Item Card
  */
 .qaCard {
+  display: block;
   background-color: #fff;
   border: 2px solid #F7F7F7;
   -webkit-border-radius: 3px;

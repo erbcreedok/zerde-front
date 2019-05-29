@@ -19,6 +19,7 @@ const i18nService = {
   setCurrentLocale(locale) {
     if (!this.isLocaleValid(locale)) return false;
     Vue.i18n.set(locale);
+    Validator.localize(_validators);
     Validator.localize(locale);
     localStorage.setItem(LS_LOCALE, locale);
   }
