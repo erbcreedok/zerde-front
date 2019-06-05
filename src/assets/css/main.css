@@ -1872,7 +1872,7 @@ a.user_name:hover {
 }
 .alert {
   display: block;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 1rem;
   font-weight: 500;
   border: 2px solid #EEEEEE;
   background-color: #FAFAFA;

@@ -6,9 +6,11 @@ const _validators = {
       password: 'пароль',
       first_name: 'имя',
       firstName: 'имя',
+      firstname: 'имя',
       name: 'имя',
       last_name: 'фамилия',
       lastName: 'фамилия',
+      lastname: 'фамилия',
       surname: 'фамилия',
     },
     messages: {
@@ -21,6 +23,7 @@ const _validators = {
       min: (val, args) => `Минимум ${args[0]} символов`,
       confirmed: (field) => {
         if(field==='password_confirm') return 'Пароли не совпадают';
+        if(field==='c_password') return 'Пароли не совпадают';
         return `Поле ${field} заполнена неверно`;
       }
     },
@@ -32,9 +35,11 @@ const _validators = {
       password: 'құпия сөз',
       first_name: 'аты',
       firstName: 'аты',
+      firstname: 'аты',
       name: 'аты',
       last_name: 'тегі',
       lastName: 'тегі',
+      lastname: 'тегі',
       surname: 'тегі',
     },
     messages: {
@@ -47,6 +52,7 @@ const _validators = {
       min: (val, args) => `Кем дегенде ${args[0]} таңба болу керек`,
       confirmed: (field) => {
         if(field==='password_confirm') return 'құпия сөздер сәйкес келмейді';
+        if(field==='c_password') return 'құпия сөздер сәйкес келмейді';
         return `${field} дұрыс толтырылмаған`;
       }
     },

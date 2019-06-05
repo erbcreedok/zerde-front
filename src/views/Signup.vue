@@ -6,7 +6,7 @@
 
             <form class="login_section login_form form" @submit.prevent="onSubmit" v-loading="status === 'loading'">
                 <template v-if="globalErrors.length">
-                    <div v-for="error in globalErrors" class="alert alert-danger form_alert" :key="error.status">{{error.message | translate | capitalize}}</div>
+                    <div v-for="error in globalErrors" class="alert alert-danger form_alert" :key="error.status">{{error.message.toLowerCase() | translate | capitalize}}</div>
                 </template>
 
                 <ui-input class="textfield-block form_field"
@@ -85,7 +85,7 @@
           },
           {
             val: '',
-            name: 'password_confirm',
+            name: 'c_password',
             label: 'confirm password',
             placeholder: 'confirm password',
             validators: 'required|confirmed:password',

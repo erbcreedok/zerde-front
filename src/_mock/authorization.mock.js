@@ -18,7 +18,7 @@ const AuthMock = {
   register(data){
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if((!data.phone && !data.email)|| !data.password || !data.first_name || !data.last_name) {
+        if((!data.phone && !data.email)|| !data.password || !data.firstname || !data.lastname) {
           reject({status: 400, message: 'there are not enough fields'});
           return;
         }

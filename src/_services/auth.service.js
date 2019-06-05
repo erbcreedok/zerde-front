@@ -43,12 +43,12 @@ const authService = {
     });
   },
   async register(data) {
-    data.first_name = data.name;
-    data.last_name = data.surname;
+    data.firstname = data.name;
+    data.lastname = data.surname;
     delete data.name;
     delete data.surname;
     console.log({data});
-    return await AuthMock.register(data)
+    return await authApi.register(data)
       .catch(handleError)
       .then(handleSuccess)
       .then(user => {
@@ -63,14 +63,25 @@ const authService = {
   }
 };
 
-function handleError({status, message}) {
-  console.log({status, message});
+function handleError({message, response}) {
+  const {status, data} = response;
+  console.log({status, message, response});
   const errors = [];
   if(status === 400 && message === BAD_CREDENTIALS) {
     errors.push({status, message: 'wrong username or password'});
-  } else {
+  }
+  else if (status === 422) {
+    console.log(Object.keys(data.data));
+    Object.keys(data.data.errors).forEach(field => {
+      data.data.errors[field].map((err, index) => {
+        errors.push({status: field+''+index, message: err});
+      });
+    });
+  }
+  else {
     errors.push({status, message});
   }
+  console.log(errors);
   return Promise.reject(errors)
 }
 
