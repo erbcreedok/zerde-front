@@ -23,13 +23,7 @@ const authService = {
       .catch(handleError)
       .then(handleSuccess)
       .then(({token}) => {
-          const authdata = window.btoa(phone + ':' + password);
-          localStorage.setItem(LS_USERS, JSON.stringify(authdata));
-          localStorage.setItem(LS_TOKEN, token);
-          setTokenToClient(token);
-          // userService.setUserToStore(user);
-          store.commit(AUTH + RESET);
-          console.log(token);
+        this.setAuthorization(phone, password, token);
       });
   },
   async logout() {
@@ -52,14 +46,42 @@ const authService = {
       .catch(handleError)
       .then(handleSuccess)
       .then(user => {
+        console.log(user);
         return user;
       })
   },
   async confirmSMS(phone, code) {
-    return await AuthMock.confirmSMS(phone, code);
+    return await authApi.confirmSMS(phone, code);
   },
   async resendSMS(phone) {
-    return await AuthMock.resendSMS(phone);
+    return await authApi.resendSMS(phone);
+  },
+  async forgotPassword(phone) {
+    console.log({phone});
+    return await authApi.forgotPassword(phone)
+      .catch(handleError)
+      .then(handleSuccess);
+  },
+  async verifyForgotPassword(phone, code) {
+    console.log({phone, code});
+    return await authApi.verifyForgotPassword(phone, code)
+      .catch(handleError)
+      .then(handleSuccess);
+  },
+  async resetPassword(phone, code, password, c_password) {
+    console.log({phone, code, password, c_password});
+    return await authApi.resetPassword(phone, code, password, c_password)
+      .catch(handleError)
+      .then(handleSuccess);
+  },
+  setAuthorization(phone, password, token) {
+    const authdata = window.btoa(phone + ':' + password);
+    localStorage.setItem(LS_USERS, JSON.stringify(authdata));
+    localStorage.setItem(LS_TOKEN, token);
+    setTokenToClient(token);
+    // userService.setUserToStore(user);
+    store.commit(AUTH + RESET);
+    console.log(token);
   }
 };
 
@@ -82,12 +104,12 @@ function handleError({message, response}) {
     errors.push({status, message});
   }
   console.log(errors);
-  return Promise.reject(errors)
+  throw errors
 }
 
 function handleSuccess(res) {
   if (res.data) return res.data;
-  return Promise.reject({data: NO_DATA})
+  throw {data: NO_DATA}
 }
 
 export default authService

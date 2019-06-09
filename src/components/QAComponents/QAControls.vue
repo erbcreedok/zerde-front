@@ -10,7 +10,7 @@
       <li style="width: 75px; height: 10px" class="loading_placeholder loading_placeholder-round loading_placeholder-animate"></li>
     </ul>
 
-    <router-link :to="{name: 'qa-create'}" class="qa_controls_button button button-primary">Задать вопрос</router-link>
+    <router-link :to="{name: 'qa-create'}" class="qa_controls_button button button-primary">{{'ask question' | translate | capitalize}}</router-link>
   </div>
 </template>
 

@@ -9,7 +9,7 @@
                 <template v-if="globalErrors.length">
                     <div v-for="(error, i) in globalErrors"
                          class="alert alert-danger form_alert"
-                         :key="error.status + ' ' + i">{{error.message | translate | capitalize}}</div>
+                         :key="error.status + ' ' + i">{{error.message.toLowerCase() | translate | capitalize}}</div>
                 </template>
 
                 <!--<ui-input class="textfield-block form_field" name="email" :label="capitalize($t('email'))" :placeholder="capitalize($t('enter email'))" v-model="data.email"/>-->
@@ -20,23 +20,23 @@
 
                 <ui-button type="submit" color="primary" class="button-block form_button" :disabled="status === 'loading'">{{'signin' | translate | capitalize }}</ui-button>
 
-                <div class="form_sublinks"><router-link :to="{name: 'forgot-password'}">{{'restore password' | translate | capitalize }}</router-link></div>
+                <div class="form_sublinks"><router-link :to="{...$route, name: 'restore-password'}">{{'forgot password' | translate | capitalize }}</router-link></div>
             </form>
 
             <section class="login_section login_section-secondary">
                 <p>{{'don\'t have an account?' | translate | capitalize }}</p>
-                <router-link :to="{name: 'signup'}" class="login_subbuton button button-small button-primary button-outline">{{'create account' | translate | capitalize }}</router-link>
+                <router-link :to="{...$route, name: 'signup'}" class="login_subbuton button button-small button-primary button-outline">{{'create account' | translate | capitalize }}</router-link>
             </section>
         </main>
     </div>
 </template>
 <script>
-  import UiButton from '../components/ui/UiButton'
-  import UiInput from '../components/ui/UiInputField'
-  import authService from '../_services/auth.service'
+  import UiButton from '../../components/ui/UiButton'
+  import UiInput from '../../components/ui/UiInputField'
+  import authService from '../../_services/auth.service'
   import 'vue-loading-overlay/dist/vue-loading.css'
-  import {capitalize} from "../_filters/capitalize";
-  import {dismaskPhone} from '../_helpers/stringManipulations'
+  import {capitalize} from "../../_filters/capitalize";
+  import {dismaskPhone} from '../../_helpers/stringManipulations'
 
   export default {
     components: {UiInput, UiButton},
@@ -51,6 +51,11 @@
         globalErrors: [],
         links: `<a href="#" class="login_socbutton login_socbutton-vk"></a><a href="#" class="login_socbutton login_socbutton-fb"></a>`,
       }
+    },
+    computed: {
+      redirectTo() {
+        return this.$route.query && this.$route.query.from ? this.$route.query.from : 'home';
+      },
     },
     methods: {
       capitalize,
@@ -72,13 +77,13 @@
           .then(() => {
             this.status = 'success';
             this.globalErrors = [];
-            this.$router.push({name: 'home'});
+            this.$router.push({name: this.redirectTo});
           })
           .catch(err => {
             this.status = 'error';
             this.globalErrors = err;
           })
       }
-    }
+    },
   }
 </script>

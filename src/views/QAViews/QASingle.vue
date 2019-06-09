@@ -7,33 +7,34 @@
           <header class="qa_question_header">
             <div class="qa_question_author user">
               <div class="user_photo avatar">
-                <img :src="question.author.avatar_src" alt="">
+                <img v-if="question.user_avatar" :src="question.user_avatar" alt="">
+                <img v-if="!question.user_avatar" src="/assets/img/avatar-placeholder.jpg" alt="">
               </div>
 
-              <a href="#" class="user_name">{{question.author.full_name}}</a>
+              <a href="#" class="user_name">{{question.author_full_name}}</a>
             </div>
 
-            <div class="qa_question_date">{{ question.createdAt | moment('D MMMM YYYY')}}</div>
+            <div class="qa_question_date">{{ question.created_at | moment('D MMMM YYYY')}}</div>
           </header>
 
           <div class="qa_question_body">
             <div class="qa_tags">
-              <a href="#" v-for="(tag, index) in question.tags" :key="index">{{tag}}</a>
+              <a :href="'#' + theme.id" v-for="theme in question.themes" :key="theme.id">{{theme.name}}</a>
             </div>
 
-            <h1 class="qa_question_title">{{question.questionTitle}}</h1>
+            <h1 class="qa_question_title">{{question.title}}</h1>
 
-            <div class="qa_question_text" v-html="question.questionBody"></div>
+            <div class="qa_question_text" v-html="question.body"></div>
           </div>
 
           <footer class="qa_question_footer">
             <div class="qa_question_controls">
               <button class="qa_question_control qa_question_control-sub" v-if="!question.subscribed" @click="setSubscription(true)">подписаться</button>
               <button class="qa_question_control qa_question_control-sub qa_question_control-sub-active hover-provider" v-if="question.subscribed" @click="setSubscription(false)"><span class="inline-no-hover none-on-hover ">подписан</span><span class="none-no-hover inline-on-hover">отписаться</span></button>
-              <button class="qa_question_control qa_question_control-share">поделиться</button>
+              <button class="qa_question_control qa_question_control-share" @click="sharePost">поделиться</button>
             </div>
 
-            <ui-rating class="qa_question_rating" :rate="question.likes" :rated="question.liked" @change="putLike"/>
+            <ui-rating :loading="ratingStatus==='loading'" class="qa_question_rating" :rate="question.rating" @change="putLike"/>
           </footer>
         </main>
 
@@ -49,17 +50,17 @@
 
           <div class="qa_stats_item">
             <div class="qa_stats_title">Подписчики</div>
-            <div class="qa_stats_value qa_stats_value-favs">{{question.subscribers + question.subscribed}}</div>
+            <div class="qa_stats_value qa_stats_value-favs">{{question.fav_count}}</div>
           </div>
 
           <div class="qa_stats_item">
             <div class="qa_stats_title">Ответы</div>
-            <div class="qa_stats_value qa_stats_value-answers">{{question.answers.count}}</div>
+            <div class="qa_stats_value qa_stats_value-answers">{{question.answers.length}}</div>
           </div>
 
           <div class="qa_stats_item">
             <div class="qa_stats_title">Комментарии</div>
-            <div class="qa_stats_value qa_stats_value-comments">{{question.commentsCount}}</div>
+            <div class="qa_stats_value qa_stats_value-comments">{{question.answers.length}}</div>
           </div>
         </div>
 
@@ -75,10 +76,12 @@
 </template>
 
 <script>
-  import qaService from '../_services/qa.service'
-  import QuestionCard from '../components/QAComponents/QuestionCard'
-  import QaAnswers from '../components/QAComponents/QAAnswers'
-  import UiRating from "../components/ui/UIRating";
+  import qaService from '../../_services/qa.service'
+  import QuestionCard from '../../components/QAComponents/QuestionCard'
+  import QaAnswers from '../../components/QAComponents/QAAnswers'
+  import UiRating from "../../components/ui/UIRating";
+  import copyToClipboard from '../../_helpers/copyToClipboard'
+  import {capitalize} from '../../_filters/capitalize'
 
   export default {
     components: {UiRating, QaAnswers, QuestionCard},
@@ -91,6 +94,8 @@
     data() {
       return {
         status: 'clean',
+        ratingStatus: 'clean',
+        subscriptionStatus: 'clean',
         question: null,
       }
     },
@@ -117,14 +122,29 @@
         })
       },
       putLike(value) {
-        qaService.setLikeToQuestion(this.question.id, value).then(question => {
-          this.question.liked = question.liked;
-        })
+        this.ratingStatus = 'loading';
+        qaService.setLikeToQuestion(this.question.id, value).then(total => {
+          this.question.rating = total;
+          this.ratingStatus = 'success';
+        }).catch(() => {
+          this.ratingStatus = 'error';
+        });
       },
       setSubscription(value) {
-        qaService.subscribeToQuestion(this.question.id, value).then(question => {
-          this.question.subscribed = question.subscribed;
-        })
+        this.subscriptionStatus = 'loading'
+        qaService.subscribeToQuestion(this.question.id, value).then(() => {
+          this.question = {...this.question, subscribed: true};
+          this.subscriptionStatus = 'success';
+        }).catch(() => {
+          this.subscriptionStatus = 'error';
+        });
+      },
+      sharePost() {
+        const url = window.location.href;
+        copyToClipboard(url);
+        this.$notyf.success({
+          message: capitalize(this.$t('link saved to clipboard')),
+        });
       },
     }
   }

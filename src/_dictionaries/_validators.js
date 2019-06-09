@@ -22,8 +22,8 @@ const _validators = {
       },
       min: (val, args) => `Минимум ${args[0]} символов`,
       confirmed: (field) => {
-        if(field==='password_confirm') return 'Пароли не совпадают';
-        if(field==='c_password') return 'Пароли не совпадают';
+        if(field==='password_confirm') return 'пароли не совпадают';
+        if(field==='c_password') return 'пароли не совпадают';
         return `Поле ${field} заполнена неверно`;
       }
     },

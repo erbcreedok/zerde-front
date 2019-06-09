@@ -5,7 +5,8 @@ const userApi = {
     return client.get('user/info').then(res => {
       return res.data.data;
     })
-  }
+  },
+
 };
 
 export default userApi;

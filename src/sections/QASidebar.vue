@@ -3,19 +3,26 @@
     <section class="qa_sidesection">
       <h3 class="qa_sidesection_title caption">Темы вопросов</h3>
 
-      <ul class="qa_threads">
-        <li class="qa_threads_item">
-          <a href="#" class="qa_threads_link">Открытие бизнеса</a>
-          <button class="qa_threads_fav"></button>
+      <div style="margin: 2rem 0" v-if="themesLoading">
+        <beat-loader :loading="themesLoading" color="#aaa"/>
+      </div>
+      <transition-group name="flip-list" class="qa_threads" v-if="shortThemes.length" tag="ul">
+        <li class="qa_threads_item" v-for="theme in shortThemes" :key="theme.id">
+          <router-link :to="{name: 'qa', query: {theme: theme.id}}" class="qa_threads_link">{{theme.name}}</router-link>
+          <button class="qa_threads_fav" :class="{'qa_threads_fav-selected': theme.isFav}" @click="addToFav(theme.id)"></button>
         </li>
+      </transition-group>
 
-        <li class="qa_threads_item">
-          <a href="#" class="qa_threads_link">Нужен совет</a>
-          <button class="qa_threads_fav qa_threads_fav-selected"></button>
-        </li>
-      </ul>
+      <button type="button" data-modal="themes" @click="showModal" class="button button-small button-primary button-outline button-icon button-icon-left button-icon-dots">Все темы</button>
 
-      <router-link :to="{name: 'qa-create'}" class="button button-small button-primary button-outline button-icon button-icon-left button-icon-dots">Все темы</router-link>
+      <modal-block :visible.sync="modalVisible" with-header title="Выберите тему вопроса" id="themes">
+        <transition-group name="flip-list" class="qa_threads" v-if="allThemes.length" tag="ul">
+          <li class="qa_threads_item" v-for="theme in allThemes" :key="theme.id" :class="{'qa_threads_item-selected': theme.selected}">
+            <router-link :to="{name: 'qa', query: {theme: theme.id}}" class="qa_threads_link">{{theme.name}}</router-link>
+            <button class="qa_threads_fav" :class="{'qa_threads_fav-selected': theme.isFav}" @click="addToFav(theme.id)"></button>
+          </li>
+        </transition-group>
+      </modal-block>
     </section>
     <qa-leaders/>
   </aside>
@@ -23,8 +30,72 @@
 
 <script>
   import QaLeaders from '../components/QAComponents/QALeaders'
+  import qaService from '../_services/qa.service'
+  import ModalBlock from '../components/ModalBlock'
+  import {capitalize} from '../_filters/capitalize'
+  import BeatLoader from 'vue-spinner/src/BeatLoader'
+
   export default {
     name: 'qa-sidebar',
-    components: {QaLeaders}
+    components: {BeatLoader, ModalBlock, QaLeaders},
+    data() {
+      return {
+        themesStatus: 'clean',
+        themes: [],
+        modalVisible: false,
+      }
+    },
+    computed: {
+      themesLoading() {
+        return this.themesStatus === 'loading';
+      },
+      shortThemes() {
+        return this.allThemes.slice(0,5);
+      },
+      allThemes() {
+        return [...this.themes].sort(t => t.isFav ? -1 : 1 );
+      },
+    },
+    methods: {
+      showModal() {
+        this.modalVisible = true;
+      },
+      loadThemes() {
+        this.themesStatus = 'loading';
+        qaService.getThemes().then(themes => {
+          console.log(themes);
+          this.themesStatus = 'success';
+          this.themes = [...themes];
+        }).catch(() => {
+          this.themesStatus = 'error';
+        });
+      },
+      addToFav(id) {
+        console.log(id);
+        qaService.addThemeToFav(id)
+          .then(() => {
+            console.log('here');
+            const index = this.themes.findIndex(t => t.id === id);
+            console.log(index);
+            const themes = [...this.themes];
+            themes[index].isFav = true;
+            this.themes = themes;
+          })
+          .catch(err => {
+            console.log('error', {err});
+            this.$notyf.error({
+              message: capitalize(this.$t(err.message))
+            })
+          })
+      }
+    },
+    watch: {
+      $route() {
+        this.modalVisible = false;
+      }
+    },
+    mounted() {
+      this.loadThemes();
+    }
   }
 </script>

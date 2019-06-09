@@ -2235,6 +2235,25 @@ a.user_name:hover {
 .hover-provider:hover .none-on-hover {
   display: none;
 }
+.simple-notifications {
+  margin-top: 100px;
+  width: 400px!important;
+}
+.simple-notifications .vue-notification {
+  font-size: inherit;
+}
+@media (max-width: 600px) {
+  .simple-notifications {
+    top: auto!important;
+    left: 0;
+    right: 0;
+    bottom: 7px;
+    margin: auto;
+  }
+}
+.flip-list-move {
+  transition: transform 0.3s;
+}
 /*
  * Import blocks
  */

@@ -15,6 +15,7 @@
            :minlength="minLength"
            :min="min"
            :max="max"
+           :disabled="disabled"
            @focus="handleFocus"
            @blur="handleBlur">
     <label v-if="label" class="textfield_label">{{label}}</label>
@@ -66,6 +67,10 @@
       minLength: [String, Number],
       min: [String, Number],
       max: [String, Number],
+      disabled: {
+        type:Boolean,
+        default: false,
+      },
     },
     data() {
       return {

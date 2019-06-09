@@ -24,6 +24,7 @@
                           :placeholder="capitalize($t(input.placeholder ? input.placeholder : `enter ${input.name}`))"
                           :mask="input.mask ? input.mask : ''"
                           :ref="input.name"
+                          :disabled="modalVisible"
                 />
 
                 <ui-button type="submit" color="primary" class="button-block form_button">{{'signup' | translate | capitalize }}</ui-button>
@@ -35,21 +36,21 @@
 
             <section class="login_section login_section-secondary">
                 <p>{{'already have an account?' | translate | capitalize }}</p>
-                <router-link :to="{name: 'signin'}" class="login_subbuton button button-small button-primary button-outline">{{'signin account' | translate | capitalize }}</router-link>
+                <router-link :to="{...$route, name: 'signin'}" class="login_subbuton button button-small button-primary button-outline">{{'signin account' | translate | capitalize }}</router-link>
             </section>
         </main>
     </div>
 </template>
 <script>
-  import UiInput from '../components/ui/UiInputField'
-  import UiButton from '../components/ui/UiButton'
-  import authService from '../_services/auth.service'
+  import UiInput from '../../components/ui/UiInputField'
+  import UiButton from '../../components/ui/UiButton'
+  import authService from '../../_services/auth.service'
   import Vue from 'vue'
   import VeeValidate from 'vee-validate'
-  import {capitalize} from "../_filters/capitalize";
-  import {dismaskPhone} from '../_helpers/stringManipulations'
-  import ModalBlock from '../components/ModalBlock'
-  import PhoneConfirmationForm from '../components/PhoneConfirmationForm'
+  import {capitalize} from "../../_filters/capitalize";
+  import {dismaskPhone} from '../../_helpers/stringManipulations'
+  import ModalBlock from '../../components/ModalBlock'
+  import PhoneConfirmationForm from '../../components/PhoneConfirmationForm'
 
   Vue.use(VeeValidate, {
     mode: 'eager'
@@ -103,6 +104,7 @@
             validators: 'required',
           },
         ],
+        token: null,
         globalErrors: [],
         links: `<a href="#" class="login_socbutton login_socbutton-vk"></a><a href="#" class="login_socbutton login_socbutton-fb"></a>`,
       }
@@ -110,7 +112,10 @@
     computed: {
       rawPhone() {
         return dismaskPhone(this.data.phone);
-      }
+      },
+      redirectTo() {
+        return this.$route.query && this.$route.query.from ? this.$route.query.from : 'home';
+      },
     },
     methods: {
       capitalize,
@@ -142,16 +147,21 @@
         })
       },
       confirmSMS(code) {
+        if(this.modalStatus==='loading') return;
         const phone = this.rawPhone;
         this.modalStatus = 'loading';
         authService.confirmSMS(phone, code).then(res => {
           console.log(res);
-          this.modalStatus = 'success';
-          this.modalVisible = false;
-          this.$router.push({name: 'signin'});
+          this.$notyf.success({
+            message: capitalize(this.$t('user have been registered')),
+          });
+          authService.login(phone, this.data.password).then(() => {
+            this.modalStatus = 'success';
+            this.modalVisible = false;
+            this.$router.push({name: this.redirectTo});
+          });
         }).catch(() => {
           this.modalStatus = 'error';
-          alert('Неверный код');
         })
       },
       onSubmit() {
@@ -163,10 +173,9 @@
               ...this.data,
               phone: this.rawPhone,
             };
-            authService.register(data).then(data => {
+            authService.register(data).then(() => {
               this.status = 'success';
               this.modalVisible = true;
-              console.log(data);
             }).catch(err => {
               this.status = 'error';
               this.globalErrors = err;
@@ -180,6 +189,6 @@
           }
         })
       }
-    }
+    },
   }
 </script>

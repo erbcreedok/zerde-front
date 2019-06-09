@@ -2,6 +2,7 @@
   <div class="textfield"
        :class="{'textfield-required': required && showRequired, 'textfield-error': error}">
     <textarea class="textfield_input"
+              ref="input"
               :title="name"
               :name="name"
               :type="type"
@@ -11,6 +12,7 @@
               :required="required"
               :rows="rows"
               @input="updateInput"
+              :autofocus="autofocus"
               v-mask="mask"
               @focus="handleFocus"
               @blur="handleBlur"></textarea>
@@ -53,6 +55,10 @@
         type: String,
         default: ''
       },
+      autofocus: {
+        type: Boolean,
+        default: false,
+      },
       mask: {
         type: String,
         default: '',
@@ -86,7 +92,10 @@
       handleBlur(e) {
         this.focused = false;
         this.$emit('blur', e);
-      }
+      },
+      focus() {
+        this.$refs.input.focus();
+      },
     },
   }
 </script>

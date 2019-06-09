@@ -9,9 +9,10 @@
 </template>
 
 <script>
-  import Header from "./components/Header";
+  import Header from './components/Header'
   import AuthProvider from './providers/AuthProvider'
+
   export default {
-    components: {AuthProvider, Header}
+    components: {AuthProvider, Header},
   }
 </script>

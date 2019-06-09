@@ -5,7 +5,8 @@ export const requireAuth = (to, from, next)  => {
   if (store.state.auth.authorized) {
     next()
   } else {
-    next({name: 'signin'})
+    console.log(from);
+    next({name: 'signin', query: {from: to.name}})
   }
 };
 

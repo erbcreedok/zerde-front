@@ -15,6 +15,7 @@ function drawLoading(el, binding) {
   } else if(loader) {
     el.style.position = '';
     loader.hide();
+    setTimeout(loader.hide, 10);
   }
 }
 

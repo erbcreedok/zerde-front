@@ -20,36 +20,36 @@ export default [
     path: 'signin',
     name: 'signin',
     beforeEnter: unrequireAuth,
-    component: () => import('../views/Signin.vue')
+    component: () => import('../views/SignInViews/Signin.vue')
   },
   {
     path: 'signup',
     name: 'signup',
     beforeEnter: unrequireAuth,
-    component: () => import('../views/Signup.vue')
+    component: () => import('../views/SignInViews/Signup.vue')
   },
   {
-    path: 'signin/forgot',
-    name: 'forgot-password',
+    path: 'signin/restore-password',
+    name: 'restore-password',
     beforeEnter: unrequireAuth,
-    component: () => import('../views/Signin.vue')
+    component: () => import('../views/SignInViews/RestorePassword.vue')
   },
   {
     path: 'qa',
     name: 'qa',
-    component: () => import('../views/QA.vue')
+    component: () => import('../views/QAViews/QA.vue')
   },
   {
     path: 'qa/new',
     name: 'qa-create',
     props: true,
     beforeEnter: requireAuth,
-    component: () => import('../views/QACreate.vue')
+    component: () => import('../views/QAViews/QACreate.vue')
   },
   {
-    path: 'qa/question-:slug',
+    path: 'qa/:slug',
     name: 'qa-single',
     props: true,
-    component: () => import('../views/QASingle.vue')
+    component: () => import('../views/QAViews/QASingle.vue')
   },
 ];
