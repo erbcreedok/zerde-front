@@ -16,9 +16,16 @@ const qaApi = {
       themes: JSON.stringify(themes.map(t => t.id)),
     }).then(handleResponse);
   },
-  getQuestions(page=1, search=""){
+  getQuestions(page=1, per_page=5, search='', themes=[]){
     console.log({page, search});
-    return client.get(`qa/question?page=${page}&search=${search}`).then(handleResponse);
+    let query = `?page=${page}&per_page=${per_page}`;
+    if (search !== '') {
+      query += '&search='+search;
+    }
+    if (themes && themes.length) {
+      query += '&themes='+JSON.stringify(themes);
+    }
+    return client.get(`qa/question${query}`).then(handleResponse);
   },
   getQuestion(id) {
     return client.get(`qa/question/${id}`).then(handleResponse);

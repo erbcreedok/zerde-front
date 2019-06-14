@@ -38,13 +38,13 @@
   </div>
 </template>
 <script>
-  import UiSearchInput from '../../components/ui/UiSearchInput'
-  import QuestionCard from '../../components/QAComponents/QuestionCard'
-  import qaService from '../../_services/qa.service'
-  import ListPagination from '../../components/ListPagination'
   import Tabs from '../../components/Tabs'
+  import qaService from '../../_services/qa.service'
   import QaSidebar from '../../sections/QASidebar'
   import QaControls from '../../components/QAComponents/QAControls'
+  import QuestionCard from '../../components/QAComponents/QuestionCard'
+  import UiSearchInput from '../../components/ui/UiSearchInput'
+  import ListPagination from '../../components/ListPagination'
   import ActionForAuthorised from '../../components/ui/ActionForAuthorised'
 
   export default {
@@ -54,7 +54,7 @@
         questions: [],
         status: 'clean',
         totalCount: 0,
-        perPage: 20,
+        perPage: 5,
         theme: null,
       }
     },
@@ -72,7 +72,7 @@
           tabs.unshift({title: this.theme.name, route: { ...this.$route, query: {theme: this.theme.id, page: 1}}, isActive: true},)
         } else {
           tabs.forEach(tab => {
-            tab.isActive = tab.route.query.category===this.activeTab
+            tab.isActive = tab.route.query.category===this.activeTab;
             return tab;
           });
         }
@@ -106,13 +106,16 @@
       handleSearch(value) {
         this.$router.push({...this.$route, query: {...this.$route.query, page: 1, category: 'all', search: value}});
       },
-      loadQuestions(page=this.activePage, limit=this.perPage, {theme=this.theme, categories=[this.activeTab], searchText=this.searchText}={}) {
+      loadQuestions(page=this.activePage, limit=this.perPage, {themes=this.theme, categories=[this.activeTab], searchText=this.searchText}={}) {
         if (page < 1) {
           this.$router.push({...this.$route, query: {...this.$route.query, page: 1}});
         }
+        if (themes) {
+          themes = [themes.id];
+        }
         this.status = 'loading';
         this.questions = [];
-        qaService.getQuestions(page, limit, {categories, theme, searchText}).then(({questions, totalCount}) => {
+        qaService.getQuestions(page, limit, {categories, themes, searchText}).then(({questions, totalCount}) => {
           console.log({questions, totalCount});
           this.status = 'success';
           this.questions = questions;
@@ -124,7 +127,7 @@
       }
     },
     mounted() {
-      console.log(this.$route.query)
+      console.log(this.$route.query);
       this.loadQuestions();
     },
     beforeRouteEnter(to, from, next) {

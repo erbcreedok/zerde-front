@@ -6,10 +6,10 @@ import qaApi from '../_api/qa.api'
 import {capitalize} from '../_filters/capitalize'
 
 const qaService = {
-  getQuestions(page=1, limit=5, {searchText="", theme, tags=[], categories=[], ...filters}={}) {
-    console.log({page,limit,searchText,tags,categories,filters, theme});
+  getQuestions(page=1, limit=5, {searchText="", themes=[], tags=[], categories=[], ...filters}={}) {
+    console.log({page,limit,searchText,tags,categories,filters, themes});
     // return qaMock.fetchQAs(page, limit, {filters: {...filters, categories, tags, searchText}, });
-    return qaApi.getQuestions(page, searchText).then(({data: {questions}}) => {
+    return qaApi.getQuestions(page, limit, searchText, themes).then(({data: {questions}}) => {
       return {
         questions: questions.data,
         questionsCount: questions.total,
