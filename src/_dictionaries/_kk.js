@@ -82,4 +82,6 @@ export default {
   'question ::: questions': 'сұрақтар',
   'question': 'сұрақ',
   'questions': 'сұрақтар',
+  'you can\'t rate own material': 'өз жазбаңыздың рейтингін өзгерте алмайсыз',
+  'you can\'t subscribe to own material': 'өз жазбаңыздың оқырманы бола алмайсыз',
 }

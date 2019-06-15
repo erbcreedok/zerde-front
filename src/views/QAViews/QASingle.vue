@@ -11,7 +11,7 @@
                 <img v-if="!question.user_avatar" src="/assets/img/avatar-placeholder.jpg" alt="">
               </div>
 
-              <a href="#" class="user_name">{{question.author_full_name}}</a>
+              <a href="#" class="user_name">{{question.author.firstname}} {{question.author.lastname}}</a>
             </div>
 
             <div class="qa_question_date">{{ question.created_at | moment('D MMMM YYYY')}}</div>
@@ -29,12 +29,14 @@
 
           <footer class="qa_question_footer">
             <div class="qa_question_controls">
-              <button class="qa_question_control qa_question_control-sub" v-if="!question.subscribed" @click="setSubscription(true)">подписаться</button>
-              <button class="qa_question_control qa_question_control-sub qa_question_control-sub-active hover-provider" v-if="question.subscribed" @click="setSubscription(false)"><span class="inline-no-hover none-on-hover ">подписан</span><span class="none-no-hover inline-on-hover">отписаться</span></button>
+              <template v-if="!isOwnQuestion">
+                <button class="qa_question_control qa_question_control-sub" v-if="!question.user_favorite" @click="setSubscription(true)">подписаться</button>
+                <button class="qa_question_control qa_question_control-sub qa_question_control-sub-active hover-provider" v-if="question.user_favorite" @click="setSubscription(false)"><span class="inline-no-hover none-on-hover ">подписан</span><span class="none-no-hover inline-on-hover">отписаться</span></button>
+              </template>
               <button class="qa_question_control qa_question_control-share" @click="sharePost">поделиться</button>
             </div>
 
-            <ui-rating :loading="ratingStatus==='loading'" class="qa_question_rating" :rate="question.rating" @change="putLike"/>
+            <ui-rating :loading="ratingStatus==='loading'" class="qa_question_rating" :rate="question.rating" :rated="question.user_rate" @change="putLike"/>
           </footer>
         </main>
 
@@ -107,6 +109,14 @@
     mounted() {
       this.loadQuestion();
     },
+    computed: {
+      isAuthorised() {
+        return this.$store.state.auth.authorized;
+      },
+      isOwnQuestion() {
+        return this.isAuthorised && this.question.user_id === this.$store.state.user.user.id
+      },
+    },
     methods: {
       loadQuestion(slug=this.slug) {
         this.status = 'loading';
@@ -122,15 +132,28 @@
         })
       },
       putLike(value) {
+        if (this.isOwnQuestion) {
+          this.$notyf.error({
+            message: capitalize(this.$t('you can\'t rate own material'))
+          });
+          return;
+        }
         this.ratingStatus = 'loading';
         qaService.setLikeToQuestion(this.question.id, value).then(total => {
           this.question.rating = total;
+          this.question.user_rate = value;
           this.ratingStatus = 'success';
         }).catch(() => {
           this.ratingStatus = 'error';
         });
       },
       setSubscription(value) {
+        if (this.isOwnQuestion) {
+          this.$notyf.error({
+            message: capitalize(this.$t('you can\'t subscribe to own material'))
+          });
+          return;
+        }
         this.subscriptionStatus = 'loading'
         qaService.subscribeToQuestion(this.question.id, value).then(() => {
           this.question = {...this.question, subscribed: true};

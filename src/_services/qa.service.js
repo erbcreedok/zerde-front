@@ -75,7 +75,7 @@ const qaService = {
       .then(({data}) => data);
   },
   getThemes() {
-    return qaApi.getThemes().then(({data}) => data.themes);
+    return qaApi.getThemes().then(({data}) => data.themes.data);
   },
   async addThemeToFav(theme_id) {
     if (!authService.isLogged()) {

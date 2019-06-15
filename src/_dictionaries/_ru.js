@@ -80,4 +80,6 @@ export default {
   'see personal {list} feed': 'видеть персональную ленту {list}',
   'link saved to clipboard': 'ссылка сохранена в буфер обмена',
   'question ::: questions': 'вопрос ::: вопроса ::: вопросов',
+  'you can\'t rate own material': 'вы не можете изменить рейтинг собственной записи',
+  'you can\'t subscribe to own material': 'вы не можете подписаться на собственную запись',
 }

@@ -5,7 +5,7 @@
 
             <div class="qa_grid form">
                 <div class="qa_main">
-                    <ui-input @input="debounceInput" class="textfield-block form_field" v-model="data.questionTitle" label="Конкретный вопрос" placeholder="Напишите сюда загаловок вашего вопроса"/>
+                    <ui-input required show-required @input="debounceInput" class="textfield-block form_field" v-model="data.questionTitle" label="Конкретный вопрос" placeholder="Напишите сюда загаловок вашего вопроса"/>
 
                     <ui-textarea class="textfield-block form_field" v-model="data.questionBody" label="Подробное пояснение вопроса" placeholder="Старайтесь описать вашу проблему как можно подробнее" rows="7"/>
                 </div>
@@ -24,6 +24,7 @@
 
                     <template v-if="!data.themes.length">
                         <div class="caption qa_sidesection_title">Выберите темы вопроса</div>
+                        <p style="margin-bottom: 1rem">Тема не выбрана</p>
                     </template>
 
                     <button type="button" data-modal="themes" @click="showModal" class="button button-small button-primary button-outline button-icon button-icon-left button-icon-dots">Выбрать тему</button>
@@ -107,7 +108,7 @@
       return null;
     },
     isValid() {
-      return this.data.questionTitle.trim() !== '' && this.data.questionBody.trim() !== '';
+      return this.data.questionTitle.trim() !== '';
     },
     allThemes() {
       return this.themes.map(theme => ({...theme, selected: this.data.themes.findIndex(t => t.id === theme.id)!==-1}))

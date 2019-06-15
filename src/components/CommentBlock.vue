@@ -10,8 +10,8 @@
                         <img v-if="!comment.user_avatar_src" src="/assets/img/avatar-placeholder.jpg" alt="">
                     </div>
 
-                    <div class="user_info">
-                        <a href="#" class="user_name">{{comment.user_full_name}}</a>
+                    <div class="user_info" v-if="author">
+                        <a href="#" class="user_name">{{author.firstname}} {{author.lastname}}</a>
                         <ul class="user_details">
                             <li>{{comment.created_at | moment('D MMMM')}}</li>
 
@@ -44,6 +44,7 @@
     import {COMMENTS, SET} from "../_types/store-types";
     import CommentReply from "./CommentReply";
     import {capitalize} from '../_filters/capitalize'
+    import userService from '../_services/user.service'
     export default {
       name: 'comment-block',
       components: {CommentReply, UiRating},
@@ -59,6 +60,7 @@
       },
       data() {
         return {
+          author: null,
           rating: this.comment.rating,
           ratingStatus: 'clean',
           newAnswers: [],
@@ -79,7 +81,10 @@
         },
         showReply() {
           return (!this.isChild && this.$store.state.comments.activeCommentReply === this.comment.id);
-        }
+        },
+        isOwnComment() {
+          return this.isAuthorised && this.comment.user_id === this.$store.state.user.user.id
+        },
       },
       methods: {
         startReply(baseText = this.username) {
@@ -107,6 +112,12 @@
           this.hideReply();
         },
         putLike(value) {
+          if (this.isOwnComment) {
+            this.$notyf.error({
+              message: capitalize(this.$t('you can\'t rate own material'))
+            });
+            return;
+          }
           this.ratingStatus = 'loading';
           this.putLikeFunction(this.comment.id, value).then(rating => {
             this.rating = rating;
@@ -123,6 +134,15 @@
           });
           this.$emit('change', comment);
         },
+        loadAuthor() {
+          userService.getUserById(this.comment.user_id).then(user => {
+            console.log(user);
+            this.author = user;
+          });
+        },
       },
+      mounted() {
+        this.loadAuthor();
+      }
     }
 </script>
