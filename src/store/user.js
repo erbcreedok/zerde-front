@@ -7,6 +7,12 @@ const state = {
 const getters = {
   getUserName(state) {
     return state.user.firstname;
+  },
+  getUserId(state) {
+    return state.user.id;
+  },
+  getUserAvatarSrc(state) {
+    return state.user.avatar_src;
   }
 };
 

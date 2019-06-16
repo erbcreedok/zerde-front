@@ -20,6 +20,13 @@
       handleSubmit() {
         this.$emit('submit', this.text);
       }
+    },
+    watch: {
+      value(to, from) {
+        if (to!==from) {
+          this.text = to;
+        }
+      }
     }
   }
 </script>

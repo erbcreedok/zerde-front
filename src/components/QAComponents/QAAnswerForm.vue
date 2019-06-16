@@ -7,7 +7,7 @@
 
             <div class="comment_form_controls">
                 <div class="comment_form_user avatar">
-                    <img src="https://thispersondoesnotexist.com/image" alt="">
+                    <img :src="avatar_src" alt="">
                 </div>
 
                 <div class="comment_form_buttons">
@@ -27,6 +27,7 @@
   import {capitalize} from '../../_filters/capitalize'
   import i18nService from '../../_services/i18n.service'
   import ActionForAuthorised from '../ui/ActionForAuthorised'
+  import {USER} from '../../_types/store-types'
 
   export default {
       name: 'qa-answer-form',
@@ -58,7 +59,10 @@
         },
         authoriseButton() {
           return `<a href="/${this.locale}/signin" class="button button-small button-outline button-primary">${capitalize(this.$t('authorise'))}</a>`
-        }
+        },
+        avatar_src() {
+          return this.$store.getters[USER + 'getUserAvatarSrc'];
+        },
       },
       methods: {
         capitalize,

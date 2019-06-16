@@ -1,13 +1,14 @@
 import usersMock from '../_mock/users.mock'
 import store from '../store'
 import {CLEAR, SET, USER} from '../_types/store-types'
-import userApi from "../_api/user.api";
+import userApi from '../_api/user.api'
+import {normalizeUser, normalizeUserProfile} from './normalizers'
 
 const userService = {
   loadedUsers: [],
   getMyUser() {
     return userApi.getMyUser().then(({user}) => {
-      console.log(user);
+      user = normalizeUser(user);
       this.setUserToStore(user);
       return user;
     });
@@ -32,11 +33,16 @@ const userService = {
       if (user) return Promise.resolve(user);
     }
     return userApi.getUserById(id).then(({user}) => {
-      this.loadedUsers.unshift(user);
-      return user;
+      return normalizeUser(user);
+    });
+  },
+  getUserProfile(id) {
+    return userApi.getUserProfile(id).then(({user}) => {
+      return normalizeUserProfile(normalizeUser(user, false));
     });
   },
 };
+
 
 window.userService = userService;
 

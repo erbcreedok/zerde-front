@@ -11,6 +11,11 @@ const userApi = {
       return res.data.data;
     });
   },
+  getUserProfile(id) {
+    return client.get('user/'+id).then(res => {
+      return res.data.data;
+    })
+  },
 };
 
 export default userApi;

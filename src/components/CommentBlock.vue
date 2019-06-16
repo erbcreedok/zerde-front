@@ -1,21 +1,25 @@
 <template>
     <article class="comment" :class="{'comment-small': isChild}" :data-id="comment.id">
-        <div class="comment_body">
+        <div class="comment_body" :class="{'comment-verified': isCorrect}">
             <div class="comment_text" v-html="comment.body"></div>
 
             <div class="comment_details">
                 <div class="user comment_author">
-                    <div class="user_photo avatar">
-                        <img v-if="comment.user_avatar_src" :src="comment.user_avatar_src" alt="">
-                        <img v-if="!comment.user_avatar_src" src="/assets/img/avatar-placeholder.jpg" alt="">
+                    <div class="user_photo avatar" v-if="author">
+                        <img :src="author.avatar_src" alt="">
                     </div>
 
-                    <div class="user_info" v-if="author">
-                        <a href="#" class="user_name">{{author.firstname}} {{author.lastname}}</a>
+                    <div class="user_info">
+                        <router-link :to="{name: 'user', params: {userId: author.id}}" class="user_name" v-if="author">{{author.firstname}} {{author.lastname}}</router-link>
                         <ul class="user_details">
-                            <li>{{comment.created_at | moment('D MMMM')}}</li>
+                          <li>{{comment.created_at | moment('D MMMM')}}</li>
 
-                            <li><a @click="startReply()" class="comment_reply_link" :data-post-id="comment.question_id" :data-parent="comment.id">Комментировать</a></li>
+                          <li><a @click="startReply()" class="comment_reply_link" :data-post-id="comment.question_id" :data-parent="comment.id">Комментировать</a></li>
+
+                          <template v-if="isOwnQuestion && !isChild">
+                            <li v-if="!isCorrect"> <a @click="setAsCorrect(true)" class="comment_correct_link" :data-post-id="comment.question_id">Это правильный ответ</a></li>
+                            <li v-if="isCorrect"> <a @click="setAsCorrect(false)" class="comment_correct_link" :data-post-id="comment.question_id">Это неправильный ответ</a></li>
+                          </template>
                         </ul>
                     </div>
                 </div>
@@ -40,12 +44,14 @@
 </template>
 
 <script>
-    import UiRating from "./ui/UIRating";
-    import {COMMENTS, SET} from "../_types/store-types";
-    import CommentReply from "./CommentReply";
-    import {capitalize} from '../_filters/capitalize'
-    import userService from '../_services/user.service'
-    export default {
+  import UiRating from './ui/UIRating'
+  import {COMMENTS, SET} from '../_types/store-types'
+  import CommentReply from './CommentReply'
+  import {capitalize} from '../_filters/capitalize'
+  import userService from '../_services/user.service'
+  import qaService from '../_services/qa.service'
+
+  export default {
       name: 'comment-block',
       components: {CommentReply, UiRating},
       props: {
@@ -53,6 +59,7 @@
           type: Object,
           required: true,
         },
+        isOwnQuestion: Boolean,
         isChild: Boolean,
         replyFunction: Function,
         putLikeFunction: Function,
@@ -63,9 +70,11 @@
           author: null,
           rating: this.comment.rating,
           ratingStatus: 'clean',
+          isCorrect: (this.comment.is_correct - 0 === 1),
+          correctStatus: 'clean',
           newAnswers: [],
-          username: (this.comment.user_full_name ? this.comment.user_full_name.trim() + ', ' : ''),
-          baseText: (this.comment.user_full_name ? this.comment.user_full_name.trim() + ', ' : ''),
+          username: (this.comment.author ? this.comment.author.fullname.trim() + ', ' : ''),
+          baseText: (this.comment.author ? this.comment.author.fullname.trim() + ', ' : ''),
         }
       },
       computed: {
@@ -126,6 +135,16 @@
             this.ratingStatus = 'error';
           });
         },
+        setAsCorrect(value) {
+          this.correctStatus = 'loading';
+          qaService.setCorrectAnswer(this.comment.question_id, this.comment.id, value).then(val => {
+            console.log(val)
+            this.isCorrect = val-0 === 1;
+            this.correctStatus = 'success';
+          }).catch(() => {
+            this.correctStatus = 'error';
+          });
+        },
         handleChange(child) {
           const comment = this.comment;
           comment.children = comment.children.map(c => {
@@ -136,8 +155,9 @@
         },
         loadAuthor() {
           userService.getUserById(this.comment.user_id).then(user => {
-            console.log(user);
             this.author = user;
+            this.username = user.fullname ? user.fullname.trim() : '';
+            this.baseText = user.fullname ? user.fullname.trim() : '';
           });
         },
       },

@@ -31,10 +31,10 @@
     methods: {
       loadQAStats() {
         this.status = 'loading';
-        qaService.getQAStats().then(({questionsCount, answersCount}) => {
+        qaService.getQAStats().then(({questions, answers}) => {
           this.status = 'success';
-          this.questionsCount = questionsCount;
-          this.answersCount = answersCount;
+          this.questionsCount = questions;
+          this.answersCount = answers;
         })
       }
     }

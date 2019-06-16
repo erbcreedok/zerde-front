@@ -121,7 +121,7 @@
       handleSubmit() {
         if(!this.isValid) return;
         this.status = 'loading';
-        qaService.sendQuestion({...this.data}).then(({question})=> {
+        qaService.sendQuestion({...this.data}).then((question)=> {
           this.status = 'success';
           this.$router.push({name: 'qa-single', params: {slug: question.id.toString()}});
           console.log(question);

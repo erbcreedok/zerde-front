@@ -21,9 +21,14 @@
                     <template v-else>
                         <div class="dropdown header_user">
                             <button class="dropdown_toggle header_user_button button button-small button-primary button-inverse button-icon button-icon-left button-icon-user" @click="openDropdown">{{username}}</button>
-                            <div v-if="dropDownVisible" class="dropdown_window dropdown_window-right dropdown_window-visible" v-click-outside="closeDropdown">
-                                <div class="dropdown_menu">
-                                    <a @click="logout" href="#" class="dropdown_menu_item dropdown_menu_item-exit">{{ 'signout' | translate | capitalize }}</a>
+                            <div :class="{'dropdown_window-visible': dropDownVisible}" class="dropdown_window dropdown_window-right">
+                                <div v-if="dropDownVisible" class="dropdown-overlay"  v-click-outside="closeDropdown">
+                                    <div class="dropdown_menu">
+                                        <router-link :to="{name: 'user', params: {userId}}" class="dropdown_menu_item dropdown_menu_item-user">{{ 'my profile' | translate | capitalize }}</router-link>
+                                    </div>
+                                    <div class="dropdown_menu">
+                                        <a @click="logout" href="#" class="dropdown_menu_item dropdown_menu_item-exit">{{ 'signout' | translate | capitalize }}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -56,6 +61,17 @@
             return this.$store.getters[USER + 'getUserName'];
           }
           return 'not authorised';
+        },
+        userId() {
+          if (this.authorized) {
+            return this.$store.getters[USER + 'getUserId'];
+          }
+          return false;
+        }
+      },
+      watch: {
+        $route() {
+          this.closeDropdown();
         }
       },
       methods: {
@@ -63,14 +79,13 @@
           if (!this.dropDownVisible) {
             setTimeout(() => {
               this.dropDownVisible = true;
-            }, 10);
+            }, 10)
           } else {
-            this.closeDropdown();
+            this.dropDownVisible = false;
           }
-
         },
         closeDropdown() {
-          this.dropDownVisible = !this.dropDownVisible;
+          this.dropDownVisible = false;
         },
         logout() {
           authService.logout()

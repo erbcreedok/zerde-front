@@ -2,12 +2,6 @@ import client, {handleResponse} from './index'
 import i18nService from '../_services/i18n.service'
 
 const qaApi = {
-  getThemes() {
-    return client.get('qa/theme').then(handleResponse);
-  },
-  addThemeToFav(theme_id) {
-    return client.post('/user/fav/theme', {theme_id}).then(handleResponse);
-  },
   createQuestion({questionTitle: title, questionBody: body, themes}) {
     return client.post('qa-moderation/question', {
       locale: i18nService.getCurrentLocale(),
@@ -16,19 +10,40 @@ const qaApi = {
       themes: JSON.stringify(themes.map(t => t.id)),
     }).then(handleResponse);
   },
-  getQuestions(page=1, per_page=5, search='', themes=[]){
-    console.log({page, search});
+  getQuestions(page=1, per_page=5, search='', themes=[], category='all'){
+    console.log({page, search, category});
+    let route = '/question';
     let query = `?page=${page}&per_page=${per_page}`;
+    switch (category) {
+      case 'all':
+        route = '/question';
+        break;
+      case 'my':
+        route = '/my-list';
+        break;
+      case 'interesting':
+        route = '/interesting';
+        break;
+    }
     if (search !== '') {
       query += '&search='+search;
     }
     if (themes && themes.length) {
       query += '&themes='+JSON.stringify(themes);
     }
-    return client.get(`qa/question${query}`).then(handleResponse);
+    return client.get(`qa${route}${query}`).then(handleResponse);
   },
   getQuestion(id) {
     return client.get(`qa/question/${id}`).then(handleResponse);
+  },
+  getQuestionSimilars(question_id) {
+    return client.get(`qa/similar-questions/${question_id}`).then(handleResponse);
+  },
+  getQAStats() {
+    return client.get(`qa/count`).then(handleResponse);
+  },
+  getAnswerLeaders() {
+    return client.get(`qa/answers-leader`).then(handleResponse);
   },
   sendAnswer(question_id, body) {
     return client.post('qa-moderation/answer', {question_id, body}).then(handleResponse);
@@ -45,8 +60,15 @@ const qaApi = {
   setLikeToQuestion(question_id, rate_value) {
     return client.post(`qa-moderation/question/${question_id}/rate`, {rate_value}).then(handleResponse)
   },
-  addQuestionToFav(question_id) {
-    return client.post('user/fav/question', {question_id}).then(handleResponse)
+  setCorrectAnswer(question_id, answer_id, is_correct) {
+    return client.post(`/qa-moderation/select/${answer_id}/question/${question_id}`, {is_correct: is_correct ? '1' : '0'}).then(handleResponse)
+  },
+  addQuestionToFav(question_id, value) {
+    if (value) {
+      return client.post('user/fav/question/add', {question_id}).then(handleResponse)
+    } else {
+      return client.post('user/fav/question/remove', {question_id}).then(handleResponse)
+    }
   },
 };
 

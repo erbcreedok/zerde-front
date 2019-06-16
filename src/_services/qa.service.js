@@ -1,17 +1,18 @@
-import Vue from 'vue';
-import questionsMock from '../_mock/questions.mock'
+import Vue from 'vue'
 import answersMock from '../_mock/answers.mock'
 import authService from './auth.service'
 import qaApi from '../_api/qa.api'
 import {capitalize} from '../_filters/capitalize'
+import {normalizeQuestion, normalizeQuestions, normalizeUsers} from './normalizers'
+import themesApi from '../_api/themes.api'
 
 const qaService = {
-  getQuestions(page=1, limit=5, {searchText="", themes=[], tags=[], categories=[], ...filters}={}) {
-    console.log({page,limit,searchText,tags,categories,filters, themes});
+  getQuestions(page=1, limit=5, {searchText="", themes=[], tags=[], category, ...filters}={}) {
+    console.log({page,limit,searchText,tags,category,filters, themes});
     // return qaMock.fetchQAs(page, limit, {filters: {...filters, categories, tags, searchText}, });
-    return qaApi.getQuestions(page, limit, searchText, themes).then(({data: {questions}}) => {
+    return qaApi.getQuestions(page, limit, searchText, themes, category).then(({data: {questions}}) => {
       return {
-        questions: questions.data,
+        questions: normalizeQuestions(questions.data),
         questionsCount: questions.total,
         answersCount: 221,
         totalCount: questions.total,
@@ -20,13 +21,18 @@ const qaService = {
   },
   getQuestion(slug) {
     // return qaMock.fetchQuestion(slug).then(({data}) => data);
-    return qaApi.getQuestion(slug).then(({data}) => data.question);
+    return qaApi.getQuestion(slug).then(({data}) => normalizeQuestion(data.question));
   },
   getQAStats() {
-    return questionsMock.fetchQAStats();
+    return qaApi.getQAStats().then(({data}) => data);
   },
   getAnswerLeaders() {
-    return questionsMock.fetchAnswerLeaders();
+    return qaApi.getAnswerLeaders().then(({data}) => normalizeUsers(data.leaders));
+  },
+  getQuestionSimilars(question_id) {
+    return qaApi.getQuestionSimilars(question_id).then(({data}) => normalizeQuestions(data.questions).filter(q => {
+      return q.id !== question_id-0
+    }));
   },
   setLikeToQuestion(id, value) {
     return qaApi.setLikeToQuestion(id, value)
@@ -67,21 +73,26 @@ const qaService = {
       .catch(handleError)
       .then(({data}) => data.total);
   },
+  setCorrectAnswer(question_id, answer_id, is_correct) {
+    return qaApi.setCorrectAnswer(question_id, answer_id, is_correct)
+      .catch(handleError)
+      .then(({data}) => data.is_correct);
+  },
   async sendQuestion(question) {
     // const token = authService.getToken();
     // return questionsMock.sendQuestion(question, token).then(({data}) => data);
     return await qaApi.createQuestion(question)
       .catch(handleError)
-      .then(({data}) => data);
+      .then(({data}) => normalizeQuestion(data.question));
   },
   getThemes() {
-    return qaApi.getThemes().then(({data}) => data.themes.data);
+    return themesApi.getThemes().then(({data}) => data.themes.data);
   },
-  async addThemeToFav(theme_id) {
+  async addThemeToFav(theme_id, value) {
     if (!authService.isLogged()) {
       throw {message: 'authorisation required', status: 0};
     }
-    return await qaApi.addThemeToFav(theme_id);
+    return await themesApi.addThemeToFav(theme_id, value);
   }
 };
 

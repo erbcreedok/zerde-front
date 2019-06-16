@@ -84,4 +84,11 @@ export default {
   'questions': 'сұрақтар',
   'you can\'t rate own material': 'өз жазбаңыздың рейтингін өзгерте алмайсыз',
   'you can\'t subscribe to own material': 'өз жазбаңыздың оқырманы бола алмайсыз',
+  'my profile': 'менің профилім',
+  '{val} minute ::: {val} minutes': '{val} минут',
+  '{val} hour ::: {val} hours': '{val} сағат',
+  '{val} day ::: {val} days': '{val} күн',
+  '{val} year ::: {val} years': '{val} жыл',
+  'age {val}': '{val} жаста',
+  'was online {val} ago': 'cайтта {val} бұрын болды',
 }

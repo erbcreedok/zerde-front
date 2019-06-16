@@ -1,5 +1,5 @@
 import store from '../store'
-import i18nService from "../_services/i18n.service";
+import i18nService from '../_services/i18n.service'
 
 export const requireAuth = (to, from, next)  => {
   if (store.state.auth.authorized) {

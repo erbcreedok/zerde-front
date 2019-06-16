@@ -7,11 +7,10 @@
           <header class="qa_question_header">
             <div class="qa_question_author user">
               <div class="user_photo avatar">
-                <img v-if="question.user_avatar" :src="question.user_avatar" alt="">
-                <img v-if="!question.user_avatar" src="/assets/img/avatar-placeholder.jpg" alt="">
+                <img :src="question.author.avatar_src" alt="">
               </div>
 
-              <a href="#" class="user_name">{{question.author.firstname}} {{question.author.lastname}}</a>
+              <router-link :to="{name: 'user', params: {userId: question.user_id}}" class="user_name">{{question.author.firstname}} {{question.author.lastname}}</router-link>
             </div>
 
             <div class="qa_question_date">{{ question.created_at | moment('D MMMM YYYY')}}</div>
@@ -40,7 +39,7 @@
           </footer>
         </main>
 
-        <qa-answers v-if="question" :question="question"/>
+        <qa-answers v-if="question" :question="question" :is-own-question="isOwnQuestion"/>
       </div>
 
       <aside class="qa_sidebar" v-if="question">
@@ -66,10 +65,10 @@
           </div>
         </div>
 
-        <div class="qa_sidesection" v-if="question.similars">
+        <div class="qa_sidesection" v-if="similars.length">
           <h3 class="qa_sidesection_title caption">Похожие вопросы</h3>
 
-          <question-card is-small v-for="(similar, index) in question.similars" :key="index" :question="similar"/>
+          <question-card is-small v-for="(similar, index) in similars" :key="index" :question="similar"/>
         </div>
       </aside>
     </div>
@@ -99,6 +98,7 @@
         ratingStatus: 'clean',
         subscriptionStatus: 'clean',
         question: null,
+        similars: [],
       }
     },
     watch: {
@@ -108,6 +108,7 @@
     },
     mounted() {
       this.loadQuestion();
+      this.loadSimilars();
     },
     computed: {
       isAuthorised() {
@@ -130,6 +131,9 @@
           this.status = 'error';
           throw err;
         })
+      },
+      loadSimilars(slug=this.slug) {
+        qaService.getQuestionSimilars(slug).then(questions => this.similars = questions);
       },
       putLike(value) {
         if (this.isOwnQuestion) {
@@ -156,7 +160,7 @@
         }
         this.subscriptionStatus = 'loading'
         qaService.subscribeToQuestion(this.question.id, value).then(() => {
-          this.question = {...this.question, subscribed: true};
+          this.question = {...this.question, user_favorite: value};
           this.subscriptionStatus = 'success';
         }).catch(() => {
           this.subscriptionStatus = 'error';

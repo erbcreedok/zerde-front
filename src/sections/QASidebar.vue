@@ -9,7 +9,7 @@
       <transition-group name="flip-list" class="qa_threads" v-if="shortThemes.length" tag="ul">
         <li class="qa_threads_item" v-for="theme in shortThemes" :key="theme.id">
           <router-link :to="{name: 'qa', query: {theme: theme.id}}" class="qa_threads_link">{{theme.name}}</router-link>
-          <button class="qa_threads_fav" :class="{'qa_threads_fav-selected': theme.isFav}" @click="addToFav(theme.id)"></button>
+          <button class="qa_threads_fav" :class="{'qa_threads_fav-selected': theme.user_favorite}" @click="addToFav(theme.id, !theme.user_favorite)"></button>
         </li>
       </transition-group>
 
@@ -19,7 +19,7 @@
         <transition-group name="flip-list" class="qa_threads" v-if="allThemes.length" tag="ul">
           <li class="qa_threads_item" v-for="theme in allThemes" :key="theme.id" :class="{'qa_threads_item-selected': theme.selected}">
             <router-link :to="{name: 'qa', query: {theme: theme.id}}" class="qa_threads_link">{{theme.name}}</router-link>
-            <button class="qa_threads_fav" :class="{'qa_threads_fav-selected': theme.isFav}" @click="addToFav(theme.id)"></button>
+            <button class="qa_threads_fav" :class="{'qa_threads_fav-selected': theme.user_favorite}" @click="addToFav(theme.id, !theme.user_favorite)"></button>
           </li>
         </transition-group>
       </modal-block>
@@ -53,7 +53,7 @@
         return this.allThemes.slice(0,5);
       },
       allThemes() {
-        return [...this.themes].sort(t => t.isFav ? -1 : 1 );
+        return [...this.themes].sort(t => t.user_favorite ? -1 : 1 );
       },
     },
     methods: {
@@ -63,22 +63,19 @@
       loadThemes() {
         this.themesStatus = 'loading';
         qaService.getThemes().then(themes => {
-          console.log(themes);
           this.themesStatus = 'success';
           this.themes = [...themes];
         }).catch(() => {
           this.themesStatus = 'error';
         });
       },
-      addToFav(id) {
-        console.log(id);
-        qaService.addThemeToFav(id)
+      addToFav(id, value) {
+        qaService.addThemeToFav(id, value)
           .then(() => {
-            console.log('here');
             const index = this.themes.findIndex(t => t.id === id);
             console.log(index);
             const themes = [...this.themes];
-            themes[index].isFav = true;
+            themes[index].user_favorite = value;
             this.themes = themes;
           })
           .catch(err => {

@@ -106,7 +106,7 @@
       handleSearch(value) {
         this.$router.push({...this.$route, query: {...this.$route.query, page: 1, category: 'all', search: value}});
       },
-      loadQuestions(page=this.activePage, limit=this.perPage, {themes=this.theme, categories=[this.activeTab], searchText=this.searchText}={}) {
+      loadQuestions(page=this.activePage, limit=this.perPage, {themes=this.theme, category=this.activeTab, searchText=this.searchText}={}) {
         if (page < 1) {
           this.$router.push({...this.$route, query: {...this.$route.query, page: 1}});
         }
@@ -115,8 +115,7 @@
         }
         this.status = 'loading';
         this.questions = [];
-        qaService.getQuestions(page, limit, {categories, themes, searchText}).then(({questions, totalCount}) => {
-          console.log({questions, totalCount});
+        qaService.getQuestions(page, limit, {category, themes, searchText}).then(({questions, totalCount}) => {
           this.status = 'success';
           this.questions = questions;
           this.totalCount = totalCount;
@@ -124,7 +123,7 @@
       },
       setTheme(theme) {
        this.theme = theme;
-      }
+      },
     },
     mounted() {
       console.log(this.$route.query);
@@ -133,7 +132,6 @@
     beforeRouteEnter(to, from, next) {
       if (to.query && to.query.theme) {
         checkTheme(to.query.theme, theme => {
-          console.log(theme);
           if (theme) next(vm => vm.setTheme(theme));
           else next({name: 'qa'});
         });

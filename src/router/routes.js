@@ -52,4 +52,10 @@ export default [
     props: true,
     component: () => import('../views/QAViews/QASingle.vue')
   },
+  {
+    path: 'user/:userId',
+    name: 'user',
+    props: true,
+    component: () => import('../views/ProfileViews/ProfileView.vue')
+  },
 ];

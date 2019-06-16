@@ -7,7 +7,7 @@
                 <ui-textarea ref="input" autofocus class="textfield-block" label="Напишите свой комментарий" v-model="replyText" name="text" required rows="2"/>
                 <div class="comment_form_controls">
                     <div class="comment_form_user avatar">
-                        <img src="http://2.gravatar.com/avatar/27ae0d93a82a7ebe577bac396da1560d?s=96&amp;d=mm&amp;r=g" alt="">
+                        <img :src="avatar_src" alt="">
                     </div>
 
                     <div class="comment_form_buttons">
@@ -25,6 +25,8 @@
 <script>
     import UiTextarea from "./ui/UiTextarea";
     import ActionForAuthorised from './ui/ActionForAuthorised'
+    import {USER} from '../_types/store-types'
+    import i18nService from '../_services/i18n.service'
     export default {
       name: 'comment-reply',
       components: {ActionForAuthorised, UiTextarea},
@@ -54,7 +56,10 @@
         },
         authorised() {
           return this.$store.state.auth.authorized;
-        }
+        },
+        avatar_src() {
+          return this.$store.getters[USER + 'getUserAvatarSrc'];
+        },
       },
       methods: {
         createReply() {
@@ -63,11 +68,12 @@
           const authorId = this.comment.user_id;
           const authorName = this.username;
           const placeholder = '${{authorName}}';
+          const locale = i18nService.getCurrentLocale();
           if (message.indexOf(authorName)!== -1) {
             message = message.replace(authorName, placeholder)
           }
           while (message.indexOf(placeholder) !== -1) {
-            message = message.replace(placeholder, `<a href="#" class="comment_sendto" data-user-id="${authorId}">${authorName}</a>`)
+            message = message.replace(placeholder, `<a href="/${locale}/user/${authorId}" class="comment_sendto" data-user-id="${authorId}">${authorName}</a>`)
           }
           return {message, replyTo: this.comment.id};
         },

@@ -82,4 +82,11 @@ export default {
   'question ::: questions': 'вопрос ::: вопроса ::: вопросов',
   'you can\'t rate own material': 'вы не можете изменить рейтинг собственной записи',
   'you can\'t subscribe to own material': 'вы не можете подписаться на собственную запись',
+  'my profile': 'мой профиль',
+  '{val} minute ::: {val} minutes': '{val} минута ::: {val} минуты ::: {val} минут',
+  '{val} hour ::: {val} hours': '{val} час ::: {val} часа ::: {val} часов',
+  '{val} day ::: {val} days': '{val} день ::: {val} дня ::: {val} дней',
+  '{val} year ::: {val} years': '{val} год ::: {val} года ::: {val} лет',
+  'age {val}': '{val} год ::: {val} года ::: {val} лет',
+  'was online {val} ago': 'был(а) на сайте {val} назад',
 }

@@ -19,13 +19,13 @@
           v-for="(leader, index) in leaders"
           :key="index"
       >
-        <div class="user_photo avatar"><img :src="leader.user.avatar_src" alt=""></div>
+        <div class="user_photo avatar"><img :src="leader.avatar_src" alt=""></div>
         <div class="user_info">
-          <a href="#" class="user_name">{{leader.user.full_name}}</a>
+          <router-link :to="{name: 'user', params: {userId: leader.id}}" class="user_name">{{leader.fullname}}</router-link>
           <ul class="user_details">
-            <li>{{$t('{count} answer ::: {count} answers', {count: leader.answersCount}, leader.answersCount)}}</li>
-            <li>{{$t('{count} comment ::: {count} comments', {count: leader.commentsCount}, leader.commentsCount)}}</li>
-            <li>{{$t('{count} like ::: {count} likes', {count: leader.likesCount}, leader.likesCount)}}</li>
+            <li>{{$t('{count} answer ::: {count} answers', {count: leader.answers_count}, leader.answers_count-0)}}</li>
+            <li>{{$t('{count} comment ::: {count} comments', {count: leader.comments_count}, leader.comments_count-0)}}</li>
+            <li>{{$t('{count} like ::: {count} likes', {count: leader.rating_count}, leader.rating_count-0)}}</li>
           </ul>
         </div>
       </li>
