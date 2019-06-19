@@ -58,4 +58,9 @@ export default [
     props: true,
     component: () => import('../views/ProfileViews/ProfileView.vue')
   },
+  {
+    path: 'kb',
+    name: 'kb',
+    component: () => import('../views/KBViews/KB.vue')
+  },
 ];
