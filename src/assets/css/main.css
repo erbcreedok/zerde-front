@@ -3682,6 +3682,7 @@ header {
   padding: 1.5rem;
   border: 2px solid #F7F7F7;
   border-top-width: 0;
+  background: white;
   -webkit-border-top-left-radius: 0 3px 3px 0;
   -moz-border-radius-topleft: 0 3px 3px 0;
   border-top-left-radius: 0 3px 3px 0;
@@ -3784,6 +3785,7 @@ header {
   align-items: flex-start;
   justify-content: flex-end;
   color: #fff;
+  background: transparent;
 }
 .blogcard-inverse .blogcard_cover:before {
   content: '';

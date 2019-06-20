@@ -123,7 +123,7 @@
           <div class="dtable dtable-justify">
             <div class="dtable_row">
               <div class="dtable_col dtable_col-muted dtable_col-4">День рождения</div>
-              <div class="dtable_col dtable_col-4">{{user.birth_date | moment('DD.MM.YYYY')}} <span class="muted">{{$t('age {val}', {val: user.age},  user.age)}}</span></div>
+              <div class="dtable_col dtable_col-4">{{user.birth_date | moment('DD.MM.YYYY')}} <span class="muted">({{$t('age {val}', {val: user.age},  user.age)}})</span></div>
             </div>
 
             <div class="dtable_row">
