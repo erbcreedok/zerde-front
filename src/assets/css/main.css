@@ -4511,6 +4511,7 @@ header {
   -moz-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
+  background: white;
 }
 .blogcard_type {
   position: absolute;
@@ -4597,6 +4598,7 @@ header {
   align-items: flex-start;
   justify-content: flex-end;
   color: #fff;
+  background: transparent;
 }
 .blogcard-inverse .blogcard_cover:before {
   content: '';
