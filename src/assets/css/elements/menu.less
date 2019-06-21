@@ -17,7 +17,7 @@
 			border-bottom: 1px solid @c-grey-10;
 		}
 
-		&-active, &.router-link-exact-active {
+		&-active {
 			color: @c-primary;
 			pointer-events: none;
 		}
@@ -60,5 +60,58 @@
 		top: 0;
 		color: @c-black-30;
 		font-weight: normal;
+	}
+
+	&_toggle {
+		display: none;
+	}
+}
+
+
+
+@media @v-t {
+	.menu {
+		&-tabletStacked {
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 101;
+			height: 100%;
+			width: 300px;
+			background: #fff;
+			color: @c-black;
+			.transform(translateX(-100%));
+			.box-shadow(-10px 0 20px fade(#000, 20));
+			.transition-all;
+			visibility: hidden;
+
+			.menu_item {
+				padding-left: 3.5rem;
+
+				&:before {
+					left: 1rem;
+				}
+			}
+
+			.menu_counter {
+				right: 1rem;
+			}
+		}
+
+		&-visible {
+			.transform(none);
+			visibility: visible;
+
+			+ .overlay {
+				visibility: visible;
+				.opacity(1);
+			}
+		}
+	}
+
+	.menu_toggle {
+		display: block;
+		padding-left: 0;
+		padding-right: 0;
 	}
 }

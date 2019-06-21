@@ -68,7 +68,14 @@
         <ui-input-field label="Vk" v-model="contactsData.vk"  class="textfield-block form_field"/>
         <ui-input-field label="Facebook" v-model="contactsData.facebook"  class="textfield-block form_field"/>
       </div>
-      <button type="submit" class="form_button button button-primary">Сохранить</button>
+      <button type="submit" class="form_button button button-primary">
+        <template v-if="uploadStatus!=='loading'">Сохранить</template>
+        <template v-else>
+          <span style="display: inline-block; width: 100px">
+            <pulse-loader loading color="white" size="10px"/>
+          </span>
+        </template>
+      </button>
     </form>
   </div>
 </template>
@@ -82,8 +89,10 @@
   import userService from '../../_services/user.service';
   import {normalizeUserProfileForm} from "../../_services/normalizers";
   import {capitalize} from "../../_filters/capitalize";
+  import PulseLoader from 'vue-spinner/src/PulseLoader'
+  import {requireOwnAuth} from '../../router/router-guards'
   export default {
-    components: {UiAutoComplete, UiSelectField, UiTextarea, UiInputField},
+    components: {PulseLoader, UiAutoComplete, UiSelectField, UiTextarea, UiInputField},
     props: {
       user: {
         type: Object,
@@ -100,6 +109,7 @@
         domainOptions: [],
         specializationOptions: [],
         specialization: null,
+        uploadStatus: 'clean',
       }
     },
     computed: {
@@ -148,7 +158,7 @@
           this.avatar = files[0];
           if (this.avatar.size > 2 * 1024 * 1024) {
             this.$notyf.error({
-              message: capitalize(this.$t('image max size is {val}kB', {val: 2})),
+              message: capitalize(this.$t('image max size is {val} kB', {val: 2})),
             });
             this.avatar = null;
           }
@@ -166,11 +176,14 @@
           if (this.jobData[key]!==null && this.jobData[key]!==undefined) {
             data.set(`job[${key}]`, this.jobData[key]);
           }
+          if (this.jobData.start_date) {
+            data.set(`job[start_date]`, moment(this.jobData.start_date,'DD.MM.YYYY').format('YYYY-MM-DD'));
+          }
         });
         data.set('contacts', JSON.stringify(this.contactsData));
         data.set('specializations', JSON.stringify(this.userData.specializations.map(s => s.id)));
         if (this.userData.birth_date) {
-          data.set('birth_date', moment(this.userData.birth_date).format('YYYY-MM-DD'));
+          data.set('birth_date', moment(this.userData.birth_date,'DD.MM.YYYY').format('YYYY-MM-DD'));
         }
         if (this.userData.region_id) {
           data.set('region_id', this.userData.region_id);
@@ -181,12 +194,18 @@
           data.delete('avatar');
         }
         data = normalizeUserProfileForm(data);
+        this.uploadStatus = 'loading';
         userService.updateProfile(data).then(message => {
+          this.uploadStatus = 'success';
           this.$emit('updateProfile');
           this.$notyf.success({
             message: capitalize(this.$t(message.toLowerCase())),
-          })
-
+          });
+        }).catch(() => {
+          this.uploadStatus = 'error';
+          this.$notyf.error({
+            message: capitalize(this.$t('error occurred while uploading form')),
+          });
         });
       },
     },
@@ -194,6 +213,7 @@
       this.loadRegionOptions();
       this.loadSpecializationsOptions();
       this.loadDomainsOptions();
-    }
+    },
+    beforeRouteEnter: requireOwnAuth
   }
 </script>

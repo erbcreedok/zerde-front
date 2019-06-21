@@ -70,6 +70,7 @@ export default {
   'ask question': 'сұрақ қою',
   'we can\'t find a user with that phone number.': 'бұл телефон нөмірі бар пайдаланушыны таба алмаймыз.',
   'authorisation required': 'авторизация қажет',
+  'not enough rights': 'құқықтар жеткіліксіз',
   'authorisation required to {action}': '{action} үшін авторизация қажет',
   'authorise to {action}': '{action} үшін авторизация қажет',
   '{authoriseButton} to {action}': '{action} үшін {authoriseButton}',
@@ -98,4 +99,6 @@ export default {
   'was online {val} ago': 'cайтта {val} бұрын болды',
   'max {val}' : '{val} дейін',
   'your information updated successfully.' : 'сіздің ақпаратыңыз сәтті жаңартылды',
+  'image max size is {val} kB' : 'кескіннің максималды мөлшері {val) kB',
+  'error occurred while uploading form' : 'пішінді жүктеу кезінде қате пайда болды',
 }

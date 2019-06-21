@@ -1,7 +1,7 @@
 <template>
   <span style="font-weight: normal; color: #212121; font-size: 16px">
     <span data-modal="skillsDescription" class="help-icon" @click="modalVisible=true"></span>
-    <modal-block :visible.sync="modalVisible" :with-header="!!title" :title="title" maxWidth="552px">
+    <modal-block v-if="modalVisible" :visible.sync="modalVisible" :with-header="!!title" :title="title" maxWidth="552px">
       <p v-html="body"></p>
     </modal-block>
   </span>

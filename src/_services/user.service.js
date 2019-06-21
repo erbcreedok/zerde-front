@@ -51,6 +51,9 @@ const userService = {
       return message;
     })
   },
+  approveSpecialization(user_id, specialization_id, val) {
+    return userApi.approveSpecialization(user_id, specialization_id, val).then(({message}) => message);
+  }
 };
 
 

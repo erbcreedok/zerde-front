@@ -70,6 +70,7 @@ export default {
   'ask question': 'задать вопрос',
   'we can\'t find a user with that phone number.': 'мы не можем найти пользователя с этим номером телефона.',
   'authorisation required': 'требуется авторизация',
+  'not enough rights': 'недостаточно прав',
   'authorisation required to {action}': 'авторизуйтесь что бы {action}',
   'authorise to {action}': 'авторизуйтесь что бы {action}',
   '{authoriseButton} to {action}': '{authoriseButton} что бы {action}',
@@ -98,5 +99,6 @@ export default {
   'was online {val} ago': 'был(а) на сайте {val} назад',
   'max {val}' : 'до {val}',
   'your information updated successfully.' : 'ваша информация успешно обновлена',
-  'image max size is {val}kB' : 'ваша информация успешно обновлена',
+  'image max size is {val} kB' : 'максимальный размер изображения {val} кБ',
+  'error occurred while uploading form' : 'при загрузке формы произошла ошибка',
 }

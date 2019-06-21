@@ -5,7 +5,6 @@
             :title="name"
             :name="name"
             :type="type"
-            :value="value"
             :placeholder="placeholderValue"
             :autocomplete="autocomplete"
             :required="required"
@@ -20,7 +19,7 @@
             @blur="handleBlur"
     >
       <option :value="null">Не выбрано</option>
-      <option v-for="option in options" :key="option.id" :value="option.id">{{option.name}}</option>
+      <option v-for="option in options" :key="option.id" :value="option.id" :selected="value+'' === option.id+''">{{option.name}}</option>
     </select>
     <label v-if="label" class="textfield_label">{{labelValue}}</label>
     <p v-if="error" v-html="error" class="textfield_subtitle textfield_subtitle-error"></p>
@@ -49,7 +48,7 @@
         default: 'text'
       },
       value: {
-        type: String
+        type: [String, Number],
       },
       required: {
         type: Boolean,

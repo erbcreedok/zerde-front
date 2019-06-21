@@ -27,39 +27,43 @@
           <ui-description-icon title="Что такое баллы?" body='Баллы – внутренний показатель пользователей сайта, которые зачисляются за большинство действий внутри сайта: ежедневный вход, завершение занятия, публикация комментария и т.д.<br/><br/>На данный момент баллы влияют только на позицию пользователя и рейтинг его региона в разделе "Сообщество".<br/><br/>Возможно, в будущем пользователям будет доступна возможность разблокировать определенный функционал или контент при условии достаточного количества набранных баллов.'/>
         </div>
 
-        <div class="profile_menu menu menu-tabletStacked">
-          <router-link :to="{name: 'profile-main'}" class="menu_item menu_item-user">
-            Профиль
-          </router-link>
+        <div class="profile_menu">
+          <button class="menu_toggle button button-outline button-icon button-icon-left button-icon-menu button-block" @click="menuVisible = true">Меню профиля</button>
+          <div class="menu menu-tabletStacked" :class="{'menu-visible': menuVisible}" @click="menuVisible = false">
+            <router-link :to="{name: 'profile-main'}" class="menu_item menu_item-user">
+              Профиль
+            </router-link>
 
-          <router-link :to="{name: 'profile-qa'}" class="menu_item menu_item-ask-question">
-            Вопросы и ответы
-            <span class="menu_counter">{{user.qa_count}}</span>
-          </router-link>
+            <router-link :to="{name: 'profile-qa'}" class="menu_item menu_item-ask-question">
+              Вопросы и ответы
+              <span class="menu_counter">{{user.qa_count}}</span>
+            </router-link>
 
-          <router-link :to="{name: 'profile-comments'}" class="menu_item menu_item-comments">
-            Комментарии
-            <span class="menu_counter">{{user.cm_count}}</span>
-          </router-link>
-          <a href="#" class="menu_item menu_item-course" v-if="false">
-            Обучение
-          </a>
+            <router-link :to="{name: 'profile-comments'}" class="menu_item menu_item-comments">
+              Комментарии
+              <span class="menu_counter">{{user.cm_count}}</span>
+            </router-link>
+            <a href="#" class="menu_item menu_item-course" v-if="false">
+              Обучение
+            </a>
 
-          <a href="#" class="menu_item menu_item-rules" v-if="false">
-            Публикации
-          </a>
+            <a href="#" class="menu_item menu_item-rules" v-if="false">
+              Публикации
+            </a>
 
-          <router-link :to="{name: 'profile-bookmarks'}" class="menu_item menu_item-bookmark" v-if="isOwnProfile">
-            Закладки
-          </router-link>
+            <router-link :to="{name: 'profile-bookmarks'}" class="menu_item menu_item-bookmark" v-if="isOwnProfile">
+              Закладки
+            </router-link>
 
-          <a href="#" class="menu_item menu_item-warranty" v-if="false">
-            Значки
-          </a>
+            <a href="#" class="menu_item menu_item-warranty" v-if="false">
+              Значки
+            </a>
 
-          <router-link :to="{name: 'profile-settings', params: {userId: this.userId}}" class="menu_item menu_item-settings" v-if="isOwnProfile">
-            Настройки
-          </router-link>
+            <router-link :to="{name: 'profile-settings', params: {userId: this.userId}}" class="menu_item menu_item-settings" v-if="isOwnProfile">
+              Настройки
+            </router-link>
+          </div>
+          <div class="overlay" @click="menuVisible = false"></div>
         </div>
 
         <div class="profile_tour" v-if="isOwnProfile">
@@ -107,6 +111,7 @@
       return {
         user: null,
         userState: 'clean',
+        menuVisible: false,
       }
     },
     mounted() {

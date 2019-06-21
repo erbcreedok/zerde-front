@@ -60,9 +60,19 @@
 
     <div class="profile_section">
       <div class="caption profile_subtitle"> Специализации <ui-description-icon title="Что такое специализации?" body="Свои специализации (навыки) можно указать в настройках профиля. Другие авторизованные пользователи могут подтверждать Ваши навыки, зайдя к Вам в профиль и нажав на навык."/></div>
-      <template v-if="user.specializations && user.specializations.length">
+      <template v-if="specializations && specializations.length">
         <div class="profile_skills">
-          <button class="skill" v-for="specialization in user.specializations" :key="specialization.id" :data-skill-id="specialization.id">{{specialization.name}}<span class="skill_counter">0</span></button>
+          <button class="skill"
+                  v-for="specialization in user.specializations"
+                  :key="specialization.id"
+                  :data-skill-id="specialization.id"
+                  :data-tooltip="specialization.is_approved===false ? 'подтвердить навык' : specialization.is_approved ? 'убрать навык' : null"
+                  @click="approveSpecialization(specialization)"
+                  :class="{'skill-canVote': specialization.is_approved===false, 'skill-voted': specialization.is_approved}"
+          >
+            {{specialization.name}}
+            <span class="skill_counter">{{specialization.approvers_count}}</span>
+          </button>
         </div>
       </template>
       <template v-else>
@@ -84,7 +94,7 @@
 
           <div class="dtable_row" v-if="user.job.domain">
             <div class="dtable_col dtable_col-muted dtable_col-4">Сфера</div>
-            <div class="dtable_col dtable_col-4">{{user.job.domain}}</div>
+            <div class="dtable_col dtable_col-4">{{user.job.domain.name}}</div>
           </div>
 
           <div class="dtable_row" v-if="user.job.position">
@@ -127,6 +137,7 @@
 <script>
   import {normalizeContact} from '../../_services/normalizers'
   import UiDescriptionIcon from '../../components/ui/UiDescriptionIcon'
+  import userService from '../../_services/user.service'
 
   export default {
     components: {UiDescriptionIcon},
@@ -135,6 +146,11 @@
         type: Object,
         required: true,
       }
+    },
+    data() {
+      return {
+        specializations: this.user.specializations ? this.user.specializations : [],
+      };
     },
     computed: {
       contacts() {
@@ -149,6 +165,34 @@
       showJob() {
         return ['name', 'domain', 'position', 'link', 'start_date'].findIndex(key => !!this.user.job[key]) !== -1
       }
+    },
+    methods: {
+      approveSpecialization(specialization) {
+        console.log(specialization.is_approved)
+        if (specialization.is_approved === false) {
+          userService.approveSpecialization(this.user.id, specialization.id, true).then(message => {
+            console.log(message);
+            this.specializations = this.specializations.map(s => {
+              if (s.id === specialization.id) {
+                s.is_approved = true;
+                s.approvers_count += 1;
+              }
+              return s;
+            });
+          });
+        } else if (specialization.is_approved) {
+          userService.approveSpecialization(this.user.id, specialization.id, false).then(message => {
+            console.log(message);
+            this.specializations = this.specializations.map(s => {
+              if (s.id === specialization.id) {
+                s.is_approved = false;
+                s.approvers_count -= 1;
+              }
+              return s;
+            });
+          });
+        }
+      },
     }
   }
 </script>

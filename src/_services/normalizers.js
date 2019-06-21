@@ -31,6 +31,9 @@ export function normalizeUserProfile(user) {
   if (!user.rating) {
     user.rating = 124;
   }
+  if (user.region && user.region.id) {
+    user.region_id = user.region.id;
+  }
   if (!user.qa_count) {
     user.qa_count = null;
   }
@@ -49,11 +52,22 @@ export function normalizeUserProfile(user) {
   if (!user.job) {
     user.job = {
       name: null,
+      domain: {
+        id: null,
+        name: null,
+      },
       domain_id: null,
       position: null,
       start_date: null,
       link: null,
     };
+  } else {
+    if(user.job.job_domain) {
+      user.job.domain = user.job.job_domain;
+    }
+    if(user.job.start_date) {
+      user.job.start_date = moment(user.job.start_date).format('DD.MM.YYYY');
+    }
   }
   if (!user.specializations) {
     user.specializations = [];
@@ -79,6 +93,7 @@ export function normalizeUsers(users) {
 
 export function normalizeUserProfileForm(data) {
   data.delete('id');
+  data.delete('username');
   data.delete('phone');
   data.delete('age');
   data.delete('qa_count');

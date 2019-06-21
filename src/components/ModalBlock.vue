@@ -30,8 +30,8 @@
       hideModal() {
         this.$emit('update:visible', false);
       },
-      switchOverflow() {
-        if (this.visible) {
+      switchOverflow(val = this.visible) {
+        if (val) {
           window.document.body.style.overflow = 'hidden';
         } else {
           window.document.body.style.overflow = null;
@@ -40,6 +40,9 @@
     },
     mounted() {
       this.switchOverflow();
+    },
+    destroyed() {
+      this.switchOverflow(false)
     },
     watch: {
       visible() {

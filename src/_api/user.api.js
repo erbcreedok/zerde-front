@@ -26,6 +26,14 @@ const userApi = {
     return client.post('/profile/update', data, {headers: {'Content-Type': 'multipart/form-data'}}).then(res => {
       return res.data.data;
     });
+  },
+  approveSpecialization(user_id, specialization_id, val) {
+    console.log({user_id, specialization_id});
+    if (val) {
+      return client.post('user/specialization/approve', {user_id, specialization_id}).then(res => res.data.data);
+    } else {
+      return client.post('user/specialization/disapprove', {user_id, specialization_id}).then(res => res.data.data);
+    }
   }
 };
 

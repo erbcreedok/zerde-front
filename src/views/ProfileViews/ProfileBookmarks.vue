@@ -15,7 +15,7 @@
         <template v-if="!questions.length">
           <span class="muted">Пользователь не сохранял вопросы</span>
         </template>
-        <question-card v-for="question in questions" :key="question.id" :question="question" :author="user"/>
+        <question-card v-for="question in questions" :key="question.id" :question="question"/>
       </template>
     </template>
   </div>
@@ -24,6 +24,7 @@
   import qaService from "../../_services/qa.service";
   import GridLoader from "vue-spinner/src/GridLoader";
   import QuestionCard from "../../components/QAComponents/QuestionCard";
+  import {requireOwnAuth} from '../../router/router-guards'
 
   export default {
     components: {QuestionCard, GridLoader},
@@ -55,6 +56,7 @@
     },
     mounted() {
       this.loadQuestions();
-    }
+    },
+    beforeRouteEnter: requireOwnAuth
   }
 </script>
