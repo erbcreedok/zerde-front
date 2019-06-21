@@ -1,0 +1,17 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.help-icon {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 1.5rem;
+	.square(1.5rem);
+	background: url(../img/icons/help.svg) no-repeat center center / 1rem 1rem;
+	.opacity(.3);
+	.transition-all;
+
+	&:hover {
+		.opacity(.5);
+	}
+}

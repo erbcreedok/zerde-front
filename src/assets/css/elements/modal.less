@@ -14,7 +14,9 @@
 	visibility: hidden;
 	.transition-all;
 	position: fixed;
-
+	max-height: 100%;
+	max-height: calc(100% - 20px);
+	overflow: scroll;
 	@media @v-m {
 		.cols(3);
 	}

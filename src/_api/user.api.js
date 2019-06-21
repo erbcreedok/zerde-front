@@ -7,7 +7,12 @@ const userApi = {
     });
   },
   getUserById(id) {
-    return client.get('user/'+id).then(res => {
+    return client.get('user/'+id+'/info').then(res => {
+      return res.data.data;
+    });
+  },
+  getMyProfile() {
+    return client.get('profile/info').then(res => {
       return res.data.data;
     });
   },
@@ -16,6 +21,11 @@ const userApi = {
       return res.data.data;
     })
   },
+  updateProfile(data) {
+    return client.put('/profile/update', data, {headers: {'Content-Type': 'multipart/form-data'}}).then(res => {
+      return res.data;
+    });
+  }
 };
 
 export default userApi;

@@ -1,0 +1,65 @@
+@import (reference) '../reference/var';
+@import (reference) '../reference/lessmix';
+@import (reference) '../reference/classes';
+
+.file {
+	display: block;
+	position: relative;
+	padding: 1rem;
+
+	border: @b-width solid @c-grey-50;
+	.rounded(@b-radius);
+	.transition-all;
+
+	&:hover {
+		border-color: @c-grey;
+	}
+
+	&:before {
+		content: '';
+
+		display: block;
+		.square(1.5rem);
+
+		position: absolute;
+		top: 1rem;
+		left: 1rem;
+
+		background: url(../img/icons/file-blank.svg) no-repeat center center / 1.5rem 1.5rem;
+	}
+
+	@formats: csv, doc, eps, gif, html, jpg, mov, mp3, pdf, png, ppt, rar, txt, xls, xml, zip;
+
+	each(@formats, {
+		@classname: ~"@{value}";
+		@url: "../img/icons/file-@{value}.svg";
+
+		&-@{classname}:before {
+			background-image: url(@url);
+		}
+	});
+
+	&-external:before {
+		background-image: url(../img/icons/external-link.svg);
+	}
+
+	&_title {
+		display: block;
+		padding-left: 2rem;
+
+		line-height: 1.5rem;
+		font-weight: 500;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+
+	&_description {
+		display: block;
+		margin-top: .75rem;
+
+		font-size: .875rem;
+		line-height: 1.5rem;
+		color: @c-black-30;
+	}
+}

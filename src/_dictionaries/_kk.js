@@ -89,6 +89,8 @@ export default {
   '{val} hour ::: {val} hours': '{val} сағат',
   '{val} day ::: {val} days': '{val} күн',
   '{val} year ::: {val} years': '{val} жыл',
+  '{val} symbol ::: {val} symbols': '{val} таңба',
   'age {val}': '{val} жаста',
   'was online {val} ago': 'cайтта {val} бұрын болды',
+  'max {val}' : '{val} дейін',
 }

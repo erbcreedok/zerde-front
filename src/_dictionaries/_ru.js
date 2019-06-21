@@ -87,6 +87,7 @@ export default {
   '{val} hour ::: {val} hours': '{val} час ::: {val} часа ::: {val} часов',
   '{val} day ::: {val} days': '{val} день ::: {val} дня ::: {val} дней',
   '{val} year ::: {val} years': '{val} год ::: {val} года ::: {val} лет',
+  '{val} symbol ::: {val} symbols': '{val} символ ::: {val} символа ::: {val} символов',
   'age {val}': '{val} год ::: {val} года ::: {val} лет',
   'was online {val} ago': 'был(а) на сайте {val} назад',
-}
+  'max {val}' : 'до {val}',}

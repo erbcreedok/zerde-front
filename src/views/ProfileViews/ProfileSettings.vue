@@ -1,0 +1,178 @@
+<template>
+  <div>
+    <form class="form" @submit.prevent="handleFormSubmit">
+      <div class="profile_section">
+        <div class="caption profile_subtitle">Имя</div>
+        <ui-input-field class="form_field textfield-block" v-model="userData.firstname" translate capitalize label="firstname" name="firstname" required show-required/>
+        <ui-input-field class="form_field textfield-block" v-model="userData.lastname" translate capitalize label="lastname" name="lastname" required show-required/>
+      </div>
+      <div class="profile_section">
+        <div class="caption profile_subtitle">Фотография</div>
+        <div class="form_field">
+          <label class="fileinput">
+            <span class="fileinput_message">
+              <template v-if="avatar">Файл: {{avatar.name}}</template>
+            </span>
+            <div type="button" class="fileinput_button button button-small button-primary button-outline button-icon button-icon-left button-icon-upload">Загрузить фото</div>
+            <input @change="handleImageInput" class="fileinput_input" accept="image/jpeg, image/png" type="file">
+            <input type="hidden" class="fileinput_id" name="fields[user_photo]" value="">
+          </label>
+        </div>
+      </div>
+      <div class="profile_section">
+        <div class="caption profile_subtitle">Статус</div>
+        <ui-input-field class="form_field textfield-block" max-length="45" v-model="userData.status" :label="`Статус (${$t('{val} symbol ::: {val} symbols', {val: 45}, 45)})`| capitalize" name="status"/>
+      </div>
+      <div class="profile_section">
+        <div class="caption profile_subtitle">О себе</div>
+        <ui-textarea rows="4"
+                     v-model="userData.about"
+                     max-length="240"
+                     name="about"
+                     class="textfield-block form_field"
+                     capitalize
+                     :label="`напишите текст о себе (${$t('max {val}', {val: $t('{val} symbol ::: {val} symbols', {val: 240}, 240)})})`"
+        />
+      </div>
+      <div class="profile_section">
+        <div class="caption profile_subtitle">Специализации</div>
+        <div class="profile_skills">
+          <input type="hidden" name="specializations" :value="userData.specializations">
+          <button type="button" class="skill" v-for="(specialization, index) in selectedSpecializations" :key="specialization.id">
+            {{specialization.name}}
+            <span class="skill_remove" data-tooltip="удалить" data-tooltip-position="top" @click="removeSpecialization(index)"></span>
+          </button>
+        </div>
+        <ui-auto-complete placeholder="Начните вводить название специализации" v-model="specialization" :options="specializationOptions" @input="addSpecialization"  class="textfield-block form_field"/>
+      </div>
+      <div class="profile_section">
+        <div class="caption profile_subtitle">Основная информация</div>
+        <ui-input-field mask="##.##.####" placeholder="ДД.ММ.ГГГГ" class="textfield-block form_field" label="День рождения" name="birth_date" v-model="userData.birth_date"/>
+        <ui-input-field placeholder="Укажите ссылку" class="textfield-block form_field" label="Личный сайт" name="site" v-model="userData.site"/>
+        <ui-select-field label="Регион" :options="regionOptions" v-model="userData.region_id" name="region_id" class="textfield-block form_field"/>
+      </div>
+      <div class="profile_section">
+        <div class="caption profile_subtitle">Работа</div>
+        <ui-input-field label="Место работы" v-model="jobData.name" class="textfield-block form_field"/>
+        <ui-select-field label="Сфера" :options="domainOptions" v-model="jobData.domain_id" name="domain_id" class="textfield-block form_field"/>
+        <ui-input-field label="Должность" v-model="jobData.position" class="textfield-block form_field"/>
+        <ui-input-field label="Начало работы" v-model="jobData.start_date" mask="##.##.####" placeholder="ДД.ММ.ГГГГ" class="textfield-block form_field"/>
+        <ui-input-field label="Сайт компании" v-model="jobData.site" class="textfield-block form_field"/>
+      </div>
+      <div class="profile_section">
+        <div class="caption profile_subtitle">Контакты</div>
+        <ui-input-field label="Телефон" v-model="contactsData.phone" mask="+#(###)###-##-##" class="textfield-block form_field"/>
+        <ui-input-field label="Instagram" v-model="contactsData.instagram"  class="textfield-block form_field"/>
+        <ui-input-field label="Telegram" v-model="contactsData.telegram"  class="textfield-block form_field"/>
+        <ui-input-field label="Skype" v-model="contactsData.skype"  class="textfield-block form_field"/>
+        <ui-input-field label="Vk" v-model="contactsData.vk"  class="textfield-block form_field"/>
+        <ui-input-field label="Facebook" v-model="contactsData.facebook"  class="textfield-block form_field"/>
+      </div>
+      <button type="submit" class="form_button button button-primary">Сохранить</button>
+    </form>
+  </div>
+</template>
+<script>
+  import UiInputField from '../../components/ui/UiInputField'
+  import UiTextarea from '../../components/ui/UiTextarea'
+  import optionsService from '../../_services/options.service'
+  import UiSelectField from '../../components/ui/UiSelectField'
+  import UiAutoComplete from '../../components/ui/UiAutoComplete'
+  import userService from '../../_services/user.service'
+  export default {
+    components: {UiAutoComplete, UiSelectField, UiTextarea, UiInputField},
+    props: {
+      user: {
+        type: Object,
+        required: true,
+      }
+    },
+    data() {
+      return {
+        userData: {...this.user},
+        jobData: {...this.user.job},
+        contactsData: {...this.user.contacts},
+        avatar: null,
+        regionOptions: [],
+        domainOptions: [],
+        specializationOptions: [],
+        specialization: null,
+      }
+    },
+    computed: {
+      selectedSpecializations() {
+        if (this.userData.specializations.length) {
+          return this.userData.specializations.map(s => {
+            return this.specializationOptions.find(o => o.id === s);
+          });
+        }
+        return [];
+      },
+    },
+    methods: {
+      loadRegionOptions() {
+        optionsService.getRegions().then(data => {
+          this.regionOptions = data;
+        });
+      },
+      loadSpecializationsOptions() {
+        optionsService.getSpecializations().then(data => {
+          this.specializationOptions = data;
+        });
+      },
+      loadDomainsOptions() {
+        optionsService.getDomains().then(data => {
+          this.domainOptions = data;
+        });
+      },
+      addSpecialization(specialization) {
+        this.userData.specializations.push(specialization.id);
+        this.specializationOptions = this.specializationOptions.map(op => {
+          if (op.id === specialization.id) {
+            op.disabled = true;
+          }
+          return op
+        })
+        this.$nextTick(() => {
+          this.specialization = null;
+        });
+      },
+      removeSpecialization(index) {
+        this.userData.specializations.splice(index, 1);
+      },
+      handleImageInput(e) {
+        const files = e.target.files;
+        console.log(files);
+        if (files[0]) {
+          this.avatar = files[0];
+        }
+      },
+      handleFormSubmit() {
+        const data = new FormData();
+        Object.keys(this.userData).forEach((key) => {
+          if (this.userData[key]!==null && this.userData[key]!==undefined) {
+            data.set(key, this.userData[key]);
+          }
+        });
+        Object.keys(this.jobData).forEach((key) => {
+          data.delete('job');
+          if (this.jobData[key]!==null && this.jobData[key]!==undefined) {
+            data.set(`job[${key}]`, this.jobData[key]);
+          }
+        });
+        data.set('contacts', JSON.stringify(this.contactsData));
+        let obj = {};
+        data.forEach(function(value, key){
+          obj[key] = value;
+        });
+        console.log(obj);
+        userService.updateProfile(data);
+      },
+    },
+    mounted() {
+      this.loadRegionOptions();
+      this.loadSpecializationsOptions();
+      this.loadDomainsOptions();
+    }
+  }
+</script>

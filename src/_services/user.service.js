@@ -36,10 +36,21 @@ const userService = {
       return normalizeUser(user);
     });
   },
+  getMyProfile() {
+    return userApi.getMyProfile().then(({user}) => {
+      return normalizeUserProfile(user)
+    });
+  },
   getUserProfile(id) {
     return userApi.getUserProfile(id).then(({user}) => {
-      return normalizeUserProfile(normalizeUser(user, false));
+      return normalizeUserProfile(user);
     });
+  },
+  updateProfile(data) {
+    return userApi.updateProfile(data).then(data => {
+      console.log(data);
+      return data;
+    })
   },
 };
 

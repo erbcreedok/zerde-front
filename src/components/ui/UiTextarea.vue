@@ -11,18 +11,21 @@
               :autocomplete="autocomplete"
               :required="required"
               :rows="rows"
-              @input="updateInput"
               :autofocus="autofocus"
+              :maxlength="maxLength"
               v-mask="mask"
+              @input="updateInput"
               @focus="handleFocus"
               @blur="handleBlur"></textarea>
-    <label v-if="label" class="textfield_label">{{label}}</label>
+    <label v-if="label" class="textfield_label">{{labelValue}}</label>
     <p v-if="error" v-html="error" class="textfield_subtitle textfield_subtitle-error"></p>
     <p v-if="notification && focused" v-html="notification" class="textfield_subtitle"></p>
   </div>
 </template>
 
 <script>
+  import {capitalize} from '../../_filters/capitalize'
+
   export default {
     props: {
       name: {
@@ -68,7 +71,12 @@
       },
       notification: {
         type: String,
-      }
+      },
+      maxLength: {
+        type: [String, Number],
+      },
+      translate: Boolean,
+      capitalize: Boolean,
     },
     data() {
       return {
@@ -79,7 +87,17 @@
       placeholderValue() {
         if (!this.label) return this.placeholder;
         return this.placeholder && this.focused ? this.placeholder : ' ';
-      }
+      },
+      labelValue() {
+        let value = this.label;
+        if (this.translate) {
+          value = this.$t(value);
+        }
+        if (this.capitalize) {
+          value = capitalize(value);
+        }
+        return value
+      },
     },
     methods: {
       updateInput(e) {

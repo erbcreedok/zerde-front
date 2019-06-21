@@ -1,23 +1,27 @@
 <template>
   <div class="textfield"
        :class="{'textfield-required': required && showRequired, 'textfield-error': error}">
-    <input class="textfield_input"
-           :title="name"
-           :name="name"
-           :type="type"
-           :value="value"
-           :placeholder="placeholderValue"
-           :autocomplete="autocomplete"
-           :required="required"
-           @input="updateInput"
-           v-mask="mask"
-           :maxlength="maxLength"
-           :minlength="minLength"
-           :min="min"
-           :max="max"
-           :disabled="disabled"
-           @focus="handleFocus"
-           @blur="handleBlur">
+    <select class="textfield_input"
+            :title="name"
+            :name="name"
+            :type="type"
+            :value="value"
+            :placeholder="placeholderValue"
+            :autocomplete="autocomplete"
+            :required="required"
+            @input="updateInput"
+            v-mask="mask"
+            :maxlength="maxLength"
+            :minlength="minLength"
+            :min="min"
+            :max="max"
+            :disabled="disabled"
+            @focus="handleFocus"
+            @blur="handleBlur"
+    >
+      <option :value="null">Не выбрано</option>
+      <option v-for="option in options" :key="option.id" :value="option.id">{{option.name}}</option>
+    </select>
     <label v-if="label" class="textfield_label">{{labelValue}}</label>
     <p v-if="error" v-html="error" class="textfield_subtitle textfield_subtitle-error"></p>
     <p v-if="notification && focused" v-html="notification" class="textfield_subtitle"></p>
@@ -75,6 +79,10 @@
       },
       translate: Boolean,
       capitalize: Boolean,
+      options: {
+        type: Array,
+        default: () => [],
+      },
     },
     data() {
       return {

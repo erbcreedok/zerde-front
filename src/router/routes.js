@@ -1,4 +1,5 @@
 import {requireAuth, unrequireAuth} from "./router-guards";
+import profileRoutes from './childRoutes/profileRoutes'
 
 export default [
   {
@@ -54,9 +55,9 @@ export default [
   },
   {
     path: 'user/:userId',
-    name: 'user',
     props: true,
-    component: () => import('../views/ProfileViews/ProfileView.vue')
+    component: () => import('../views/ProfileViews/ProfileView.vue'),
+    children: profileRoutes,
   },
   {
     path: 'kb',

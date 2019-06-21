@@ -23,14 +23,14 @@
               <div class="level_title">{{user.levelName}}</div>
             </div>
           </div>
-
           <div class="points profile_activity_points">{{user.rating}}</div>
+          <ui-description-icon title="Что такое баллы?" body='Баллы – внутренний показатель пользователей сайта, которые зачисляются за большинство действий внутри сайта: ежедневный вход, завершение занятия, публикация комментария и т.д.<br/><br/>На данный момент баллы влияют только на позицию пользователя и рейтинг его региона в разделе "Сообщество".<br/><br/>Возможно, в будущем пользователям будет доступна возможность разблокировать определенный функционал или контент при условии достаточного количества набранных баллов.'/>
         </div>
 
         <div class="profile_menu menu menu-tabletStacked">
-          <a href="#" class="menu_item menu_item-user menu_item-active">
+          <router-link :to="{name: 'user', params: {userId: this.userId}}" class="menu_item menu_item-user">
             Профиль
-          </a>
+          </router-link>
 
           <a href="#" class="menu_item menu_item-ask-question">
             Вопросы и ответы
@@ -58,9 +58,9 @@
             Значки
           </a>
 
-          <a href="#" class="menu_item menu_item-settings" v-if="isOwnProfile">
+          <router-link :to="{name: 'profile-settings', params: {userId: this.userId}}" class="menu_item menu_item-settings" v-if="isOwnProfile">
             Настройки
-          </a>
+          </router-link>
         </div>
 
         <div class="profile_tour" v-if="isOwnProfile">
@@ -85,96 +85,7 @@
       </aside>
 
       <main class="profile_main">
-        <div class="profile_stats" v-if="false">
-          <div class="profile_stats_counter">
-            65
-          </div>
-          <div class="profile_stats_description">
-            просмотров профиля
-            <br>за последние 7 дней
-          </div>
-
-          <div class="profile_stats_users">
-            <a href="#" class="avatar"><img src="https://thispersondoesnotexist.com/image" alt=""></a>
-            <a href="#" class="avatar"><img src="https://thispersondoesnotexist.com/image" alt=""></a>
-            <a href="#" class="avatar"><img src="https://thispersondoesnotexist.com/image" alt=""></a>
-          </div>
-
-          <div class="profile_stats_chart">
-            график
-          </div>
-        </div>
-
-        <div class="profile_section">
-          <div class="caption profile_subtitle">
-            О себе
-          </div>
-
-          <div class="profile_about" v-html="user.about"></div>
-
-          <!--<a href="#" rel="nofollow" class="profile_custombutton button button-small button-primary button-outline">Пользовательская кнопка</a>-->
-        </div>
-
-        <div class="profile_section">
-          <div class="caption profile_subtitle">
-            Основная информация
-          </div>
-
-          <div class="dtable dtable-justify">
-            <div class="dtable_row">
-              <div class="dtable_col dtable_col-muted dtable_col-4">День рождения</div>
-              <div class="dtable_col dtable_col-4">{{user.birth_date | moment('DD.MM.YYYY')}} <span class="muted">({{$t('age {val}', {val: user.age},  user.age)}})</span></div>
-            </div>
-
-            <div class="dtable_row">
-              <div class="dtable_col dtable_col-muted dtable_col-4">Город</div>
-              <div class="dtable_col dtable_col-4">{{user.city}}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="profile_section">
-          <div class="caption profile_subtitle">
-            Работа
-          </div>
-
-          <div class="dtable dtable-justify" v-if="user.work_information">
-            <div class="dtable_row" v-if="user.work_information.place">
-              <div class="dtable_col dtable_col-muted dtable_col-4">Место работы</div>
-              <div class="dtable_col dtable_col-4">{{user.work_information.place}}</div>
-            </div>
-
-            <div class="dtable_row" v-if="user.work_information.space">
-              <div class="dtable_col dtable_col-muted dtable_col-4">Сфера</div>
-              <div class="dtable_col dtable_col-4">{{user.work_information.space}}</div>
-            </div>
-
-            <div class="dtable_row" v-if="user.work_information.position">
-              <div class="dtable_col dtable_col-muted dtable_col-4">Должность</div>
-              <div class="dtable_col dtable_col-4">{{user.work_information.position}}</div>
-            </div>
-
-            <div class="dtable_row" v-if="user.work_information.since">
-              <div class="dtable_col dtable_col-muted dtable_col-4">Начало работы</div>
-              <div class="dtable_col dtable_col-4">{{user.work_information.since | moment('YYYY')}}</div>
-            </div>
-
-            <div class="dtable_row" v-if="user.work_information.site">
-              <div class="dtable_col dtable_col-muted dtable_col-4">Сайт компании</div>
-              <div class="dtable_col dtable_col-4"><a :href="user.work_information.site" target="_blank">{{user.work_information.site}}</a></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="profile_section">
-          <div class="caption profile_subtitle">
-            Контакты
-          </div>
-
-          <div class="profile_contacts" v-if="user.contacts && user.contacts.length">
-            <a v-for="contact in user.contacts" :key="contact.type" :href="contact.link" :class="contact.icon" target="_blank" class="profile_contact">{{contact.label}}</a>
-          </div>
-        </div>
+        <router-view :user="user"/>
       </main>
     </template>
   </div>
@@ -183,8 +94,10 @@
 <script>
   import userService from '../../_services/user.service'
   import moment from 'moment';
+  import UiDescriptionIcon from '../../components/ui/UiDescriptionIcon'
 
   export default {
+    components: {UiDescriptionIcon},
     props: {
       userId: {
         type: [String, Number],
@@ -239,10 +152,18 @@
     methods: {
       loadUser(id = this.userId) {
         this.userState = 'loading';
-        userService.getUserProfile(id).then(user => {
-          this.userState = 'success';
-          this.user = user;
-        });
+        if (this.isOwnProfile) {
+          userService.getMyProfile().then(user => {
+            this.userState = 'success';
+            this.user = user;
+            console.log(user);
+          });
+        } else {
+          userService.getUserProfile(id).then(user => {
+            this.userState = 'success';
+            this.user = user;
+          });
+        }
       }
     },
   }

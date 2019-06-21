@@ -157,8 +157,8 @@
     watch: {
       searchText(to, from) {
         if (to !== from) {
-          const text = to.split();
-          this.loadSimilars(text[text.length - 1])
+          const text = to.split(' ');
+          this.loadSimilars(text[text.length - 1].trim());
         }
       }
     },

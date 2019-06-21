@@ -92,6 +92,7 @@
 		display: -ms-flex;
 		display: -o-flex;
 		display: flex;
+		align-items: center;
 
 		&_level {
 			margin-right: .75rem;
@@ -224,10 +225,6 @@
 		line-height: 2rem;
 	}
 
-	&_custombutton {
-		margin-top: .5rem;
-	}
-
 	&_section {
 		&+& {
 			margin-top: 2.5rem;
@@ -269,7 +266,108 @@
 
 		@contact-icons: phone, email, instagram, telegram, skype, vk, fb, www;
 
-		each(@contact-icons, {
+	each(@contact-icons, {
+		@classname: ~"@{value}";
+		@url: "../img/icons/@{value}.svg";
+
+		&-@{classname}:before {
+			mask-image: url(@url);
+		}
+	});
+
+		&:hover {
+			color: @c-primary;
+		}
+	}
+
+	&_tabs {
+		margin-bottom: 1.5rem;
+	}
+
+	&_skills {
+		margin-left: -.5rem;
+		margin-bottom: -.5rem;
+
+		.skill, &_message {
+			margin-left: .5rem;
+			margin-bottom: .5rem;
+		}
+
+		& + .form_field {
+			margin-top: 1rem;
+		}
+	}
+
+	&_notifs {
+		&_title {
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		&_button {
+			margin-left: auto;
+
+			@media @v-m {
+				margin-left: 0;
+				margin-top: .5rem;
+			}
+		}
+
+		&_item {
+			align-items: center;
+
+			@media @v-m {
+				align-items: flex-start;
+			}
+		}
+
+		&_action {
+			line-height: 1.5rem;
+			position: relative;
+			padding-left: 2.5rem;
+
+			@media @v-m {
+				line-height: 1.125rem;
+			}
+
+			a {
+				font-weight: 500;
+
+				&:hover {
+					color: @c-primary;
+				}
+			}
+
+			b {
+				font-weight: 500;
+			}
+
+			&:before {
+				content: '';
+
+				position: absolute;
+				left: 0;
+				top: 0;
+
+				.square(1.5rem);
+				margin-right: 1rem;
+				// margin-top: -.75rem;
+
+				background-color: @c-black;
+				mask-repeat: no-repeat;
+				mask-size: 1.5rem 1.5rem;
+				mask-position: center center;
+			}
+
+			&-thumbs-up:before {background-color: @c-success;}
+			&-thumbs-down:before {background-color: @c-danger;}
+
+		each(@icons, {
 			@classname: ~"@{value}";
 			@url: "../img/icons/@{value}.svg";
 
@@ -277,84 +375,56 @@
 				mask-image: url(@url);
 			}
 		});
-
-		&:hover {
-			color: @c-primary;
-		}
-	}
-
-	&_stats {
-		margin-bottom: 2.5rem;
-
-		border: @b-width solid @c-grey-10;
-		.rounded(@b-radius);
-		padding: 1rem 1.5rem;
-
-		display: -webkit-flex;
-		display: -moz-flex;
-		display: -ms-flex;
-		display: -o-flex;
-		display: flex;
-		align-items: center;
-
-		@media @v-m {
-			flex-direction: column;
-			text-align: center;
 		}
 
-		&_counter {
-			font-size: 2rem;
-			font-weight: 300;
-			margin-right: 1rem;
-
-			@media @v-m {
-				margin-right: 0;
-				margin-bottom: .5rem;
-				order: 2;
-			}
-		}
-
-		&_description {
-			font-size: .75rem;
-			color: @c-black-60;
-			line-height: 1.125rem;
-			margin-right: 2.5rem;
-
-			@media @v-m {
-				margin-right: 0;
-				margin-bottom: 1rem;
-				order: 3;
-			}
-		}
-
-		&_users {
-			.avatar {
-				.square(32px);
-				margin-right: .5rem;
-				display: inline-block;
-			}
-
-			@media @v-m {
-				margin-right: -.5rem;
-				order: 4;
-			}
-		}
-
-		&_chart {
+		&_time {
 			margin-left: auto;
-			background-color: @c-grey-10;
-			text-align: center;
-			height: 2rem;
+			color: @c-black-30;
 
 			@media @v-m {
 				margin-left: 0;
-				margin-bottom: 1rem;
-				order: 1;
+				font-size: .75rem;
+				margin-top: .25rem;
+				padding-left: 2.5rem;
 			}
 		}
 	}
 
-	&_tabs {
-		margin-bottom: 1.5rem;
+	&_points {
+		&_title {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+
+		&_value {
+			width: 48px;
+			margin-left: auto;
+			margin-right: 1.5rem;
+
+			color: @c-warning;
+			font-weight: 600;
+
+			@media @v-m {
+				margin-left: 0;
+				font-weight: 500;
+				font-size: 1.5rem;
+			}
+		}
+
+		&_date {
+			width: 144px;
+			text-align: right;
+
+			@media @v-m {
+				width: 100%;
+				text-align: left;
+			}
+		}
+
+		&_value, &_date {
+			flex-shrink: 0;
+			flex-grow: 0;
+		}
 	}
 }

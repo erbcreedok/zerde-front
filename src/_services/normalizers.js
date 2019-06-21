@@ -16,6 +16,7 @@ export function normalizeUser(user, save=true) {
 }
 
 export function normalizeUserProfile(user) {
+  user = normalizeUser(user, false);
   if (!user.level) {
     user.level = 5;
     user.levelName = 'Прокрастинатор';
@@ -25,7 +26,7 @@ export function normalizeUserProfile(user) {
     user.lastActivity = new Date((new Date()).getTime() - (1000 * 60 * 60 * 24 * 2)); // 2 дня
   }
   if (!user.rating) {
-    user.rating = 1324;
+    user.rating = 124;
   }
   if (!user.questionsCount) {
     user.questionsCount = 5;
@@ -36,31 +37,35 @@ export function normalizeUserProfile(user) {
   if (!user.coursesCount) {
     user.coursesCount = 0;
   }
-  if (!user.about) {
-    user.about = 'In expression an solicitude principles in do. Happiness remainder joy but earnestly for off.';
-  }
-  if (!user.birth_date) {
-    user.birth_date = new Date('03.16.1997');
+  if (user.birth_date && !user.age) {
     user.age = moment().diff(user.birth_date, 'years');
+    user.birth_date = moment(user.birth_date).format('DD.MM.YYYY');
+  } else {
+    user.age = null;
   }
-  if (!user.city) {
-    user.city = 'Алматы';
+  if (!user.job) {
+    user.job = {
+      name: null,
+      domain_id: null,
+      position: null,
+      start_date: null,
+      link: null,
+    };
   }
-  if (!user.work_information) {
-    user.work_information = {
-      place: 'Фрилансер',
-      space: 'Дизайн',
-      position: 'UX/UI Дизайнер',
-      since: new Date('12.12.2016'),
-      site: null,
-    }
+  if (!user.specializations) {
+    user.specializations = [];
   }
-  if (!user.contacts) {
-    user.contacts = [
-      {type: 'phone', value: '77021113439'},
-      {type: 'instagram', value: 'moonfriend_11'},
-      {type: 'telegram', value: '@aidosssss'},
-    ].map(c => normalizeContact(c));
+  if (!user.contacts && user.contacts !== null) {
+    user.contacts = {
+      phone: null,
+      instagram: null,
+      telegram: null,
+      skype: null,
+      vk: null,
+      facebook: null,
+    };
+  } else {
+    user.contacts = JSON.parse(user.contacts);
   }
   return user;
 }
