@@ -145,7 +145,6 @@
         setAsCorrect(value) {
           this.correctStatus = 'loading';
           qaService.setCorrectAnswer(this.comment.question_id, this.comment.id, value).then(val => {
-            console.log(val)
             this.isCorrect = val-0 === 1;
             this.correctStatus = 'success';
           }).catch(() => {
@@ -167,15 +166,15 @@
             this.baseText = user.fullname ? user.fullname.trim() : '';
           });
         },
-        loadQuestion() {
-          qaService.getQuestion(this.comment.question_id).then(question => {
+        loadQuestion(question_id = this.comment.question_id) {
+          qaService.getQuestion(question_id).then(question => {
             this.question = question;
           });
         }
       },
       mounted() {
         this.loadAuthor();
-        if (this.showLink) {
+        if (this.showLink && this.comment.question_id) {
           this.loadQuestion();
         }
       }

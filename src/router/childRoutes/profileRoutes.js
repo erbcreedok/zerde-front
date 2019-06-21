@@ -17,6 +17,11 @@ const profileRoutes = [
     component: () => import('../../views/ProfileViews/ProfileQA.vue'),
   },
   {
+    path: 'comments',
+    name: 'profile-comments',
+    component: () => import('../../views/ProfileViews/ProfileComments.vue'),
+  },
+  {
     path: 'bookmarks',
     name: 'profile-bookmarks',
     component: () => import('../../views/ProfileViews/ProfileBookmarks.vue'),

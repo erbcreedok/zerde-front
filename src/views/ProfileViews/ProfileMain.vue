@@ -40,7 +40,7 @@
       <div class="caption profile_subtitle">
         Основная информация
       </div>
-      <template v-if="user.birth_date && user.region && user.region.length">
+      <template v-if="user.birth_date || (user.region && user.region.length)">
         <div class="dtable dtable-justify">
           <div class="dtable_row" v-if="user.birth_date">
             <div class="dtable_col dtable_col-muted dtable_col-4">День рождения</div>

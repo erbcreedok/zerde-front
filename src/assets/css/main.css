@@ -1246,6 +1246,7 @@ input:checked ~ .checkbox_label {
   -ms-transform: translateX(-50%) translateY(-50%);
   -o-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
+  object-fit: cover;
 }
 .user {
   display: -webkit-flex;

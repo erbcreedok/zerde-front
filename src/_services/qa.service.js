@@ -33,6 +33,12 @@ const qaService = {
   getAnswersByUserId(user_id) {
     return qaApi.getAnswersByUserId(user_id).then(handleAnswersSuccess);
   },
+  getCommentsByUserId(user_id) {
+    return qaApi.getCommentsByUserId(user_id).then(handleCommentsSuccess);
+  },
+  getFavoriteQuestions() {
+    return qaApi.getFavoriteQuestions().then(handleQuestionsSuccess);
+  },
   setLikeToQuestion(id, value) {
     return qaApi.setLikeToQuestion(id, value)
       .catch(handleError)
@@ -115,6 +121,13 @@ function handleAnswersSuccess({data: {answers}}) {
   return {
     answers: answers.data,
     totalCount: answers.total,
+  };
+}
+
+function handleCommentsSuccess({data: {comments}}) {
+  return {
+    comments: comments.data,
+    totalCount: comments.total,
   };
 }
 

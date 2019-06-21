@@ -27,6 +27,9 @@
                                         <router-link :to="{name: 'user', params: {userId}}" class="dropdown_menu_item dropdown_menu_item-user">{{ 'my profile' | translate | capitalize }}</router-link>
                                     </div>
                                     <div class="dropdown_menu">
+                                        <router-link :to="{name: 'profile-settings', params: {userId}}" class="dropdown_menu_item dropdown_menu_item-settings">{{ 'settings' | translate | capitalize }}</router-link>
+                                    </div>
+                                    <div class="dropdown_menu">
                                         <a @click="logout" href="#" class="dropdown_menu_item dropdown_menu_item-exit">{{ 'signout' | translate | capitalize }}</a>
                                     </div>
                                 </div>

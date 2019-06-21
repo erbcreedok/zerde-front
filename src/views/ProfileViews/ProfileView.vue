@@ -34,19 +34,18 @@
 
           <router-link :to="{name: 'profile-qa'}" class="menu_item menu_item-ask-question">
             Вопросы и ответы
-            <span class="menu_counter">{{user.questionsCount}}</span>
+            <span class="menu_counter">{{user.qa_count}}</span>
           </router-link>
 
-          <a href="#" class="menu_item menu_item-comments">
+          <router-link :to="{name: 'profile-comments'}" class="menu_item menu_item-comments">
             Комментарии
-            <span class="menu_counter">{{user.commentsCount}}</span>
-          </a>
-
-          <a href="#" class="menu_item menu_item-course">
+            <span class="menu_counter">{{user.cm_count}}</span>
+          </router-link>
+          <a href="#" class="menu_item menu_item-course" v-if="false">
             Обучение
           </a>
 
-          <a href="#" class="menu_item menu_item-rules">
+          <a href="#" class="menu_item menu_item-rules" v-if="false">
             Публикации
           </a>
 
@@ -54,7 +53,7 @@
             Закладки
           </router-link>
 
-          <a href="#" class="menu_item menu_item-warranty">
+          <a href="#" class="menu_item menu_item-warranty" v-if="false">
             Значки
           </a>
 
@@ -85,7 +84,7 @@
       </aside>
 
       <main class="profile_main">
-        <router-view :user="user"/>
+        <router-view :user="user" @updateProfile="handleUpdate"/>
       </main>
     </template>
   </div>
@@ -164,6 +163,9 @@
             this.user = user;
           });
         }
+      },
+      handleUpdate() {
+        this.loadUser();
       }
     },
   }

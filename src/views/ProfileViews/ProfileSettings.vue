@@ -73,12 +73,15 @@
   </div>
 </template>
 <script>
-  import UiInputField from '../../components/ui/UiInputField'
-  import UiTextarea from '../../components/ui/UiTextarea'
-  import optionsService from '../../_services/options.service'
-  import UiSelectField from '../../components/ui/UiSelectField'
-  import UiAutoComplete from '../../components/ui/UiAutoComplete'
-  import userService from '../../_services/user.service'
+  import moment from 'moment';
+  import UiInputField from '../../components/ui/UiInputField';
+  import UiTextarea from '../../components/ui/UiTextarea';
+  import optionsService from '../../_services/options.service';
+  import UiSelectField from '../../components/ui/UiSelectField';
+  import UiAutoComplete from '../../components/ui/UiAutoComplete';
+  import userService from '../../_services/user.service';
+  import {normalizeUserProfileForm} from "../../_services/normalizers";
+  import {capitalize} from "../../_filters/capitalize";
   export default {
     components: {UiAutoComplete, UiSelectField, UiTextarea, UiInputField},
     props: {
@@ -102,9 +105,7 @@
     computed: {
       selectedSpecializations() {
         if (this.userData.specializations.length) {
-          return this.userData.specializations.map(s => {
-            return this.specializationOptions.find(o => o.id === s);
-          });
+          return this.userData.specializations;
         }
         return [];
       },
@@ -126,13 +127,13 @@
         });
       },
       addSpecialization(specialization) {
-        this.userData.specializations.push(specialization.id);
+        this.userData.specializations.push(specialization );
         this.specializationOptions = this.specializationOptions.map(op => {
           if (op.id === specialization.id) {
             op.disabled = true;
           }
           return op
-        })
+        });
         this.$nextTick(() => {
           this.specialization = null;
         });
@@ -145,10 +146,16 @@
         console.log(files);
         if (files[0]) {
           this.avatar = files[0];
+          if (this.avatar.size > 2 * 1024 * 1024) {
+            this.$notyf.error({
+              message: capitalize(this.$t('image max size is {val}kB', {val: 2})),
+            });
+            this.avatar = null;
+          }
         }
       },
       handleFormSubmit() {
-        const data = new FormData();
+        let data = new FormData();
         Object.keys(this.userData).forEach((key) => {
           if (this.userData[key]!==null && this.userData[key]!==undefined) {
             data.set(key, this.userData[key]);
@@ -161,12 +168,26 @@
           }
         });
         data.set('contacts', JSON.stringify(this.contactsData));
-        let obj = {};
-        data.forEach(function(value, key){
-          obj[key] = value;
+        data.set('specializations', JSON.stringify(this.userData.specializations.map(s => s.id)));
+        if (this.userData.birth_date) {
+          data.set('birth_date', moment(this.userData.birth_date).format('YYYY-MM-DD'));
+        }
+        if (this.userData.region_id) {
+          data.set('region_id', this.userData.region_id);
+        }
+        if (this.avatar) {
+          data.set('avatar', this.avatar);
+        } else {
+          data.delete('avatar');
+        }
+        data = normalizeUserProfileForm(data);
+        userService.updateProfile(data).then(message => {
+          this.$emit('updateProfile');
+          this.$notyf.success({
+            message: capitalize(this.$t(message.toLowerCase())),
+          })
+
         });
-        console.log(obj);
-        userService.updateProfile(data);
       },
     },
     mounted() {

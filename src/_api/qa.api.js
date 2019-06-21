@@ -42,6 +42,9 @@ const qaApi = {
   getFavoriteQuestions() {
     return client.get(`/profile/qa/favorite`).then(handleResponse)
   },
+  getFavoriteMaterials() {
+    return client.get(`/profile/kb/favorite`).then(handleResponse)
+  },
   getQAStats() {
     return client.get(`qa/count`).then(handleResponse);
   },
@@ -53,6 +56,9 @@ const qaApi = {
   },
   getAnswersByUserId(user_id) {
     return client.get(`user/${user_id}/answers`).then(handleResponse);
+  },
+  getCommentsByUserId(user_id) {
+    return client.get(`user/${user_id}/qa/comments`).then(handleResponse);
   },
   sendAnswer(question_id, body) {
     return client.post('qa-moderation/answer', {question_id, body}).then(handleResponse);

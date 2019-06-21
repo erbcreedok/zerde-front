@@ -22,8 +22,9 @@ const userApi = {
     })
   },
   updateProfile(data) {
-    return client.put('/profile/update', data, {headers: {'Content-Type': 'multipart/form-data'}}).then(res => {
-      return res.data;
+    data.set('_method', 'PUT');
+    return client.post('/profile/update', data, {headers: {'Content-Type': 'multipart/form-data'}}).then(res => {
+      return res.data.data;
     });
   }
 };

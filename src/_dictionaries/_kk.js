@@ -88,6 +88,7 @@ export default {
   'you can\'t rate own material': 'өз жазбаңыздың рейтингін өзгерте алмайсыз',
   'you can\'t subscribe to own material': 'өз жазбаңыздың оқырманы бола алмайсыз',
   'my profile': 'менің профилім',
+  'settings': 'баптаулар',
   '{val} minute ::: {val} minutes': '{val} минут',
   '{val} hour ::: {val} hours': '{val} сағат',
   '{val} day ::: {val} days': '{val} күн',
@@ -96,4 +97,5 @@ export default {
   'age {val}': '{val} жаста',
   'was online {val} ago': 'cайтта {val} бұрын болды',
   'max {val}' : '{val} дейін',
+  'your information updated successfully.' : 'сіздің ақпаратыңыз сәтті жаңартылды',
 }

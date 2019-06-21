@@ -47,9 +47,8 @@ const userService = {
     });
   },
   updateProfile(data) {
-    return userApi.updateProfile(data).then(data => {
-      console.log(data);
-      return data;
+    return userApi.updateProfile(data).then(({message}) => {
+      return message;
     })
   },
 };

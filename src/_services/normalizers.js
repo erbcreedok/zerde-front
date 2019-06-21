@@ -1,6 +1,7 @@
 import moment from 'moment';
 import userService from './user.service'
 import {getContactIconClass, getContactLabel, getContactLink} from '../_types/contact-types'
+import {homeURL} from "../_api";
 
 export function normalizeUser(user, save=true) {
   if (!user.fullname) {
@@ -8,6 +9,8 @@ export function normalizeUser(user, save=true) {
   }
   if (!user.avatar_src) {
     user.avatar_src = '/assets/img/avatar-placeholder.jpg';
+  } else if (user.avatar_src.indexOf(homeURL) === -1) {
+    user.avatar_src = homeURL + user.avatar_src;
   }
   if (save) {
     userService.loadedUsers.push(user);
@@ -28,11 +31,11 @@ export function normalizeUserProfile(user) {
   if (!user.rating) {
     user.rating = 124;
   }
-  if (!user.questionsCount) {
-    user.questionsCount = 5;
+  if (!user.qa_count) {
+    user.qa_count = null;
   }
-  if (!user.commentsCount) {
-    user.commentsCount = 10;
+  if (!user.cm_count) {
+    user.cm_count = null;
   }
   if (!user.coursesCount) {
     user.coursesCount = 0;
@@ -73,6 +76,32 @@ export function normalizeUserProfile(user) {
 export function normalizeUsers(users) {
   return users.map(u => normalizeUser(u));
 }
+
+export function normalizeUserProfileForm(data) {
+  data.delete('id');
+  data.delete('phone');
+  data.delete('age');
+  data.delete('qa_count');
+  data.delete('cm_count');
+  data.delete('avatar_src');
+  data.delete('fullname');
+  data.delete('level');
+  data.delete('levelName');
+  data.delete('levelProgress');
+  data.delete('lastActivity');
+  data.delete('rating');
+  data.delete('region');
+  data.delete('questionsCount');
+  data.delete('commentsCount');
+  data.delete('coursesCount');
+  data.delete('job[id]');
+  data.delete('job[user_id]');
+  data.delete('job[created_at]');
+  data.delete('job[updated_at]');
+  
+  return data;
+}
+
 
 export function normalizeQuestion(question) {
   if (question.author) {

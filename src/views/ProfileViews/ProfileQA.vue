@@ -12,9 +12,15 @@
     </template>
     <template v-else>
       <template v-if="selectedTab === 'q'">
+        <template v-if="!questions.length">
+          <span class="muted">Пользователь не задавал вопросов</span>
+        </template>
         <question-card v-for="question in questions" :key="question.id" :question="question" :author="user"/>
       </template>
       <template v-if="selectedTab === 'a'">
+        <template v-if="!questions.length">
+          <span class="muted">Пользователь никому не отвечал</span>
+        </template>
         <comment-block v-for="answer in answers" :key="answer.id" :comment="answer" :author="user" disable-comment show-link/>
       </template>
     </template>

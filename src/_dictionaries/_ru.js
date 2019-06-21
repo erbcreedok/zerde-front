@@ -88,6 +88,7 @@ export default {
   'you can\'t rate own material': 'вы не можете изменить рейтинг собственной записи',
   'you can\'t subscribe to own material': 'вы не можете подписаться на собственную запись',
   'my profile': 'мой профиль',
+  'settings': 'настройки',
   '{val} minute ::: {val} minutes': '{val} минута ::: {val} минуты ::: {val} минут',
   '{val} hour ::: {val} hours': '{val} час ::: {val} часа ::: {val} часов',
   '{val} day ::: {val} days': '{val} день ::: {val} дня ::: {val} дней',
@@ -95,4 +96,7 @@ export default {
   '{val} symbol ::: {val} symbols': '{val} символ ::: {val} символа ::: {val} символов',
   'age {val}': '{val} год ::: {val} года ::: {val} лет',
   'was online {val} ago': 'был(а) на сайте {val} назад',
-  'max {val}' : 'до {val}',}
+  'max {val}' : 'до {val}',
+  'your information updated successfully.' : 'ваша информация успешно обновлена',
+  'image max size is {val}kB' : 'ваша информация успешно обновлена',
+}

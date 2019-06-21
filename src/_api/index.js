@@ -2,9 +2,11 @@ import axios from 'axios';
 import Vue from 'vue'
 import {capitalize} from '../_filters/capitalize'
 
+export const homeURL = 'http://academy-back.tk';
+
 const baseURLS = {
-  'development': 'http://academy-back.tk/api',
-  'production': 'http://academy-back.tk/api',
+  'development': homeURL + '/api',
+  'production': homeURL + '/api',
 };
 const client =  axios.create({
   baseURL: baseURLS[process.env.NODE_ENV] || 'http://academy-back.tk/api',
