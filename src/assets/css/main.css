@@ -837,6 +837,25 @@ html {
     margin-left: 1.5rem !important;
   }
 }
+.tabs_counter {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 0.25rem;
+  margin-top: -0.125rem;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid #EEEEEE;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  line-height: 1;
+  font-weight: 600;
+  color: #757575;
+}
+.tabs_item-active .tabs_counter {
+  color: #304FFE;
+  border-color: #D6DCFF;
+}
 ::placeholder {
   color: #B3B3B3;
 }

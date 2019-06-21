@@ -28,14 +28,14 @@
         </div>
 
         <div class="profile_menu menu menu-tabletStacked">
-          <router-link :to="{name: 'user', params: {userId: this.userId}}" class="menu_item menu_item-user">
+          <router-link :to="{name: 'profile-main'}" class="menu_item menu_item-user">
             Профиль
           </router-link>
 
-          <a href="#" class="menu_item menu_item-ask-question">
+          <router-link :to="{name: 'profile-qa'}" class="menu_item menu_item-ask-question">
             Вопросы и ответы
             <span class="menu_counter">{{user.questionsCount}}</span>
-          </a>
+          </router-link>
 
           <a href="#" class="menu_item menu_item-comments">
             Комментарии
@@ -50,9 +50,9 @@
             Публикации
           </a>
 
-          <a href="#" class="menu_item menu_item-bookmark" v-if="isOwnProfile">
+          <router-link :to="{name: 'profile-bookmarks'}" class="menu_item menu_item-bookmark" v-if="isOwnProfile">
             Закладки
-          </a>
+          </router-link>
 
           <a href="#" class="menu_item menu_item-warranty">
             Значки

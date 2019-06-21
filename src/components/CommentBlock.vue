@@ -1,32 +1,30 @@
 <template>
-    <article class="comment" :class="{'comment-small': isChild}" :data-id="comment.id">
-        <div class="comment_body" :class="{'comment-verified': isCorrect}">
-            <div class="comment_text" v-html="comment.body"></div>
-
-            <div class="comment_details">
-                <div class="user comment_author">
-                    <div class="user_photo avatar" v-if="author">
-                        <img :src="author.avatar_src" alt="">
-                    </div>
-
-                    <div class="user_info">
-                        <router-link :to="{name: 'user', params: {userId: author.id}}" class="user_name" v-if="author">{{author.firstname}} {{author.lastname}}</router-link>
-                        <ul class="user_details">
-                          <li>{{comment.created_at | moment('D MMMM')}}</li>
-
-                          <li><a @click="startReply()" class="comment_reply_link" :data-post-id="comment.question_id" :data-parent="comment.id">Комментировать</a></li>
-
-                          <template v-if="isOwnQuestion && !isChild">
-                            <li v-if="!isCorrect"> <a @click="setAsCorrect(true)" class="comment_correct_link" :data-post-id="comment.question_id">Это правильный ответ</a></li>
-                            <li v-if="isCorrect"> <a @click="setAsCorrect(false)" class="comment_correct_link" :data-post-id="comment.question_id">Это неправильный ответ</a></li>
-                          </template>
-                        </ul>
-                    </div>
-                </div>
-
-                <ui-rating :loading="ratingStatus==='loading'" class="comment_rating" :rate="rating" @change="putLike"/>
+    <article :id="blockId" class="comment" :class="{'comment-small': isChild}" :data-id="comment.id">
+      <template v-if="showLink && question">
+        <router-link :to="{name: 'qa-single', params: {slug: question.id}}" v-scroll-to="'#answer-block-'+comment.id" class="comment_post">{{question.title}}</router-link>
+      </template>
+      <div class="comment_body" :class="{'comment-verified': isCorrect}">
+        <div class="comment_text" v-html="comment.body"></div>
+        <div class="comment_details">
+          <div class="user comment_author">
+            <div class="user_photo avatar" v-if="author">
+              <img :src="author.avatar_src" alt="">
             </div>
+            <div class="user_info" id="#info">
+              <router-link :to="{name: 'user', params: {userId: author.id}}" class="user_name" v-if="author">{{author.firstname}} {{author.lastname}}</router-link>
+              <ul class="user_details">
+                <li>{{comment.created_at | moment('D MMMM')}}</li>
+                <li v-if="!disableComment"><a @click="startReply()" class="comment_reply_link" :data-post-id="comment.question_id" :data-parent="comment.id">Комментировать</a></li>
+                <template v-if="isOwnQuestion && !isChild">
+                  <li v-if="!isCorrect"> <a @click="setAsCorrect(true)" class="comment_correct_link" :data-post-id="comment.question_id">Это правильный ответ</a></li>
+                  <li v-if="isCorrect"> <a @click="setAsCorrect(false)" class="comment_correct_link" :data-post-id="comment.question_id">Это неправильный ответ</a></li>
+                </template>
+              </ul>
+            </div>
+          </div>
+          <ui-rating :loading="ratingStatus==='loading'" class="comment_rating" :rate="rating" @change="putLike"/>
         </div>
+      </div>
 
         <div class="comment_replies" v-if="children.length">
             <comment-block v-for="reply in children"
@@ -59,14 +57,17 @@
           type: Object,
           required: true,
         },
+        disableComment: Boolean,
         isOwnQuestion: Boolean,
         isChild: Boolean,
         replyFunction: Function,
         putLikeFunction: Function,
         putLikeToChildFunction: Function,
+        showLink: Boolean,
       },
       data() {
         return {
+          question: null,
           author: null,
           rating: this.comment.rating,
           ratingStatus: 'clean',
@@ -94,6 +95,12 @@
         isOwnComment() {
           return this.isAuthorised && this.comment.user_id === this.$store.state.user.user.id
         },
+        blockId() {
+          if (this.isChild) {
+            return 'comment-block-' + this.comment.answer_id + '-' + this.comment.id;
+          }
+          return 'answer-block-' + this.comment.id;
+        }
       },
       methods: {
         startReply(baseText = this.username) {
@@ -160,9 +167,17 @@
             this.baseText = user.fullname ? user.fullname.trim() : '';
           });
         },
+        loadQuestion() {
+          qaService.getQuestion(this.comment.question_id).then(question => {
+            this.question = question;
+          });
+        }
       },
       mounted() {
         this.loadAuthor();
+        if (this.showLink) {
+          this.loadQuestion();
+        }
       }
     }
 </script>

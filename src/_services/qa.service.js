@@ -10,14 +10,7 @@ const qaService = {
   getQuestions(page=1, limit=5, {searchText="", themes=[], tags=[], category, ...filters}={}) {
     console.log({page,limit,searchText,tags,category,filters, themes});
     // return qaMock.fetchQAs(page, limit, {filters: {...filters, categories, tags, searchText}, });
-    return qaApi.getQuestions(page, limit, searchText, themes, category).then(({data: {questions}}) => {
-      return {
-        questions: normalizeQuestions(questions.data),
-        questionsCount: questions.total,
-        answersCount: 221,
-        totalCount: questions.total,
-      }
-    });
+    return qaApi.getQuestions(page, limit, searchText, themes, category).then(handleQuestionsSuccess);
   },
   getQuestion(slug) {
     // return qaMock.fetchQuestion(slug).then(({data}) => data);
@@ -33,6 +26,12 @@ const qaService = {
     return qaApi.getQuestionSimilars(question_id).then(({data}) => normalizeQuestions(data.questions).filter(q => {
       return q.id !== question_id-0
     }));
+  },
+  getQuestionByUserId(user_id) {
+    return qaApi.getQuestionByUserId(user_id).then(handleQuestionsSuccess);
+  },
+  getAnswersByUserId(user_id) {
+    return qaApi.getAnswersByUserId(user_id).then(handleAnswersSuccess);
   },
   setLikeToQuestion(id, value) {
     return qaApi.setLikeToQuestion(id, value)
@@ -103,6 +102,20 @@ function handleError(error) {
     })
   }
   throw error;
+}
+
+function handleQuestionsSuccess({data: {questions}}) {
+  return {
+    questions: normalizeQuestions(questions.data),
+    totalCount: questions.total,
+  };
+}
+
+function handleAnswersSuccess({data: {answers}}) {
+  return {
+    answers: answers.data,
+    totalCount: answers.total,
+  };
 }
 
 export default qaService;

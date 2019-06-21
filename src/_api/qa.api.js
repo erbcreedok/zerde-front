@@ -39,11 +39,20 @@ const qaApi = {
   getQuestionSimilars(question_id) {
     return client.get(`qa/similar-questions/${question_id}`).then(handleResponse);
   },
+  getFavoriteQuestions() {
+    return client.get(`/profile/qa/favorite`).then(handleResponse)
+  },
   getQAStats() {
     return client.get(`qa/count`).then(handleResponse);
   },
   getAnswerLeaders() {
     return client.get(`qa/answers-leader`).then(handleResponse);
+  },
+  getQuestionByUserId(user_id) {
+    return client.get(`user/${user_id}/questions`).then(handleResponse);
+  },
+  getAnswersByUserId(user_id) {
+    return client.get(`user/${user_id}/answers`).then(handleResponse);
   },
   sendAnswer(question_id, body) {
     return client.post('qa-moderation/answer', {question_id, body}).then(handleResponse);

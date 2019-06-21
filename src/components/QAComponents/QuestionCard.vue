@@ -17,8 +17,8 @@
         <li>{{$t('{count} subscriber ::: {count} subscribers', {count: question.fav_count}, question.fav_count)}}</li>
       </ul>
 
-      <router-link :to="{name: 'user', params: {userId: question.user_id}}" v-if="question.user_id" class="qaCard_author avatar" :title="question.author.fullname">
-        <img v-if="question.author.avatar_src" :src="question.author.avatar_src" alt="">
+      <router-link :to="{name: 'user', params: {userId: authorData.id}}" v-if="authorData" class="qaCard_author avatar" :title="authorData.fullname">
+        <img v-if="authorData.avatar_src" :src="authorData.avatar_src" alt="">
         <!--<img v-if="!question.user_avatar" src="/assets/img/avatar-placeholder.jpg" alt="">-->
       </router-link>
     </div>
@@ -32,12 +32,20 @@
       question: {
         type: Object,
         required: true
+      },
+      author: {
+        type: Object,
       }
     },
     methods: {
       handleTagClick(e) {
         e.stopPropagation();
       }
-    }
+    },
+    data() {
+      return {
+        authorData: this.author ? {...this.author} : this.question.author ? {...this.question.author} : null
+      }
+    },
   }
 </script>

@@ -89,7 +89,7 @@
     props: {
       slug: {
         required: true,
-        type: String,
+        type: [String, Number],
       }
     },
     data() {
