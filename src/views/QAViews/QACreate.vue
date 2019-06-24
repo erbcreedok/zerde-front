@@ -101,18 +101,18 @@
       }
     },
     computed: {
-    swiper() {
-      if (this.$refs.mySwiper) {
-        return this.$refs.mySwiper.swiper
-      }
-      return null;
-    },
-    isValid() {
-      return this.data.questionTitle.trim() !== '';
-    },
-    allThemes() {
-      return this.themes.map(theme => ({...theme, selected: this.data.themes.findIndex(t => t.id === theme.id)!==-1}))
-    },
+      swiper() {
+        if (this.$refs.mySwiper) {
+          return this.$refs.mySwiper.swiper
+        }
+        return null;
+      },
+      isValid() {
+        return this.data.questionTitle.trim() !== '';
+      },
+      allThemes() {
+        return this.themes.map(theme => ({...theme, selected: this.data.themes.findIndex(t => t.id === theme.id)!==-1}))
+      },
     },
     methods: {
       showModal() {

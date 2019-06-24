@@ -109,12 +109,12 @@
 			pointer-events: none;
 		}
 
-		&:before {
+		&:not(.beginning):before {
 			left: 0;
 			#gradient .horizontal(#fff, fade(#fff, 0))
 		}
 
-		&:after {
+		&:not(.end):after {
 			right: 0;
 			#gradient .horizontal(fade(#fff, 0), #fff)
 		}
@@ -160,7 +160,7 @@
 
 			@media @v-t {
 				padding: 4rem 0;
-				margin: 4rem 0;				
+				margin: 4rem 0;
 			}
 		}
 	}
@@ -353,7 +353,7 @@
 
 		@media @v-m {
 			margin-left: 0;
-			margin-top: 1rem;			
+			margin-top: 1rem;
 		}
 
 		.post_favorite_button {
@@ -627,7 +627,7 @@
 		position: absolute;
 		top: 1rem;
 		right: 1rem;
-		z-index: 3;		
+		z-index: 3;
 	}
 
 	&_icon {
@@ -718,7 +718,7 @@
 
 			img {
 				filter: grayscale(100);
-				
+
 				@media @v-m {
 					height: 100%;
 					width: auto;

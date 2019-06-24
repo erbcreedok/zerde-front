@@ -113,7 +113,7 @@
         return this.options.filter(v => this.getIndex(v.name, this.text) !== -1)
           .sort((a,b) =>
             this.getIndex(a.name, this.text) - this.getIndex(b.name, this.text)
-          )
+          );
       },
     },
     methods: {

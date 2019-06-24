@@ -101,4 +101,8 @@ export default {
   'your information updated successfully.' : 'ваша информация успешно обновлена',
   'image max size is {val} kB' : 'максимальный размер изображения {val} кБ',
   'error occurred while uploading form' : 'при загрузке формы произошла ошибка',
+  'catalog' : 'каталог',
+  'all in a row' : 'все подряд',
+  'search' : 'поиск',
+  'bookmarks' : 'закладки',
 }

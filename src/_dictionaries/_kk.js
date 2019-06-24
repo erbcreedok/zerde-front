@@ -101,4 +101,8 @@ export default {
   'your information updated successfully.' : 'сіздің ақпаратыңыз сәтті жаңартылды',
   'image max size is {val} kB' : 'кескіннің максималды мөлшері {val) kB',
   'error occurred while uploading form' : 'пішінді жүктеу кезінде қате пайда болды',
+  'catalog' : 'тізім',
+  'all in a row' : 'барлығы',
+  'search' : 'іздеу',
+  'bookmarks' : 'бетбелгі',
 }

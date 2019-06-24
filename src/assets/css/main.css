@@ -4002,7 +4002,7 @@ header {
   z-index: 9;
   pointer-events: none;
 }
-.blog_tags:before {
+.blog_tags:not(.beginning):before {
   left: 0;
   background: rgba(255, 255, 255, 0.5);
   background: -moz-linear-gradient(left, #fff 0%, rgba(255, 255, 255, 0) 100%);
@@ -4013,7 +4013,7 @@ header {
   background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='rgba(255, 255, 255, 0)', GradientType=1);
 }
-.blog_tags:after {
+.blog_tags:not(.end):after {
   right: 0;
   background: rgba(255, 255, 255, 0.5);
   background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, #fff 100%);

@@ -1,5 +1,6 @@
 import {requireAuth, unrequireAuth} from "./router-guards";
 import profileRoutes from './childRoutes/profileRoutes'
+import KBRoutes from "./childRoutes/KBRoutes";
 
 export default [
   {
@@ -61,7 +62,8 @@ export default [
   },
   {
     path: 'kb',
-    name: 'kb',
-    component: () => import('../views/KBViews/KB.vue')
+    props: true,
+    component: () => import('../views/KBViews/KB.vue'),
+    children: KBRoutes,
   },
 ];
