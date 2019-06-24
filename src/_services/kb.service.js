@@ -1,9 +1,12 @@
 import client, {handleResponse} from "../_api";
 import {normalizeArticle, normalizeArticles} from "./normalizers";
+import Vue from "vue";
+import {capitalize} from "../_filters/capitalize";
 
 const kbService = {
-  loadArticles() {
-    return client.get(`kb/article`).then(handleResponse).then(({data}) => {
+  loadArticles(page=1, per_page=5,) {
+    let query = `?page=${page}&per_page=${per_page}`;
+    return client.get(`kb/article${query}`).then(handleResponse).then(({data}) => {
       console.log(data);
       return handleArticlesSuccess(data);
     });
@@ -34,7 +37,28 @@ const kbService = {
     return client.post(`user/fav/article/${value ? 'add' : 'remove'}`, {article_id})
       .then(handleResponse)
   },
+  sendComment(article_id, body) {
+    return client.post('kb-moderation/comment', {article_id, body})
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data.comment);
+  },
+  setLikeToComment(comment_id, rate_value) {
+    return client.post(`kb-moderation/comment/${comment_id}/rate`, {rate_value})
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data.total);
+  },
 };
+
+function handleError(error) {
+  if (error.response.status === 401) {
+    Vue.prototype.$notyf.error({
+      message: capitalize(Vue.prototype.$t('authorisation required'))
+    })
+  }
+  throw error;
+}
 
 function handleArticlesSuccess({articles}) {
   return {

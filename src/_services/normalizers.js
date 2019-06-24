@@ -145,7 +145,8 @@ export function normalizeArticle(article) {
     created_at: moment(article.created_at),
     updated_at: moment(article.updated_at),
     cover: article.cover ? article.cover : '/assets/img/blogpost_placeholder.jpg',
-    category: article.themes && article.themes[0] && article.themes[0].name ? article.themes[0].name : ''
+    category: article.themes && article.themes[0] && article.themes[0].name ? article.themes[0].name : '',
+    author: normalizeUser(article.author)
   }
 }
 

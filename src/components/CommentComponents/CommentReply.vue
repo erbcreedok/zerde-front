@@ -1,5 +1,5 @@
 <template>
-    <div class="comment_reply_form" v-loading="status==='loading'">
+    <div class="comment_reply_form">
         <template v-if="authorised">
             <form class="comment_form form" data-action="add_comment" @submit.prevent="handleSubmit">
                 <input type="hidden" name="post_id" :value="comment.question_id">
@@ -11,7 +11,10 @@
                     </div>
 
                     <div class="comment_form_buttons">
-                        <button type="submit" class="button button-small button-primary" :disabled="!isValid">Комментировать</button>
+                        <button type="submit" class="button button-small button-primary" :disabled="!isValid">
+                            <pulse-loader v-if="status==='loading'" color="white" size="10px" style="margin-top: 2px; width: 130px"/>
+                            <span v-else>Комментировать</span>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -23,13 +26,14 @@
 </template>
 
 <script>
-    import UiTextarea from "./ui/UiTextarea";
-    import ActionForAuthorised from './ui/ActionForAuthorised'
-    import {USER} from '../_types/store-types'
-    import i18nService from '../_services/i18n.service'
+    import UiTextarea from "../ui/UiTextarea";
+    import ActionForAuthorised from '../ui/ActionForAuthorised'
+    import {USER} from '../../_types/store-types'
+    import i18nService from '../../_services/i18n.service'
+    import PulseLoader from "vue-spinner/src/PulseLoader";
     export default {
       name: 'comment-reply',
-      components: {ActionForAuthorised, UiTextarea},
+      components: {PulseLoader, ActionForAuthorised, UiTextarea},
       props: {
         comment: {
           type: Object,

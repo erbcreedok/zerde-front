@@ -38,28 +38,14 @@
   import KbTags from "../../components/KBComponents/KBTags";
   import kbService from "../../_services/kb.service";
   import BlogCard from "../../components/KBComponents/BlogCard";
+  import {blogsSwiperOptions} from "../../_helpers/swiperOptions";
   export default {
     components: {BlogCard, KbTags},
     data() {
       return {
         themes: [],
         articles: [],
-        swiperOptions: {
-          slidesPerView: 4,
-          preventClicks: false,
-          spaceBetween: 24,
-          breakpoints: {
-            600 : {
-              slidesPerView: 'auto',
-              spaceBetween: 0
-            },
-
-            1176 : {
-              slidesPerView: 2,
-              spaceBetween: 24
-            }
-          }
-        },
+        swiperOptions: blogsSwiperOptions
       }
     },
     computed: {

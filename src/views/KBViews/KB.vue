@@ -2,7 +2,7 @@
   <div class="page">
 
     <div class="wrap">
-    <tabs :tabs="tabs" class="blog_tabs"/>
+      <tabs :tabs="tabs" class="blog_tabs"/>
     </div>
 
     <router-view/>
@@ -20,12 +20,17 @@
     },
     computed: {
       tabs() {
-        return [
-          {title: 'catalog', route: { ...this.$route, query: {...this.$route.query, theme: undefined, page: 1, category: 'catalog'}}},
-          {title: 'all in a row', route: { ...this.$route, query: {...this.$route.query, theme: undefined, page: 1, category: 'all'}}},
-          {title: 'search', position: 'right', icon: 'search', route: { ...this.$route, query: {...this.$route.query, theme: undefined, page: 1, category: 'search'}}},
-          {title: 'bookmarks', position: 'right', icon: 'bookmark', route: { ...this.$route, query: {...this.$route.query, theme: undefined, page: 1, category: 'bookmarks'}}},
-        ]
+        const tabs = [
+          {title: 'catalog', route: { name: 'kb-catalog' }},
+          {title: 'all in a row', route: { name: 'kb-all' }},
+          {title: 'search', position: 'right', icon: 'search', route: { name: 'kb-search' }},
+          {title: 'bookmarks', position: 'right', icon: 'bookmark', route: { name: 'kb-bookmarks' }},
+        ];
+        tabs.forEach(tab => {
+          tab.isActive = tab.route.name === this.$route.name;
+          return tab;
+        });
+        return tabs;
       }
     },
   }

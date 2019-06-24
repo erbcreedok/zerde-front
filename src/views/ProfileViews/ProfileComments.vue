@@ -16,7 +16,7 @@
 <script>
   import qaService from '../../_services/qa.service'
   import GridLoader from 'vue-spinner/src/GridLoader'
-  import CommentBlock from '../../components/CommentBlock'
+  import CommentBlock from '../../components/CommentComponents/CommentBlock'
 
   export default {
     components: {CommentBlock, GridLoader},

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import CommentBlock from '../CommentBlock'
+  import CommentBlock from '../CommentComponents/CommentBlock'
   import qaService from '../../_services/qa.service'
   import QaAnswerForm from './QAAnswerForm'
 

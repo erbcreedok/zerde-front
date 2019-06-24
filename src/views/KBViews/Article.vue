@@ -29,12 +29,12 @@
 
                 <main class="post_content post_wrap typeset" v-html="article.body"></main>
 
-                <div class="post_details post_wrap">
-                    <div class="post_author">
+                <div class="post_details post_details-bottom post_wrap">
+                    <div class="post_author" v-if="article.author">
                         <div class="avatar post_author_photo">
-                            <img src="https://thispersondoesnotexist.com/image" alt="">
+                            <img :src="article.author.avatar_src" alt="">
                         </div>
-                        <div class="post_author_name">Minnie Ortiz</div>
+                        <div class="post_author_name">{{article.author.fullname}}</div>
                     </div>
 
                     <div class="post_controls">
@@ -50,147 +50,32 @@
                     <ui-rating class="post_rating" :rate="article.rating" :rated="article.user_rate" :loading="ratingStatus==='loading'"  @change="putLike"/>
                 </div>
 
-                <section class="post_comments post_wrap">
-                    <div class="post_subtitle caption">17 комментариев</div>
-
-                    <article class="comment" data-id="8">
-                        <a href="#" class="comment_post">Название поста</a>
-
-                        <div class="comment_body">
-                            <div class="comment_text">Тестовый ответ</div>
-
-                            <div class="comment_details">
-                                <div class="user comment_author">
-                                    <div class="user_photo avatar">
-                                        <img src="http://2.gravatar.com/avatar/5eb37376a348cbb324c93a1c5dee5b1b?s=96&amp;d=mm&amp;r=g" alt="">
-                                    </div>
-
-                                    <div class="user_info">
-                                        <a href="#" class="user_name">Юрий Апретов</a>
-                                        <div class="user_details">
-                                            <li>
-                                                3 апреля </li>
-
-                                            <li>
-                                                <a href="#" class="comment_reply_link" data-post-id="47" data-parent="8">Комментировать</a>
-                                            </li>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="comment_rating rating" data-entry-id="8" data-entry-type="comment"> <button class="rating_control rating_control-decrease rating_control-selected"></button>
-                                    <div class="rating_counter">0</div> <button class="rating_control rating_control-increase"></button></div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <button class="post_comments_toggle button button-primary button-outline button-block">Показать комментарии</button>
-                </section>
+                <article-comments v-if="(article.comments && article.comments.length) || freshComments.length" :comments="article.comments" :fresh-comments="freshComments" :article_id="article.id"/>
 
                 <div class="post_addcomment post_wrap">
                     <div class="post_subtitle caption">Ваш комментарий</div>
-
-                    <form class="form">
-                        <input type="hidden" name="post_id" value="47">
-                        <input type="hidden" name="parent" value="8">
-
-                        <div class="textfield textfield-block">
-                            <textarea rows="2" class="textfield_input" placeholder=" " name="text" required=""></textarea>
-                            <div class="textfield_label">Напишите свой комментарий</div>
-                        </div>
-
-                        <div class="comment_form_controls">
-                            <div class="comment_form_user avatar">
-                                <img src="http://2.gravatar.com/avatar/27ae0d93a82a7ebe577bac396da1560d?s=96&amp;d=mm&amp;r=g" alt="">
-                            </div>
-
-                            <div class="comment_form_buttons">
-                                <button type="submit" class="button button-small button-primary">Комментировать</button>
-                            </div>
-                        </div>
-                    </form>
+                    <template v-if="isAuthorised">
+                        <comment-form :post-id="article.id" :send-reply="replyFunction" @onSend="addToComments"/>
+                    </template>
+                    <template v-else>
+                        <action-for-authorised style="margin-top: 0.4rem;" action="leave comments" ref="input"/>
+                    </template>
                 </div>
             </article>
 
-            <section class="post_next wrap">
+            <section class="post_next wrap" v-if="similars && similars.length">
                 <div class="post_next_title caption">Выберите следующий материал</div>
 
-                <div class="blog_grid">
-                    <article class="blogcard">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Lorem ipsum dolor.</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-inverse">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-inverse">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum a aliquid hic reprehenderit quos harum amet!</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
+                <div class="blog_grid blog_grid-slider">
+                    <swiper ref="mySwiper" :options="swiperOptions">
+                        <swiper-slide v-for="(similarArticle, index) in similars" :key="index">
+                            <blog-card  v-bind="similarArticle"/>
+                        </swiper-slide>
+                    </swiper>
                 </div>
 
                 <div class="post_next_button">
-                    <a href="#" class="button button-secondary button-outline button-icon button-icon-left button-icon-arrow-left">Вернуться в базу знаний</a>
+                    <router-link :to="{name: 'kb'}"  class="button button-secondary button-outline button-icon button-icon-left button-icon-arrow-left">Вернуться в базу знаний</router-link>
                 </div>
             </section>
         </template>
@@ -202,9 +87,14 @@
   import {capitalize} from "../../_filters/capitalize";
   import copyToClipboard from "../../_helpers/copyToClipboard";
   import UiRating from "../../components/ui/UIRating";
+  import ArticleComments from "../../components/KBComponents/ArticleComments";
+  import CommentForm from "../../components/CommentComponents/CommentForm";
+  import ActionForAuthorised from "../../components/ui/ActionForAuthorised";
+  import BlogCard from "../../components/KBComponents/BlogCard";
+  import {blogsSwiperOptions} from "../../_helpers/swiperOptions";
 
   export default {
-    components: {UiRating},
+    components: {BlogCard, ActionForAuthorised, CommentForm, ArticleComments, UiRating},
     props: {
       slug: {
         required: true,
@@ -218,6 +108,9 @@
         subscriptionStatus: 'clean',
         article: null,
         similars: [],
+        replyFunction: kbService.sendComment,
+        freshComments: [],
+        swiperOptions: blogsSwiperOptions,
       }
     },
     watch: {
@@ -252,7 +145,10 @@
         })
       },
       loadSimilars(slug = this.slug) {
-        kbService.loadSimilars(slug).then(articles => this.similars = articles);
+        kbService.loadSimilars(slug).then(articles => {
+          console.log(articles);
+          this.similars = articles;
+        });
       },
       putLike(value) {
         if (this.isOwnArticle) {
@@ -291,6 +187,10 @@
         this.$notyf.success({
           message: capitalize(this.$t('link saved to clipboard')),
         });
+      },
+      addToComments(comment) {
+        console.log(comment);
+        this.freshComments.push(comment)
       },
     }
   }

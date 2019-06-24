@@ -1,7 +1,7 @@
 <template>
     <article :id="blockId" class="comment" :class="{'comment-small': isChild}" :data-id="comment.id">
-      <template v-if="showLink && question">
-        <router-link :to="{name: 'qa-single', params: {slug: question.id}}" v-scroll-to="'#answer-block-'+comment.id" class="comment_post">{{question.title}}</router-link>
+      <template v-if="showLink">
+        <router-link v-if="question" :to="{name: 'qa-single', params: {slug: question.id}}" v-scroll-to="'#answer-block-'+comment.id" class="comment_post">{{question.title}}</router-link>
       </template>
       <div class="comment_body" :class="{'comment-verified': isCorrect}">
         <div class="comment_text" v-html="comment.body"></div>
@@ -30,6 +30,7 @@
             <comment-block v-for="reply in children"
                            :comment="reply"
                            is-child
+                           :max-level="maxLevel - 1"
                            :key="reply.id"
                            :reply-function="replyFunction"
                            :put-like-function="putLikeToChildFunction ? putLikeToChildFunction : putLikeFunction"
@@ -42,12 +43,12 @@
 </template>
 
 <script>
-  import UiRating from './ui/UIRating'
-  import {COMMENTS, SET} from '../_types/store-types'
+  import UiRating from '../ui/UIRating'
+  import {COMMENTS, SET} from '../../_types/store-types'
   import CommentReply from './CommentReply'
-  import {capitalize} from '../_filters/capitalize'
-  import userService from '../_services/user.service'
-  import qaService from '../_services/qa.service'
+  import {capitalize} from '../../_filters/capitalize'
+  import userService from '../../_services/user.service'
+  import qaService from '../../_services/qa.service'
 
   export default {
       name: 'comment-block',
@@ -57,12 +58,22 @@
           type: Object,
           required: true,
         },
+        maxLevel: [Number, String],
         disableComment: Boolean,
         isOwnQuestion: Boolean,
         isChild: Boolean,
-        replyFunction: Function,
-        putLikeFunction: Function,
-        putLikeToChildFunction: Function,
+        replyFunction: {
+          type: Function,
+          default: () => new Promise(() => {})
+        },
+        putLikeFunction: {
+          type: Function,
+          default: () => new Promise(() => {})
+        },
+        putLikeToChildFunction: {
+          type: Function,
+          default: () => new Promise(() => {})
+        },
         showLink: Boolean,
       },
       data() {
