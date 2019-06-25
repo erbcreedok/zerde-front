@@ -141,19 +141,10 @@ export function normalizeContact(contact) {
 }
 
 export function normalizeArticle(article) {
-  return {
-    commentsCount: article.comments_count,
-    ratingCount: article.rating,
-    author: article.author,
-    bookmarksCount: article.fav_count,
-    id: article.id,
-    user_id: article.user_id,
-    title: article.title,
-    body: article.body,
+  return {...article,
     created_at: moment(article.created_at),
     updated_at: moment(article.updated_at),
     cover: article.cover ? article.cover : '/assets/img/blogpost_placeholder.jpg',
-    themes: article.themes,
     category: article.themes && article.themes[0] && article.themes[0].name ? article.themes[0].name : ''
   }
 }

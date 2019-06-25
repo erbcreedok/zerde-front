@@ -14,11 +14,6 @@ export default [
     component: () => import('../views/About.vue')
   },
   {
-    path: 'blog:slug',
-    name: 'blog',
-    component: () => import('../views/BlogPage.vue')
-  },
-  {
     path: 'signin',
     name: 'signin',
     beforeEnter: unrequireAuth,
@@ -65,5 +60,11 @@ export default [
     props: true,
     component: () => import('../views/KBViews/KB.vue'),
     children: KBRoutes,
+  },
+  {
+    path: 'article/:slug',
+    name: 'article',
+    props: true,
+    component: () => import('../views/KBViews/Article.vue')
   },
 ];

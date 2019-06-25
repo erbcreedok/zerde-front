@@ -7,12 +7,12 @@
         <div class="blogcard_wrap">
             <div class="blogcard_type">Статья</div>
             <div class="blogcard_category" v-if="category && category!==''">{{category}}</div>
-            <a href="#" class="blogcard_title">{{title}}</a>
+            <router-link :to="{name: 'article', params: {slug: id}}" class="blogcard_title">{{title}}</router-link>
 
-            <ul class="blog_stats blogcard_stats" v-if="bookmarksCount!==null || ratingCount!==null || commentsCount!==null">
-                <li class="blog_stat blog_stat-rating" v-if="ratingCount!==null">{{ratingCount}}</li>
-                <li class="blog_stat blog_stat-comments" v-if="commentsCount!==null">{{commentsCount}}</li>
-                <li class="blog_stat blog_stat-bookmarks" v-if="bookmarksCount!==null">{{bookmarksCount}}</li>
+            <ul class="blog_stats blogcard_stats" v-if="fav_count!==null || rating!==null || comments_count!==null">
+                <li class="blog_stat blog_stat-rating" v-if="rating!==null">{{rating}}</li>
+                <li class="blog_stat blog_stat-comments" v-if="comments_count!==null">{{comments_count}}</li>
+                <li class="blog_stat blog_stat-bookmarks" v-if="fav_count!==null">{{fav_count}}</li>
             </ul>
         </div>
     </article>
@@ -21,9 +21,10 @@
 <script>
     export default {
       props: {
-        ratingCount: Number,
-        commentsCount: Number,
-        bookmarksCount: Number,
+        id: [Number, String],
+        rating: Number,
+        comments_count: Number,
+        fav_count: Number,
         type: String,
         category: String,
         title: String,
