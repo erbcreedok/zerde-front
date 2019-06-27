@@ -23,6 +23,12 @@ const kbService = {
       return normalizeArticles(data.articles);
     });
   },
+  loadFavorites(page=1, per_page=5) {
+    let query = `?page=${page}&per_page=${per_page}`;
+    return client.get(`profile/kb/favorite${query}`).then(handleResponse).then(({data}) => {
+      return handleArticlesSuccess(data);
+    });
+  },
   loadThemes() {
     return client.get(`kb/theme`).then(handleResponse).then(({data}) => {
       return data.themes.data;
@@ -30,11 +36,13 @@ const kbService = {
   },
   rateArticle(article_id, rate_value) {
     return client.post(`kb-moderation/article/${article_id}/rate`, {rate_value})
+      .catch(handleError)
       .then(handleResponse)
       .then(({data}) => data.total);
   },
   addArticleToFavorites(article_id, value=true) {
     return client.post(`user/fav/article/${value ? 'add' : 'remove'}`, {article_id})
+      .catch(handleError)
       .then(handleResponse)
   },
   sendComment(article_id, body) {

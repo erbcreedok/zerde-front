@@ -141,13 +141,26 @@ export function normalizeContact(contact) {
 }
 
 export function normalizeArticle(article) {
-  return {...article,
+  article = {...article,
     created_at: moment(article.created_at),
     updated_at: moment(article.updated_at),
     cover: article.cover ? article.cover : '/assets/img/blogpost_placeholder.jpg',
     category: article.themes && article.themes[0] && article.themes[0].name ? article.themes[0].name : '',
-    author: normalizeUser(article.author)
+    author: article.author ? normalizeUser(article.author) : null,
+    embed: article.video ? generateEmbedLink(article.video) : null,
+  };
+  return article;
+}
+
+export function generateEmbedLink(link) {
+  if (link.indexOf('youtube.com/watch?v=') !== -1) {
+    const code = link.split('youtube.com/watch?v=')[1].split('=')[0];
+    link = 'https://www.youtube.com/embed/' + code;
+  } else if (link.indexOf('youtu.be/') !== -1) {
+    const code = link.split('youtu.be/')[1];
+    link = 'https://www.youtube.com/embed/' + code;
   }
+  return link;
 }
 
 export function normalizeArticles(articles = []) {

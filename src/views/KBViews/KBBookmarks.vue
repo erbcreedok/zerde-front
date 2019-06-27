@@ -31,7 +31,7 @@
         articles: [],
         status: 'clean',
         totalCount: 0,
-        perPage: 12,
+        perPage: 5,
       }
     },
     computed: {
@@ -43,11 +43,10 @@
       loadArticles(page=this.activePage, per_page=this.perPage) {
         this.status = 'loading';
         this.articles = [];
-        kbService.loadArticles(page, per_page).then(({articles, totalCount}) => {
+        kbService.loadFavorites(page, per_page).then(({articles}) => {
           console.log(articles);
           this.status = 'success';
           this.articles = articles;
-          this.totalCount = totalCount
         }).catch(err => {
           this.status = 'error';
           console.log(err);

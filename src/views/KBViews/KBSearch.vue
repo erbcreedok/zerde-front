@@ -118,229 +118,64 @@
             <div class="overlay"></div>
 
             <main class="bSearch_results blog_grid-static">
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-
-
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
-                <article class="blogcard blogcard-h">
-                    <div class="blogcard_cover">
-                        <img src="http://placehold.it/500x500" alt="">
-                        <div class="blogcard_type">Статья</div>
-                        <div class="blogcard_icons">
-                            <span class="blogcard_icon blogcard_icon-external"></span>
-                        </div>
-                    </div>
-
-                    <div class="blogcard_wrap">
-                        <div class="blogcard_category">Личная эффективность</div>
-                        <a href="#" class="blogcard_title">Когда идей нет: предприниматели рассказывают, где искали вдохновение</a>
-
-                        <ul class="blog_stats blogcard_stats">
-                            <li class="blog_stat blog_stat-rating">13</li>
-                            <li class="blog_stat blog_stat-comments">1</li>
-                            <li class="blog_stat blog_stat-bookmarks">12</li>
-                        </ul>
-                    </div>
-                </article>
+                <template v-if="status==='loading'">
+                    <grid-loader color="#e3e3e3" style="text-align: center; margin: 1rem auto"/>
+                </template>
+                <blog-card v-for="(article, index) in articles" v-bind="article" :key="index" horizontal/>
+                <scroll-loader :loader-enable="status==='success' && totalCount > articles.length" :loader-method="debounce(scrollLoaderMethod, 1000)"/>
             </main>
         </div>
     </div>
 </template>
+
+<script>
+    import kbService from "../../_services/kb.service";
+    import BlogCard from "../../components/KBComponents/BlogCard";
+    import _ from "lodash";
+    import GridLoader from "vue-spinner/src/GridLoader";
+
+    export default {
+      components: {GridLoader, BlogCard},
+      data() {
+        return {
+          articles: [],
+          status: 'clean',
+          totalCount: 0,
+          perPage: 10,
+          activePage: 1,
+        }
+      },
+      methods: {
+        debounce:_.debounce,
+        scrollLoaderMethod() {
+          if (this.totalCount <= this.articles.length) return;
+          console.log(this.totalCount, this.articles.length);
+          this.activePage += 1;
+        },
+        loadArticles(page=this.activePage, per_page=this.perPage) {
+          this.status = 'loading';
+          console.log(page);
+          kbService.loadArticles(page, per_page).then(({articles, totalCount}) => {
+            console.log(articles);
+            this.status = 'success';
+            this.articles.push(...articles);
+            this.totalCount = totalCount;
+          }).catch(err => {
+            console.log(err);
+            this.status = 'error';
+            this.$notyf.error({
+              message: 'Произошла ошибка при загрузке данных',
+            });
+          });
+        },
+      },
+      watch: {
+        activePage() {
+          this.loadArticles();
+        },
+      },
+      mounted() {
+        this.loadArticles();
+      },
+    }
+</script>

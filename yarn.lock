@@ -7807,6 +7807,11 @@ vue-router@^3.0.3:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.6.tgz#2e4f0f9cbb0b96d0205ab2690cfe588935136ac3"
 
+vue-scroll-loader@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/vue-scroll-loader/-/vue-scroll-loader-1.1.6.tgz#7b54b21930b4b0abddafce73c3d676938712341c"
+  integrity sha512-+uH3bfw951g4yQ63AXbhIHIgrOncFn2s6ogZU96BBxH4awDeQHTQdii2T4s29+dQDop84vZkVlr84t+7q52FfA==
+
 vue-scrollto@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/vue-scrollto/-/vue-scrollto-2.15.0.tgz#e6e4645dfd2efc0d960123f607c2ab448b81670a"

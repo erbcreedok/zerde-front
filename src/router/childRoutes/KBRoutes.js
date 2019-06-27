@@ -22,7 +22,7 @@ const KBRoutes = [
   {
     path: 'bookmarks',
     name: 'kb-bookmarks',
-    component: () => import('../../views/KBViews/KBAll.vue')
+    component: () => import('../../views/KBViews/KBBookmarks.vue')
   },
 ];
 

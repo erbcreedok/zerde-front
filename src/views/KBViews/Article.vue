@@ -23,11 +23,24 @@
                     </ul>
 
                     <div class="post_controls">
-                        <button class="post_controls_item button button-small button-secondary button-outline button-icon button-icon-left button-icon-bookmark">Сохранить</button>
+                        <template v-if="article.user_favorite">
+                            <span data-tooltip="Убрать из сохранении" data-tooltip-position="top"><button class="post_controls_item button button-small button-secondary button-icon button-icon-left button-icon-bookmark button-danger" @click="setSubscription(false)">Сохранено</button></span>
+                        </template>
+                        <template v-else>
+                            <button class="post_controls_item button button-small button-secondary button-icon button-icon-left button-icon-bookmark button-outline" @click="setSubscription(true)">Сохранить</button>
+                        </template>
                     </div>
                 </div>
 
-                <main class="post_content post_wrap typeset" v-html="article.body"></main>
+                <template v-if="article.type === 'text'">
+                    <main class="post_content post_wrap typeset" v-html="article.body"></main>
+                </template>
+
+                <template v-if="article.type === 'video_out'">
+                    <main class="post_content post_wrap typeset">
+                        <iframe :src="article.embed" width="100%" height="350px" frameborder="0"></iframe>
+                    </main>
+                </template>
 
                 <div class="post_details post_details-bottom post_wrap">
                     <div class="post_author" v-if="article.author">

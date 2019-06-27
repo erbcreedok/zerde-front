@@ -1,10 +1,14 @@
 <template>
     <div class="catalog">
+
         <div class="wrap">
             <kb-tags :tags="themes"/>
         </div>
 
         <div class="wrap">
+            <template v-if="status==='loading'">
+                <grid-loader color="#e3e3e3" style="text-align: center; margin: 1rem auto"/>
+            </template>
             <div class="blog_section blog_grid blog_grid-static">
                 <template v-for="(article, index) in articles">
                     <blog-card :key="index" v-bind="article" :size="index < 2 ? 'wide': ''" inverse/>
@@ -39,11 +43,13 @@
   import kbService from "../../_services/kb.service";
   import BlogCard from "../../components/KBComponents/BlogCard";
   import {blogsSwiperOptions} from "../../_helpers/swiperOptions";
+  import GridLoader from "vue-spinner/src/GridLoader";
   export default {
-    components: {BlogCard, KbTags},
+    components: {GridLoader, BlogCard, KbTags},
     data() {
       return {
         themes: [],
+        status: 'clean',
         articles: [],
         swiperOptions: blogsSwiperOptions
       }
@@ -53,8 +59,10 @@
     },
     methods: {
       loadArticles() {
-        kbService.loadArticles().then(({articles}) => {
+        this.status = 'loading';
+        kbService.loadArticles(1, 6).then(({articles}) => {
           console.log(articles);
+          this.status = 'success';
           this.articles = articles;
         })
       },

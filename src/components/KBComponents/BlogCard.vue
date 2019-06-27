@@ -1,5 +1,5 @@
 <template>
-    <article class="blogcard" :class="{'blogcard-wide': size==='wide',  'blogcard-inverse': inverse}">
+    <router-link :to="{name: 'article', params: {slug: id}}" class="blogcard" :class="{'blogcard-wide': size==='wide',  'blogcard-inverse': inverse, 'blogcard-h': horizontal}">
         <div class="blogcard_cover">
             <img :src="cover" alt="">
         </div>
@@ -15,7 +15,7 @@
                 <li class="blog_stat blog_stat-bookmarks" v-if="fav_count!==null">{{fav_count}}</li>
             </ul>
         </div>
-    </article>
+    </router-link>
 </template>
 
 <script>
@@ -31,6 +31,7 @@
         cover: String,
         size: String,
         inverse: Boolean,
+        horizontal: Boolean,
       }
     }
 </script>
