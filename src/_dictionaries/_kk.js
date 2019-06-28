@@ -105,4 +105,5 @@ export default {
   'all in a row' : 'барлығы',
   'search' : 'іздеу',
   'bookmarks' : 'бетбелгі',
+  'see bookmarks' : 'бетбелгілерді көру',
 }

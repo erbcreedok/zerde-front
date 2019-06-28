@@ -1,19 +1,24 @@
 <template>
     <div class="all">
         <div class="wrap">
-            <template v-if="status==='loading'">
-                <grid-loader color="#e3e3e3" style="text-align: center; margin: 1rem auto"/>
-            </template>
-            <div class="blog_section blog_grid blog_grid-static">
-                <template v-for="(article, index) in articles">
-                    <blog-card :key="index" v-bind="article" inverse/>
+            <template v-if="isAuthorised">
+                <template v-if="status==='loading'">
+                    <grid-loader color="#e3e3e3" style="text-align: center; margin: 1rem auto"/>
                 </template>
-            </div>
-            <list-pagination v-if="totalCount > perPage"
-                             :active-page="activePage-0"
-                             :limit="perPage"
-                             :total="totalCount"
-                             :route="$route"/>
+                <div class="blog_section blog_grid blog_grid-static">
+                    <template v-for="(article, index) in articles">
+                        <blog-card :key="index" v-bind="article" inverse/>
+                    </template>
+                </div>
+                <list-pagination v-if="totalCount > perPage"
+                                 :active-page="activePage-0"
+                                 :limit="perPage"
+                                 :total="totalCount"
+                                 :route="$route"/>
+            </template>
+            <template v-else>
+                <action-for-authorised action="see bookmarks"/>
+            </template>
         </div>
     </div>
 </template>
@@ -23,9 +28,10 @@
   import ListPagination from "../../components/ListPagination";
   import BlogCard from "../../components/KBComponents/BlogCard";
   import GridLoader from "vue-spinner/src/GridLoader";
+  import ActionForAuthorised from "../../components/ui/ActionForAuthorised";
 
   export default {
-    components: {GridLoader, BlogCard, ListPagination},
+    components: {ActionForAuthorised, GridLoader, BlogCard, ListPagination},
     data() {
       return {
         articles: [],
@@ -35,6 +41,9 @@
       }
     },
     computed: {
+      isAuthorised() {
+        return this.$store.state.auth.authorized;
+      },
       activePage() {
         return this.$route.query && this.$route.query['page'] ? this.$route.query['page']-0 : 1;
       },

@@ -17,6 +17,9 @@
         </template>
         <question-card v-for="question in questions" :key="question.id" :question="question"/>
       </template>
+      <template v-if="selectedTab === 'a'">
+        <k-b-bookmarks/>
+      </template>
     </template>
   </div>
 </template>
@@ -25,13 +28,15 @@
   import GridLoader from "vue-spinner/src/GridLoader";
   import QuestionCard from "../../components/QAComponents/QuestionCard";
   import {requireOwnAuth} from '../../router/router-guards'
+  import KBBookmarks from "../KBViews/KBBookmarks";
 
   export default {
-    components: {QuestionCard, GridLoader},
+    components: {KBBookmarks, QuestionCard, GridLoader},
     data() {
       return {
         tabs: [
           {name: 'q', label: this.$t('questions'), count: null},
+          {name: 'a', label: this.$t('articles'), count: null},
         ],
         questionsStatus: 'clean',
         questions: [],

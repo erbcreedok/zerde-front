@@ -7,7 +7,7 @@
                 <div class="post_header post_wrap">
                     <ul class="post_categories">
                         <li>Статья</li>
-                        <li><a href="#" v-for="theme in article.themes" :key="theme.id">{{theme.name}}</a></li>
+                        <li v-for="theme in article.themes" :key="theme.id"><a href="#">{{theme.name}}</a></li>
                     </ul>
 
                     <h1 class="post_title title">{{article.title}}</h1>
@@ -39,6 +39,14 @@
                 <template v-if="article.type === 'video_out'">
                     <main class="post_content post_wrap typeset">
                         <iframe :src="article.embed" width="100%" height="350px" frameborder="0"></iframe>
+                    </main>
+                </template>
+
+                <template v-if="article.type === 'video_in'">
+                    <main class="post_content post_wrap typeset">
+                        <video :src="article.embed" controls="controls" width="100%" height="350px">
+                            <source :src="article.embed"/>
+                        </video>
                     </main>
                 </template>
 

@@ -12,6 +12,7 @@ import 'swiper/dist/css/swiper.css';
 import {Notyf} from 'notyf';
 import 'notyf/notyf.min.css';
 
+
 Vue.use(vuexI18n.plugin, store);
 locales.forEach(locale => {
   

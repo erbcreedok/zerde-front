@@ -152,15 +152,20 @@ export function normalizeArticle(article) {
   return article;
 }
 
-export function generateEmbedLink(link) {
-  if (link.indexOf('youtube.com/watch?v=') !== -1) {
-    const code = link.split('youtube.com/watch?v=')[1].split('=')[0];
-    link = 'https://www.youtube.com/embed/' + code;
-  } else if (link.indexOf('youtu.be/') !== -1) {
-    const code = link.split('youtu.be/')[1];
-    link = 'https://www.youtube.com/embed/' + code;
+export function generateEmbedLink(link, type='video_out') {
+  if (type==='video_out') {
+    if (link.indexOf('youtube.com/watch?v=') !== -1) {
+      const code = link.split('youtube.com/watch?v=')[1].split('=')[0];
+      link = 'https://www.youtube.com/embed/' + code;
+    } else if (link.indexOf('youtu.be/') !== -1) {
+      const code = link.split('youtu.be/')[1];
+      link = 'https://www.youtube.com/embed/' + code;
+    } else {
+      link = 'http://academy-back.tk/storage/kb/article/' + link;
+    }
+    return link;
   }
-  return link;
+  
 }
 
 export function normalizeArticles(articles = []) {

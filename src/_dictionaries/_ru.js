@@ -105,4 +105,5 @@ export default {
   'all in a row' : 'все подряд',
   'search' : 'поиск',
   'bookmarks' : 'закладки',
+  'see bookmarks' : 'видеть закладки',
 }
