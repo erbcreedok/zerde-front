@@ -7,7 +7,7 @@
                 <div class="post_header post_wrap">
                     <ul class="post_categories">
                         <li>Статья</li>
-                        <li v-for="theme in article.themes" :key="theme.id"><a href="#">{{theme.name}}</a></li>
+                        <li v-for="theme in article.themes" :key="theme.id"><router-link :to="{name: 'kb-search', query: {themes: `[${theme.id}]`}}">{{theme.name}}</router-link></li>
                     </ul>
 
                     <h1 class="post_title title">{{article.title}}</h1>
