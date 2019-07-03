@@ -13,9 +13,6 @@ const userService = {
       return user;
     });
   },
-  getUserByToken(token) {
-    console.log(token)
-  },
   getUser(username) {
     usersMock.fetchUser(username).then(user => {
       return user;

@@ -17,7 +17,6 @@ const client =  axios.create({
 
 client.interceptors.response.use(res => res, error => {
   if (error.response.status === 500) {
-    console.log();
     Vue.prototype.$notyf.error({
       message: capitalize(Vue.prototype.$t('server not responding')),
     });
@@ -29,8 +28,16 @@ export const setTokenToClient = token => { client.defaults.headers.common.Author
 export const removeTokenFromClient = () => { delete client.defaults.headers.common.Authorization };
 
 export function handleResponse(res) {
-  console.log(res);
   return res.data;
+}
+
+export function handleError(error) {
+  if (error.response.status === 401) {
+    Vue.prototype.$notyf.error({
+      message: capitalize(Vue.prototype.$t('authorisation required'))
+    })
+  }
+  throw error;
 }
 
 export default client;

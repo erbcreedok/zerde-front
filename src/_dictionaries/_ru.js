@@ -107,4 +107,5 @@ export default {
   'bookmarks' : 'закладки',
   'see bookmarks' : 'видеть закладки',
   'courses' : 'курсы',
+  'articles' : 'статьи',
 }

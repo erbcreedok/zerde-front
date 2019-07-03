@@ -11,7 +11,6 @@ const qaApi = {
     }).then(handleResponse);
   },
   getQuestions(page=1, per_page=5, search='', themes=[], category='all'){
-    console.log({page, search, category});
     let route = '/question';
     let query = `?page=${page}&per_page=${per_page}`;
     switch (category) {

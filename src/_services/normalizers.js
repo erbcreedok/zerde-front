@@ -18,6 +18,22 @@ export function normalizeUser(user, save=true) {
   return user;
 }
 
+export function normalizeCourseAuthor(author) {
+  if (!author.fullname) {
+    author.fullname = (author.firstname + ' ' + author.lastname).trim();
+  }
+  if (!author.avatar_src) {
+    if (author.avatar) {
+      author.avatar_src = homeURL + '/storage/cl/author/' + author.avatar;
+    } else {
+      author.avatar_src = '/assets/img/avatar-placeholder.jpg';
+    }
+  } else if (author.avatar_src.indexOf(homeURL) === -1) {
+    author.avatar_src = homeURL + author.avatar_src;
+  }
+  return author;
+}
+
 export function normalizeUserProfile(user) {
   user = normalizeUser(user, false);
   if (!user.level) {
@@ -87,8 +103,12 @@ export function normalizeUserProfile(user) {
   return user;
 }
 
-export function normalizeUsers(users) {
-  return users.map(u => normalizeUser(u));
+export function normalizeUsers(users, save=true) {
+  return users.map(u => normalizeUser(u, save));
+}
+
+export function normalizeCourseAuthors(authors) {
+  return authors.map(a => normalizeCourseAuthor(a));
 }
 
 export function normalizeUserProfileForm(data) {
@@ -154,6 +174,7 @@ export function normalizeArticle(article) {
 
 export function normalizeCourse(course) {
   course = {...course,
+    authors: course.authors ? normalizeCourseAuthors(course.authors) : course.authors_list ? normalizeCourseAuthors(course.authors_list) : [],
   };
   return course;
 }

@@ -28,7 +28,6 @@ const userApi = {
     });
   },
   approveSpecialization(user_id, specialization_id, val) {
-    console.log({user_id, specialization_id});
     if (val) {
       return client.post('user/specialization/approve', {user_id, specialization_id}).then(res => res.data.data);
     } else {

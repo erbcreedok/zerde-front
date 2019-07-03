@@ -7,13 +7,10 @@ import {normalizeQuestion, normalizeQuestions, normalizeUsers} from './normalize
 import themesApi from '../_api/themes.api'
 
 const qaService = {
-  getQuestions(page=1, limit=5, {searchText="", themes=[], tags=[], category, ...filters}={}) {
-    console.log({page,limit,searchText,tags,category,filters, themes});
-    // return qaMock.fetchQAs(page, limit, {filters: {...filters, categories, tags, searchText}, });
+  getQuestions(page=1, limit=5, {searchText="", themes=[], category}={}) {
     return qaApi.getQuestions(page, limit, searchText, themes, category).then(handleQuestionsSuccess);
   },
   getQuestion(slug) {
-    // return qaMock.fetchQuestion(slug).then(({data}) => data);
     return qaApi.getQuestion(slug).then(({data}) => normalizeQuestion(data.question));
   },
   getQAStats() {
@@ -57,8 +54,6 @@ const qaService = {
     return answersMock.addAnswerReply(answerId, message, token).then(({data}) => data);
   },
   sendAnswer(questionId, message) {
-    // const token = authService.getToken();
-    // return answersMock.sendAnswer(questionId, message, token).then(({data}) => data);
     return qaApi.sendAnswer(questionId, message)
       .catch(handleError)
       .then(({data}) => data.answer);
@@ -84,8 +79,6 @@ const qaService = {
       .then(({data}) => data.is_correct);
   },
   async sendQuestion(question) {
-    // const token = authService.getToken();
-    // return questionsMock.sendQuestion(question, token).then(({data}) => data);
     return await qaApi.createQuestion(question)
       .catch(handleError)
       .then(({data}) => normalizeQuestion(data.question));

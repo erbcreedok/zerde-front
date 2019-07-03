@@ -69,6 +69,12 @@ export default [
     component: () => import('../views/KBViews/Article.vue')
   },
   {
+    path: 'course/:slug',
+    name: 'course',
+    props: true,
+    component: () => import('../views/CLViews/Course.vue')
+  },
+  {
     path: 'cl',
     props: true,
     component: () => import('../views/CLViews/CL.vue'),

@@ -1,7 +1,5 @@
-import client, {handleResponse} from "../_api";
-import {normalizeArticle, normalizeArticles} from "./normalizers";
-import Vue from "vue";
-import {capitalize} from "../_filters/capitalize";
+import client, {handleError, handleResponse} from '../_api'
+import {normalizeArticle, normalizeArticles} from './normalizers'
 
 const kbService = {
   loadArticles(page=1, per_page=5, {search, themes, types, orderBy} = {}) {
@@ -15,24 +13,20 @@ const kbService = {
     if (types && types.length) {
       query += '&types=' + encodeURI(JSON.stringify(types));
     }
-    console.log(orderBy);
     if (orderBy) {
       query += `&order_by[${encodeURI(orderBy)}]=DESC`
     }
     return client.get(`kb/article${query}`).then(handleResponse).then(({data}) => {
-      console.log(data);
       return handleArticlesSuccess(data);
     });
   },
   loadArticleById(id) {
     return client.get(`kb/article/${id}`).then(handleResponse).then(({data}) => {
-      console.log(data);
       return handleArticleSuccess(data);
     });
   },
   loadSimilars(id) {
     return client.get(`kb/similar-articles/${id}`).then(handleResponse).then(({data}) => {
-      console.log(data);
       return normalizeArticles(data.articles);
     });
   },
@@ -71,15 +65,6 @@ const kbService = {
       .then(({data}) => data.total);
   },
 };
-
-function handleError(error) {
-  if (error.response.status === 401) {
-    Vue.prototype.$notyf.error({
-      message: capitalize(Vue.prototype.$t('authorisation required'))
-    })
-  }
-  throw error;
-}
 
 function handleArticlesSuccess({articles}) {
   return {

@@ -1,4 +1,4 @@
-import client, {handleResponse} from "../_api";
+import client, {handleError, handleResponse} from '../_api'
 import {normalizeCourse, normalizeCourses} from "./normalizers";
 
 const clService = {
@@ -9,27 +9,30 @@ const clService = {
       return handleCoursesSuccess(data);
     });
   },
-  loadArticleById(id) {
-    return client.get(`kb/article/${id}`).then(handleResponse).then(({data}) => {
+  loadCourseById(id) {
+    return client.get(`cl/course/${id}`).then(handleResponse).then(({data}) => {
       console.log(data);
       return handleCourseSuccess(data);
     });
   },
   loadThemes() {
-    return client.get(`kb/theme`).then(handleResponse).then(({data}) => {
+    return client.get(`cl/theme`).then(handleResponse).then(({data}) => {
       return data.themes.data;
     });
   },
+  sendComment(course_id, body) {
+    return client.post('cl-moderation/course/comment', {course_id, body})
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data.comment);
+  },
+  setLikeToComment(comment_id, rate_value) {
+    return client.post(`cl-moderation/course/comment/${comment_id}/rate`, {rate_value})
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data.total);
+  },
 };
-
-// function handleError(error) {
-//   if (error.response.status === 401) {
-//     Vue.prototype.$notyf.error({
-//       message: capitalize(Vue.prototype.$t('authorisation required'))
-//     })
-//   }
-//   throw error;
-// }
 
 function handleCoursesSuccess({courses}) {
   return {
@@ -37,7 +40,7 @@ function handleCoursesSuccess({courses}) {
     totalCount: courses.total ? courses.total : courses.data.length,
   }
 }
-function handleCourseSuccess({course}) {
+function handleCourseSuccess(course) {
   return normalizeCourse(course);
 }
 

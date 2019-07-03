@@ -18,7 +18,7 @@
         <question-card v-for="question in questions" :key="question.id" :question="question"/>
       </template>
       <template v-if="selectedTab === 'a'">
-        <k-b-bookmarks/>
+        <k-b-bookmarks horizontal no-wrap/>
       </template>
     </template>
   </div>

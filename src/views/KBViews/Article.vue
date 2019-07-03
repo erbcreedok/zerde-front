@@ -160,7 +160,6 @@
           this.article = data;
           return data;
         }).catch(err => {
-          console.log(err);
           this.status = 'error';
           throw err;
         })

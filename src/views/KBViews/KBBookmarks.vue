@@ -1,13 +1,13 @@
 <template>
     <div class="all">
-        <div class="wrap">
+        <div :class="{wrap: !noWrap}">
             <template v-if="isAuthorised">
                 <template v-if="status==='loading'">
                     <grid-loader color="#e3e3e3" style="text-align: center; margin: 1rem auto"/>
                 </template>
-                <div class="blog_section blog_grid blog_grid-static">
+                <div class="blog_grid blog_grid-static">
                     <template v-for="(article, index) in articles">
-                        <blog-card :key="index" v-bind="article" inverse/>
+                        <blog-card :key="index" v-bind="article" :inverse="inverse && !horizontal" :horizontal="horizontal"/>
                     </template>
                 </div>
                 <list-pagination v-if="totalCount > perPage"
@@ -32,6 +32,11 @@
 
   export default {
     components: {ActionForAuthorised, GridLoader, BlogCard, ListPagination},
+    props: {
+      inverse: Boolean,
+      horizontal: Boolean,
+      noWrap: Boolean,
+    },
     data() {
       return {
         articles: [],
