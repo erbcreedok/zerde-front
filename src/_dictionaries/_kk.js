@@ -106,4 +106,5 @@ export default {
   'search' : 'іздеу',
   'bookmarks' : 'бетбелгі',
   'see bookmarks' : 'бетбелгілерді көру',
+  'courses' : 'курстар',
 }

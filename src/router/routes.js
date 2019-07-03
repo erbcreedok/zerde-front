@@ -1,6 +1,7 @@
 import {requireAuth, unrequireAuth} from "./router-guards";
 import profileRoutes from './childRoutes/profileRoutes'
 import KBRoutes from "./childRoutes/KBRoutes";
+import CLRoutes from "./childRoutes/CLRoutes";
 
 export default [
   {
@@ -66,5 +67,11 @@ export default [
     name: 'article',
     props: true,
     component: () => import('../views/KBViews/Article.vue')
+  },
+  {
+    path: 'cl',
+    props: true,
+    component: () => import('../views/CLViews/CL.vue'),
+    children: CLRoutes,
   },
 ];

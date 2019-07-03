@@ -1,6 +1,6 @@
 <template>
     <form class="comment_form form" data-action="add_comment" @submit.prevent="handleSubmit">
-        <ui-textarea ref="input" autofocus class="textfield-block" label="Напишите свой комментарий" v-model="replyText" name="text" required rows="2"/>
+        <ui-textarea ref="input" :autofocus="autofocus" class="textfield-block" label="Напишите свой комментарий" v-model="replyText" name="text" required rows="2"/>
         <div class="comment_form_controls">
             <div class="comment_form_user avatar">
                 <img :src="avatar_src" alt="">
@@ -24,6 +24,7 @@
     props: {
       sendReply: Function,
       postId: [Number, String],
+      autofocus: Boolean,
     },
     data() {
       return {

@@ -152,6 +152,12 @@ export function normalizeArticle(article) {
   return article;
 }
 
+export function normalizeCourse(course) {
+  course = {...course,
+  };
+  return course;
+}
+
 export function generateEmbedLink(link, type='video_out') {
   if (type==='video_out') {
     if (link.indexOf('youtube.com/watch?v=') !== -1) {
@@ -170,4 +176,8 @@ export function generateEmbedLink(link, type='video_out') {
 
 export function normalizeArticles(articles = []) {
   return articles.map(a => normalizeArticle(a));
+}
+
+export function normalizeCourses(courses) {
+  return courses.map(c => normalizeCourse(c));
 }

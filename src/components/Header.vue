@@ -7,6 +7,7 @@
                 </div>
 
                 <ul class="mainmenu" :class="{'mainmenu-visible': mainMenuVisible}" @click="mainMenuVisible = false">
+                    <li class="mainmenu_item"><router-link :to="{name: 'cl'}" class="mainmenu_link">{{ 'courses' | translate | capitalize }}</router-link></li>
                     <li class="mainmenu_item"><router-link :to="{name: 'qa'}" class="mainmenu_link">{{ 'questions and answers' | translate | capitalize }}</router-link></li>
                     <li class="mainmenu_item"><router-link :to="{name: 'kb'}" class="mainmenu_link">{{ 'knowledge' | translate | capitalize }}</router-link></li>
                 </ul>

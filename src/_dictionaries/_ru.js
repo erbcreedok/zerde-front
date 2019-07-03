@@ -106,4 +106,5 @@ export default {
   'search' : 'поиск',
   'bookmarks' : 'закладки',
   'see bookmarks' : 'видеть закладки',
+  'courses' : 'курсы',
 }

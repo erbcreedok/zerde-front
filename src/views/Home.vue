@@ -1,29 +1,6 @@
 <template>
     <div class="home">
-        <section class="hp_hero">
-            <div class="wrap hp_hero_wrap">
-                <div class="hp_hero_content">
-                    <div class="hp_hero_title">ATAMEKEN</div>
-                    <div class="hp_hero_subtitle">
-                        <span class="txt-rotate" data-period="1000">{{txtAnimate}}</span>
-                        для начинающих и действующих <br>предпринимателей
-                    </div>
-                    <div class="hp_hero_tags">
-                        <a href="#" class="button button-small button-primary button-inverse">Старт бизнеса</a>
-                        <a href="#" class="button button-small button-primary button-inverse">Операционка</a>
-                        <a href="#" class="button button-small button-primary button-inverse">Персонал</a>
-                        <a href="#" class="button button-small button-primary button-inverse">Финансы</a>
-                        <a href="#" class="button button-small button-primary button-inverse">Маркетинг</a>
-                        <a href="#" class="button button-small button-primary button-inverse">Продажи</a>
-                        <a href="#" class="button button-small button-primary button-inverse">Управление рисками</a>
-                        <a href="#" class="button button-small button-primary button-inverse">Право</a>
-                        <a href="#" class="button button-small button-primary button-inverse">Развитие бизнеса</a>
-                    </div>
-                </div>
-
-                <div class="hp_hero_illustration"></div>
-            </div>
-        </section>
+        <hero/>
         <div class="wrap">
             <section class="hp_section">
                 <div class="hp_title">Курсы и материалы</div>
@@ -217,45 +194,8 @@
 </template>
 
 <script>
+    import Hero from "../components/Hero";
     export default {
-      data() {
-        return {
-          txtActive: 0,
-          txtLength: 0,
-          txtDirection: 1,
-          txtArray: [ "медиа", "сообщество", "образование" ],
-          txtDuration: 100,
-        }
-      },
-      methods: {
-        changeTxt() {
-          setTimeout(() => {
-            if (this.txtDirection > 0) {
-              this.txtLength += 1;
-            }
-            if (this.txtDirection < 0) {
-              this.txtLength -= 1;
-            }
-            if (this.txtLength === this.txtArray[this.txtActive].length + 1) {
-              this.txtDirection = -1;
-            }
-            if (this.txtLength === 0) {
-              this.txtDirection = 1;
-              this.txtActive += 1;
-              this.txtActive %= this.txtArray.length;
-            }
-            this.txtDuration = Math.random() * 300 + this.txtDirection * 100;
-            this.changeTxt();
-          }, this.txtDuration)
-        }
-      },
-      computed: {
-        txtAnimate() {
-          return this.txtArray[this.txtActive].substr(0, this.txtLength);
-        }
-      },
-      mounted() {
-        this.changeTxt();
-      },
+      components: {Hero}
     }
 </script>
