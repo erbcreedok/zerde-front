@@ -1068,64 +1068,64 @@ html {
   }
 }
 .dtable_col-12 {
-  position: relative;
   width: 1128px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-11 {
-  position: relative;
   width: 1032px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-10 {
-  position: relative;
   width: 936px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-9 {
-  position: relative;
   width: 840px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-8 {
-  position: relative;
   width: 744px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-7 {
-  position: relative;
   width: 648px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-6 {
-  position: relative;
   width: 552px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-5 {
-  position: relative;
   width: 456px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-4 {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-3 {
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-2 {
-  position: relative;
   width: 168px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-1 {
-  position: relative;
   width: 72px;
   max-width: 100%;
+  position: relative;
 }
 .dtable_col-muted {
   color: #B3B3B3;
@@ -1856,9 +1856,9 @@ input:checked ~ .checkbox_label {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  position: relative;
   width: 552px;
   max-width: 100%;
+  position: relative;
   z-index: 102;
   opacity: 0;
   filter: alpha(opacity=0);
@@ -1874,9 +1874,9 @@ input:checked ~ .checkbox_label {
 }
 @media (max-width: 600px) {
   .modal {
-    position: relative;
     width: 264px;
     max-width: 100%;
+    position: relative;
   }
 }
 .modal-visible {
@@ -2252,7 +2252,8 @@ input:checked ~ .checkbox_label {
 .tabs_item:not(.tabs_item-active):hover {
   border-color: #d5d5d5;
 }
-.tabs_item-active {
+.tabs_item-active,
+.tabs_item.router-link-exact-active {
   cursor: default;
   color: #304ffe;
   border-color: currentColor;
@@ -2893,9 +2894,9 @@ header {
   height: 100%;
 }
 .header_brand {
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .header_brand {
@@ -3132,9 +3133,9 @@ header {
 }
 .footer_menu {
   font-weight: 600;
-  position: relative;
   width: 168px;
   max-width: 100%;
+  position: relative;
   margin-right: 1.5rem;
 }
 @media (max-width: 1176px) {
@@ -3164,9 +3165,9 @@ header {
   color: #304ffe;
 }
 .footer_text {
-  position: relative;
   width: 456px;
   max-width: 100%;
+  position: relative;
   color: #757575;
 }
 @media (max-width: 1176px) {
@@ -3176,9 +3177,9 @@ header {
 }
 .footer_socialmedia {
   margin-left: auto;
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 .footer_socialmedia li + li {
   margin-top: 0.75rem;
@@ -3247,9 +3248,9 @@ header {
   filter: alpha(opacity=70);
 }
 .footer_links_item-right {
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
   margin-left: auto;
   margin-right: 0;
 }
@@ -3290,14 +3291,14 @@ header {
   }
 }
 .qa_search {
-  position: relative;
   width: 648px;
   max-width: 100%;
+  position: relative;
 }
 .qa_controls {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
@@ -3375,14 +3376,14 @@ header {
   }
 }
 .qa_main {
-  position: relative;
   width: 648px;
   max-width: 100%;
+  position: relative;
 }
 .qa_sidebar {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .qa_sidebar {
@@ -3554,9 +3555,9 @@ header {
   margin-bottom: 1.5rem;
 }
 .qa_similar_item {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 /*
  * Item Card
@@ -3820,9 +3821,9 @@ header {
   align-items: center;
 }
 .hp_hero_content {
-  position: relative;
   width: 744px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .hp_hero_content {
@@ -3909,9 +3910,9 @@ header {
   }
 }
 .hp_hero_illustration {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
   height: 427px;
   background: url(../img/illustration/hero.png) no-repeat center bottom / contain;
 }
@@ -3957,9 +3958,9 @@ header {
 .hp_questions .qaCard {
   margin-left: 1.5rem;
   margin-bottom: 1.5rem;
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .hp_questions .qaCard {
@@ -4087,9 +4088,9 @@ header {
   background-image: url(../img/icons/hpstats/courses.svg);
 }
 .login_wrap {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
 }
@@ -4335,9 +4336,9 @@ header {
  * Single post
  */
 .post {
-  position: relative;
   width: 936px;
   max-width: 100%;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
   background: #fff;
@@ -4571,9 +4572,9 @@ header {
   align-items: flex-start;
 }
 .bSearch_filters {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
   border: 2px solid #F7F7F7;
   background-color: #FAFAFA;
   -webkit-border-radius: 3px;
@@ -4665,9 +4666,9 @@ header {
   }
 }
 .bSearch_results {
-  position: relative;
   width: 744px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .bSearch_results {
@@ -4809,9 +4810,9 @@ header {
   margin-bottom: -0.5rem;
 }
 .blogcard-wide {
-  position: relative;
   width: 552px;
   max-width: 100%;
+  position: relative;
 }
 .blogcard-wide .blogcard_title {
   font-size: 1.375rem;
@@ -4876,9 +4877,9 @@ header {
     height: 144px;
   }
   .blogcard-h .blogcard_cover {
-    position: relative;
     width: 168px;
     max-width: 100%;
+    position: relative;
     flex-grow: 0 !important;
     flex-shrink: 0;
   }
@@ -4941,9 +4942,9 @@ header {
   }
 }
 .blogQaCard {
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
   height: 373px;
   border: 2px solid #F7F7F7;
   -webkit-border-radius: 3px;
@@ -5019,17 +5020,17 @@ header {
   }
 }
 .quizblock_illustration {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 .quizblock_illustration img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .quizblock_illustration {
@@ -5037,9 +5038,9 @@ header {
   }
 }
 .quizblock_content {
-  position: relative;
   width: 744px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .quizblock_content {
@@ -5102,9 +5103,9 @@ header {
   }
 }
 .profile_sidebar {
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .profile_sidebar {
@@ -5113,9 +5114,9 @@ header {
   }
 }
 .profile_main {
-  position: relative;
   width: 744px;
   max-width: 100%;
+  position: relative;
 }
 /*
  * Sidebar
@@ -5572,14 +5573,14 @@ header {
   flex-wrap: wrap;
 }
 .course_main {
-  position: relative;
   width: 744px;
   max-width: 100%;
+  position: relative;
 }
 .course_sidebar {
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .course_sidebar {
@@ -5634,9 +5635,9 @@ header {
 }
 @media (max-width: 1176px) {
   .course_author_photo {
-    position: relative;
     width: 264px;
     max-width: 100%;
+    position: relative;
   }
 }
 @media (max-width: 600px) {
@@ -5988,9 +5989,9 @@ a.courcont_progress_item {
   }
 }
 .coursecard_content {
-  position: relative;
   width: 648px;
   max-width: 100%;
+  position: relative;
 }
 .coursecard_title {
   display: block;
@@ -6225,9 +6226,9 @@ a.coursecard_title:hover {
   display: -o-flex;
   display: flex;
   flex-direction: column;
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
   min-height: 0;
   margin-left: 1.5rem;
   flex-shrink: 0;
@@ -6392,9 +6393,9 @@ a.coursecard_title:hover {
   }
 }
 .lesson_files {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .lesson_files {
@@ -6405,9 +6406,9 @@ a.coursecard_title:hover {
   margin-top: 1.5rem;
 }
 .lesson_posts {
-  position: relative;
   width: 648px;
   max-width: 100%;
+  position: relative;
 }
 .lesson_posts .blogcard {
   margin-bottom: 1.5rem;
@@ -6434,6 +6435,23 @@ a.coursecard_title:hover {
   .lesson_files + .lesson_posts {
     margin-top: 2rem;
   }
+}
+.video {
+  position: relative;
+  height: 0;
+  padding-bottom: 56.25%;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.video iframe,
+.video video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 /*
  * Quiz
@@ -6610,9 +6628,9 @@ input:checked + .quiz_answer_wrap {
 }
 .comm_header_wrap {
   text-align: center;
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
 }
@@ -6695,15 +6713,15 @@ input:checked + .quiz_answer_wrap {
   }
 }
 .comm_ratings_col {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .comm_ratings_col {
-    position: relative;
     width: 264px;
     max-width: 100%;
+    position: relative;
   }
   .comm_ratings_col:not(.comm_activity) {
     order: 2;
@@ -6833,9 +6851,9 @@ input:checked + .quiz_answer_wrap {
   justify-content: space-between;
 }
 .comm_leaders_item {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
   padding: 0.25rem 0 0.25rem 4rem;
   font-size: 0.75rem;
   color: #B3B3B3;
@@ -6847,9 +6865,9 @@ input:checked + .quiz_answer_wrap {
 @media (max-width: 1176px) {
   .comm_leaders_item {
     margin-bottom: 1.5rem;
-    position: relative;
     width: 264px;
     max-width: 100%;
+    position: relative;
   }
 }
 .comm_leaders_item span {
@@ -6939,9 +6957,9 @@ input:checked + .quiz_answer_wrap {
   }
 }
 .comm_table_col-title {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .comm_table_col-title {
@@ -6954,9 +6972,9 @@ input:checked + .quiz_answer_wrap {
   }
 }
 .comm_table_col-rating {
-  position: relative;
   width: 264px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .comm_table_col-rating {
@@ -6965,9 +6983,9 @@ input:checked + .quiz_answer_wrap {
   }
 }
 .comm_table_col-points {
-  position: relative;
   width: 168px;
   max-width: 100%;
+  position: relative;
   margin-left: auto;
   margin-right: 1.5rem;
 }
@@ -6978,9 +6996,9 @@ input:checked + .quiz_answer_wrap {
   }
 }
 .comm_table_col-users {
-  position: relative;
   width: 168px;
   max-width: 100%;
+  position: relative;
 }
 @media (max-width: 1176px) {
   .comm_table_col-users {
@@ -7032,17 +7050,17 @@ input:checked + .quiz_answer_wrap {
   }
 }
 .comm_users .usercard {
-  position: relative;
   width: 360px;
   max-width: 100%;
+  position: relative;
   margin-left: 1.5rem;
   margin-bottom: 1.5rem;
 }
 @media (max-width: 1176px) {
   .comm_users .usercard {
-    position: relative;
     width: 264px;
     max-width: 100%;
+    position: relative;
   }
 }
 @media (max-width: 600px) {

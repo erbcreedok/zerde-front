@@ -5,6 +5,9 @@
         <template v-if="status==='loading'">
             <grid-loader color="#e3e3e3" style="text-align: center; margin: 1rem auto"/>
         </template>
+        <template v-if="status==='success' && !courses.length">
+            <div class="post_subtitle caption"><span class="muted">Курсов нет</span></div>
+        </template>
         <main class="courses_grid">
             <course-card v-for="course of courses" :key="course.id" v-bind="course"/>
         </main>

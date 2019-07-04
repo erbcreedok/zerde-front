@@ -15,11 +15,7 @@
 </template>
 
 <script>
-  import moment from 'moment';
-
-  function getTimeString(seconds) {
-    return moment(seconds * 1000).format('m:ss');
-  }
+  import {getTimeString} from "../../_helpers";
 
   export default {
     name: 'lesson-item',

@@ -1,7 +1,7 @@
 import {requireAuth, unrequireAuth} from "./router-guards";
 import profileRoutes from './childRoutes/profileRoutes'
 import KBRoutes from "./childRoutes/KBRoutes";
-import CLRoutes from "./childRoutes/CLRoutes";
+import LessonRoutes from "./childRoutes/LessonRoutes";
 
 export default [
   {
@@ -78,12 +78,13 @@ export default [
     path: 'lesson/:slug',
     name: 'lesson',
     props: true,
-    component: () => import('../views/CLViews/Lesson.vue')
+    component: () => import('../views/CLViews/Lesson.vue'),
+    children: LessonRoutes,
   },
   {
     path: 'cl',
+    name: 'cl',
     props: true,
     component: () => import('../views/CLViews/CL.vue'),
-    children: CLRoutes,
   },
 ];
