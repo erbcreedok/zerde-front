@@ -22,7 +22,7 @@
               </ul>
             </div>
           </div>
-          <ui-rating :loading="ratingStatus==='loading'" class="comment_rating" :rate="rating" @change="putLike"/>
+          <ui-rating :loading="ratingStatus==='loading'" class="comment_rating" :rate="rating" :rated="rated" @change="putLike"/>
         </div>
       </div>
 
@@ -81,6 +81,7 @@
           question: null,
           author: null,
           rating: this.comment.rating,
+          rated: this.comment.user_rate,
           ratingStatus: 'clean',
           isCorrect: (this.comment.is_correct - 0 === 1),
           correctStatus: 'clean',
@@ -148,6 +149,7 @@
           this.ratingStatus = 'loading';
           this.putLikeFunction(this.comment.id, value).then(rating => {
             this.rating = rating;
+            this.rated = value;
             this.ratingStatus = 'success';
           }).catch(() => {
             this.ratingStatus = 'error';

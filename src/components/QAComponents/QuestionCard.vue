@@ -17,10 +17,11 @@
         <li>{{$t('{count} subscriber ::: {count} subscribers', {count: question.fav_count}, question.fav_count)}}</li>
       </ul>
 
-      <router-link :to="{name: 'user', params: {userId: authorData.id}}" v-if="authorData" class="qaCard_author avatar" :title="authorData.fullname">
-        <img v-if="authorData.avatar_src" :src="authorData.avatar_src" alt="">
-        <!--<img v-if="!question.user_avatar" src="/assets/img/avatar-placeholder.jpg" alt="">-->
-      </router-link>
+      <div :data-tooltip="authorData.fullname" data-tooltip-position='top' class="qaCard_author">
+        <router-link :to="{name: 'user', params: {userId: authorData.id}}" v-if="authorData" class="qaCard_author avatar" style="display: block">
+          <img v-if="authorData.avatar_src" :src="authorData.avatar_src" alt="">
+        </router-link>
+      </div>
     </div>
   </router-link>
 </template>

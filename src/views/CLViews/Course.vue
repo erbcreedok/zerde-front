@@ -6,7 +6,7 @@
 
       <div class="course_grid">
         <div class="course_main">
-          <main class="course_description" v-html="course.body_in">
+          <main class="course_description typeset" v-html="course.body_in">
           </main>
 
           <section class="course_video" v-if="course.video">
