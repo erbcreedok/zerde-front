@@ -1,0 +1,153 @@
+@import (reference) '../../../../../../../Downloads/Основа 2/assets/css/reference/var';
+@import (reference) '../../../../../../../Downloads/Основа 2/assets/css/reference/lessmix';
+@import (reference) '../../../../../../../Downloads/Основа 2/assets/css/reference/classes';
+
+.footer {
+	font-size: .75rem;
+	background: @c-grey-10;
+	line-height: 1.66666667em;
+
+	@media @v-t {
+		text-align: center;
+	}
+
+	&_wrap {
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+
+		padding-top: 2.5rem;
+		padding-bottom: 2.5rem;
+
+		@media @v-t {
+			display: block;
+		}
+	}
+
+	&_menu {
+		font-weight: 600;
+		.cols(2);
+		margin-right: 1.5rem;
+
+		@media @v-t {
+			margin-bottom: 1.5rem;
+			width: 100%;
+			font-size: 1rem;
+			margin-right: 0;
+
+			li {
+				display: inline-block;
+				margin-right: 1rem;
+			}
+		}
+
+		@media @v-m {
+			line-height: 2rem;
+		}
+
+		&_link {
+			.transition-all;
+
+			&:hover {
+				color: @c-primary;
+			}
+		}
+	}
+
+	&_text {
+		.cols(5);
+		color: @c-black-60;
+
+		@media @v-t {
+			width: 100%;
+		}
+	}
+
+	&_socialmedia {
+		margin-left: auto;
+		.cols(3);
+
+		li+li {
+			margin-top: .75rem;
+		}
+
+		@media @v-t {
+			margin-left: 0;
+			margin-top: 1.5rem;
+			width: 100%;
+
+			li {
+				display: inline-block;
+			}
+
+			li+li {
+				margin-top: 0;
+				margin-left: 1.5rem;
+			}
+		}
+
+		@media @v-m {
+			li {
+				display: block;
+			}
+
+			li+li {
+				margin-left: 0;
+				margin-top: .5rem;
+			}
+
+			.smbutton {
+				width: 100%;
+			}
+		}
+	}
+
+	&_links {
+		padding: .75rem 0;
+		background: @c-black-30;
+		color: #fff;
+		font-weight: 600;
+
+		&_wrap {
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+			align-items: center;
+
+			@media @v-t {
+				display: block;
+			}
+		}
+
+		&_item {
+			display: inline-block;
+			margin-right: 1.5rem;
+			.transition-all;
+
+			@media @v-t {
+				margin-right: 0;
+				display: block;
+			}
+
+			&:hover {
+				.opacity(.7);
+			}
+
+			&-right {
+				.cols(3);
+				margin-left: auto;
+				margin-right: 0;
+
+				@media @v-t {
+					width: 100%;
+					margin-left: 0;
+					margin-right: 1.5rem;
+				}
+			}
+		}
+	}
+}

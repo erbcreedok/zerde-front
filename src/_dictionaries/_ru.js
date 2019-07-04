@@ -108,4 +108,5 @@ export default {
   'see bookmarks' : 'видеть закладки',
   'courses' : 'курсы',
   'articles' : 'статьи',
+  'home' : 'главная',
 }

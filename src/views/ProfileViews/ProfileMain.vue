@@ -62,17 +62,30 @@
       <div class="caption profile_subtitle"> Специализации <ui-description-icon title="Что такое специализации?" body="Свои специализации (навыки) можно указать в настройках профиля. Другие авторизованные пользователи могут подтверждать Ваши навыки, зайдя к Вам в профиль и нажав на навык."/></div>
       <template v-if="specializations && specializations.length">
         <div class="profile_skills">
-          <button class="skill"
-                  v-for="specialization in user.specializations"
-                  :key="specialization.id"
-                  :data-skill-id="specialization.id"
-                  :data-tooltip="specialization.is_approved===false ? 'подтвердить навык' : specialization.is_approved ? 'убрать навык' : null"
-                  @click="approveSpecialization(specialization)"
-                  :class="{'skill-canVote': specialization.is_approved===false, 'skill-voted': specialization.is_approved}"
-          >
-            {{specialization.name}}
-            <span class="skill_counter">{{specialization.approvers_count}}</span>
-          </button>
+          <template v-if="isOwnProfile">
+            <button class="skill"
+                    v-for="specialization in user.specializations"
+                    :key="specialization.id"
+                    :data-skill-id="specialization.id"
+                    @click="approveSpecialization(specialization)"
+            >
+              {{specialization.name}}
+              <span class="skill_counter">{{specialization.approvers_count}}</span>
+            </button>
+          </template>
+          <template v-else>
+            <button class="skill"
+                    v-for="specialization in user.specializations"
+                    :key="specialization.id"
+                    :data-skill-id="specialization.id"
+                    :data-tooltip="specialization.is_approved===false ? 'подтвердить навык' : specialization.is_approved ? 'убрать навык' : null"
+                    @click="approveSpecialization(specialization)"
+                    :class="{'skill-canVote': specialization.is_approved===false, 'skill-voted': specialization.is_approved}"
+            >
+              {{specialization.name}}
+              <span class="skill_counter">{{specialization.approvers_count}}</span>
+            </button>
+          </template>
         </div>
       </template>
       <template v-else>
@@ -164,14 +177,18 @@
       },
       showJob() {
         return ['name', 'domain', 'position', 'link', 'start_date'].findIndex(key => !!this.user.job[key]) !== -1
-      }
+      },
+      isAuthorised() {
+        return this.$store.state.auth.authorized;
+      },
+      isOwnProfile() {
+        return this.isAuthorised && this.user.id-0 === this.$store.state.user.user.id
+      },
     },
     methods: {
       approveSpecialization(specialization) {
-        console.log(specialization.is_approved)
         if (specialization.is_approved === false) {
-          userService.approveSpecialization(this.user.id, specialization.id, true).then(message => {
-            console.log(message);
+          userService.approveSpecialization(this.user.id, specialization.id, true).then(() => {
             this.specializations = this.specializations.map(s => {
               if (s.id === specialization.id) {
                 s.is_approved = true;
@@ -181,8 +198,7 @@
             });
           });
         } else if (specialization.is_approved) {
-          userService.approveSpecialization(this.user.id, specialization.id, false).then(message => {
-            console.log(message);
+          userService.approveSpecialization(this.user.id, specialization.id, false).then(() => {
             this.specializations = this.specializations.map(s => {
               if (s.id === specialization.id) {
                 s.is_approved = false;

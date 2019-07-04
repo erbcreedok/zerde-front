@@ -75,6 +75,12 @@ export default [
     component: () => import('../views/CLViews/Course.vue')
   },
   {
+    path: 'lesson/:slug',
+    name: 'lesson',
+    props: true,
+    component: () => import('../views/CLViews/Lesson.vue')
+  },
+  {
     path: 'cl',
     props: true,
     component: () => import('../views/CLViews/CL.vue'),

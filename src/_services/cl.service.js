@@ -32,6 +32,12 @@ const clService = {
       .catch(handleError)
       .then(({data}) => data.total);
   },
+  loadLessonById(id) {
+    return client.get(`cl/lesson/${id}`)
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data);
+  },
 };
 
 function handleCoursesSuccess({courses}) {

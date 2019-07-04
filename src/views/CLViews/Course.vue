@@ -13,100 +13,7 @@
             <iframe :src="course.video" height="350px" width="100%"></iframe>
           </section>
 
-          <section class="course_section courcont">
-            <div class="courcont_header">
-              <div class="courcont_title">
-                <div class="caption">Содержание</div>
-              </div>
-            </div>
-
-            <div class="courcont_progress">
-              <div class="courcont_progress_captions">
-                <span class="courcont_progress_caption courcont_progress_caption-success">Вы на 3 занятии</span>
-                <span class="courcont_progress_caption">Всего 8 занятий</span>
-              </div>
-
-              <div class="courcont_progress_line">
-                <a href="#" class="courcont_progress_item courcont_progress_item-done"></a>
-                <a href="#" class="courcont_progress_item courcont_progress_item-done"></a>
-                <a href="#" class="courcont_progress_item courcont_progress_item-current"></a>
-                <span href="#" class="courcont_progress_item"></span>
-                <span href="#" class="courcont_progress_item"></span>
-                <span href="#" class="courcont_progress_item"></span>
-                <span href="#" class="courcont_progress_item"></span>
-                <span href="#" class="courcont_progress_item"></span>
-              </div>
-            </div>
-
-            <a href="#" class="courcont_item courcont_item-done">
-              <div class="courcont_item_wrap">
-                <div class="courcont_item_icon"></div>
-                <div class="courcont_item_title">Вводное занятие</div>
-                <div class="courcont_item_duration">5:47</div>
-              </div>
-
-              <ul class="courcont_item_timing">
-                <li>
-                  <span class="courcont_item_timing_title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, necessitatibus.</span>
-                  <span class="courcont_item_timing_time">5:47</span>
-                </li>
-                <li>
-                  <span class="courcont_item_timing_title">Что такое экспозиция</span>
-                  <span class="courcont_item_timing_time">5:47</span>
-                </li>
-              </ul>
-            </a>
-
-            <a href="#" class="courcont_item courcont_item-done">
-              <div class="courcont_item_wrap">
-                <div class="courcont_item_icon"></div>
-                <div class="courcont_item_title">Техника и аксессуары</div>
-                <div class="courcont_item_duration">5:47</div>
-              </div>
-            </a>
-
-            <a href="#" class="courcont_item">
-              <div class="courcont_item_wrap">
-                <div class="courcont_item_icon"></div>
-                <div class="courcont_item_title">Композиция</div>
-                <div class="courcont_item_duration">5:47</div>
-              </div>
-
-              <ul class="courcont_item_timing">
-                <li>
-                  <span class="courcont_item_timing_title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, necessitatibus.</span>
-                  <span class="courcont_item_timing_time">5:47</span>
-                </li>
-                <li>
-                  <span class="courcont_item_timing_title">Что такое экспозиция</span>
-                  <span class="courcont_item_timing_time">5:47</span>
-                </li>
-              </ul>
-            </a>
-
-            <a href="#" class="courcont_item">
-              <div class="courcont_item_wrap">
-                <div class="courcont_item_icon"></div>
-                <div class="courcont_item_title">Экспозиция. Свет</div>
-                <div class="courcont_item_duration">5:47</div>
-              </div>
-            </a>
-
-            <a href="#" class="courcont_item courcont_item-quiz">
-              <div class="courcont_item_wrap">
-                <div class="courcont_item_icon"></div>
-                <div class="courcont_item_title">Промежуточное тестирование</div>
-              </div>
-            </a>
-
-            <a class="courcont_item courcont_item-locked">
-              <div class="courcont_item_wrap">
-                <div class="courcont_item_icon"></div>
-                <div class="courcont_item_title">Съемка людей</div>
-                <div class="courcont_item_duration">5:47</div>
-              </div>
-            </a>
-          </section>
+          <lessons-list :lessons="course.lessons_list"/>
 
           <course-comments v-if="(course.comments_list && course.comments_list.length) || freshComments.length" :comments="course.comments_list" :fresh-comments="freshComments" :course_id="course.id" />
 
@@ -185,9 +92,10 @@
   import CommentForm from '../../components/CommentComponents/CommentForm'
   import ActionForAuthorised from '../../components/ui/ActionForAuthorised'
   import CourseComments from '../../components/CLComponents/CourseComments'
+  import LessonsList from '../../components/CLComponents/LessonsList'
 
   export default {
-    components: {CourseComments, ActionForAuthorised, CommentForm},
+    components: {LessonsList, CourseComments, ActionForAuthorised, CommentForm},
     props: {
       slug: [String, Number],
     },

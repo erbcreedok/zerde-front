@@ -222,5 +222,99 @@
  */
 
 .button {
+	&-disabled {
+		cursor: not-allowed;
+		pointer-events: none;
+		.opacity(.6);
+	}
 
+	&-loading {
+		pointer-events: none;
+		// .opacity(.5);
+		position: relative;
+		color: transparent !important;
+
+		&:before {
+			.opacity(0);
+		}
+
+		&:after {
+			content: '';
+			.square(2rem);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			background: #fff;
+			.transform(translateX(-50%) translateY(-50%));
+
+			mask: url(../img/icons/loader.svg) no-repeat center center / cover;
+		}
+
+		&.button-small:after {
+			.square(1rem);
+		}
+
+		&.button-outline.button-primary:after {background-color: @c-primary;}
+		&.button-outline.button-danger:after {background-color: @c-danger;}
+		&.button-outline.button-warning:after {background-color: @c-warning;}
+		&.button-outline.button-success:after {background-color: @c-success;}
+	}
+}
+
+
+
+/*
+ * Другие кнопки
+ */
+
+// Социальные сети
+
+.smbutton {
+	display: inline-block;
+	position: relative;
+	height: 2.5rem;
+	padding: 0 1rem 0 3rem;
+	background: @c-black-30;
+	.rounded(@b-radius);
+
+	font-size: .875rem;
+	line-height: 2.5rem;
+	font-weight: 600;
+	color: #fff;
+
+	.transition-all;
+
+	&:hover {
+		.opacity(.8);
+	}
+
+	&:before {
+		content: '';
+		.square(1.5rem);
+		position: absolute;
+		top: 50%;
+		left: .75rem;
+		margin-top: -.75rem;
+
+		background: #fff;
+		mask-repeat: no-repeat;
+		mask-size: cover;
+		mask-position: center center;
+	}
+
+	&-telegram {
+		background: linear-gradient(180deg, #0EA5F0 0%, #0792D8 100%);
+
+		&:before {
+			mask-image: url(../img/icons/telegram.svg)
+		}
+	}
+
+	&-instagram {
+		background: linear-gradient(280.35deg, #4F61D5 0%, #962FBF 20.83%, #D62976 46.35%, #FA7E1E 75%, #FEDA75 100%);
+
+		&:before {
+			mask-image: url(../img/icons/instagram.svg)
+		}
+	}
 }

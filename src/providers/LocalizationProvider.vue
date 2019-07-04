@@ -1,7 +1,8 @@
 <template>
     <div class="localization-provider" :class="'locale-' + currentLocale" v-if="currentLocale">
-        <slot/>
+        <slot name="top"/>
         <router-view/>
+        <slot name="bottom"/>
     </div>
 </template>
 

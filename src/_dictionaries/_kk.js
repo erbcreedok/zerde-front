@@ -108,4 +108,5 @@ export default {
   'see bookmarks' : 'бетбелгілерді көру',
   'courses' : 'курстар',
   'articles' : 'мақалалар',
+  'home' : 'басты',
 }
