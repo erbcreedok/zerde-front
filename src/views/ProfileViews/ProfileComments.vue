@@ -33,6 +33,11 @@
         commentsTotal: 0,
       };
     },
+    watch: {
+      user(to) {
+        this.loadComments(to.id);
+      },
+    },
     methods: {
       loadComments() {
         this.requestStatus = 'loading';

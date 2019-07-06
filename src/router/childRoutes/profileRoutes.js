@@ -12,6 +12,11 @@ const profileRoutes = [
     component: () => import('../../views/ProfileViews/ProfileMain.vue'),
   },
   {
+    path: 'courses',
+    name: 'profile-courses',
+    component: () => import('../../views/ProfileViews/ProfileCourses.vue'),
+  },
+  {
     path: 'qa',
     name: 'profile-qa',
     component: () => import('../../views/ProfileViews/ProfileQA.vue'),

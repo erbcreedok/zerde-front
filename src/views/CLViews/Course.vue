@@ -1,6 +1,8 @@
 <template>
   <div class="page wrap">
-    <div style="height: 200px" v-loading v-if="status==='loading'"></div>
+    <template v-if="status==='loading'">
+      <grid-loader color="#e3e3e3" style="text-align: center; margin: 1rem auto"/>
+    </template>
     <template v-if="course">
       <h1 class="title course_title">{{course.title}}</h1>
 
@@ -13,7 +15,7 @@
             <iframe :src="course.video" height="350px" width="100%"></iframe>
           </section>
 
-          <lessons-list :lessons="course.lessons_list"/>
+          <lessons-list :lessons="course.lessons"/>
 
           <course-comments v-if="(course.comments_list && course.comments_list.length) || freshComments.length" :comments="course.comments_list" :fresh-comments="freshComments" :course_id="course.id" />
 
@@ -86,9 +88,10 @@
   import LessonsList from '../../components/CLComponents/LessonsList'
   import {getTimeString} from '../../_helpers'
   import UserAvatar from '../../components/ui/UserAvatar'
+  import GridLoader from 'vue-spinner/src/GridLoader'
 
   export default {
-    components: {UserAvatar, LessonsList, CourseComments, ActionForAuthorised, CommentForm},
+    components: {GridLoader, UserAvatar, LessonsList, CourseComments, ActionForAuthorised, CommentForm},
     props: {
       slug: [String, Number],
     },
@@ -113,8 +116,8 @@
         return this.$store.state.auth.authorized;
       },
       durationString() {
-        if (!this.course || !this.course.duration) return '00:00';
-        return getTimeString(this.course.duration);
+        if (!this.course || !this.course.lesson_duration) return '00:00';
+        return getTimeString(this.course.lesson_duration);
 
       },
       ratingPercent() {

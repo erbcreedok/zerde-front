@@ -13,12 +13,12 @@
       </div>
 
       <div class="courcont_progress_line">
-        <router-link v-for="(lesson, index) in availables" :key="lesson.id" :to="{name: 'lesson', params: {slug: lesson.id}}" class="courcont_progress_item" :class="{'courcont_progress_item-done': lesson.user_finished, 'courcont_progress_item-current': !lesson.user_finished}" :data-tooltip="lesson.title" :data-tooltip-position="'top' + (index && index === lessons.length - 1 ? ' left' : '') + (!index ? ' right' : '') "></router-link>
-        <span v-for="lesson in unavailables" :key="lesson.id" class="courcont_progress_item" data-tooltip="Курс недоступен" :data-tooltip-position="'top' + (index && index === lessons.length - 1 ? ' left' : '') + (!index ? ' right' : '') "></span>
+        <router-link v-for="(lesson, index) in availables" :key="index" :to="{name: lesson.type, params: {slug: lesson.id}}" class="courcont_progress_item" :class="{'courcont_progress_item-done': lesson.user_finished, 'courcont_progress_item-current': !lesson.user_finished}" :data-tooltip="lesson.title" :data-tooltip-position="'top' + lesson.tooltipPosition"></router-link>
+        <span v-for="(lesson, index) in unavailables" :key="index + availables.length" class="courcont_progress_item" data-tooltip="Курс недоступен" :data-tooltip-position="'top' + lesson.tooltipPosition"></span>
       </div>
     </div>
 
-    <lesson-item v-for="lesson in lessons" :key="lesson.id" v-bind="lesson"/>
+    <lesson-item v-for="(lesson, index) in lessons" :key="index" v-bind="lesson"/>
 
   </section>
 </template>
@@ -27,18 +27,27 @@
   export default {
     components: {LessonItem},
     props: {
-      lessons: Array,
+      lessons: {
+        type: Array,
+        default: () => [],
+      },
     },
     name: 'lessons-list',
     computed: {
+      lessonsList() {
+        return this.lessons.map((l, index) => ({
+          ...l,
+          tooltipPosition: index===0 ? ' right' : index===this.lessons.length-1 ? ' left' : '',
+        }));
+      },
       availables() {
-        return this.lessons.filter(l => l.user_access);
+        return this.lessonsList.filter(l => l.user_access);
       },
       unavailables() {
-        return this.lessons.filter(l => !l.user_access);
+        return this.lessonsList.filter(l => !l.user_access);
       },
       finished() {
-        return this.lessons.filter(l => l.user_finished);
+        return this.lessonsList.filter(l => l.user_finished);
       }
     },
   }

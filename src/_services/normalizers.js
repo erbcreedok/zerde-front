@@ -42,7 +42,7 @@ export function normalizeUserProfile(user) {
     user.levelProgress = 80;
   }
   if (!user.lastActivity) {
-    user.lastActivity = new Date((new Date()).getTime() - (1000 * 60 * 60 * 24 * 2)); // 2 дня
+    user.lastActivity = new Date(user.last_seen);
   }
   if (!user.rating) {
     user.rating = 124;
@@ -173,7 +173,20 @@ export function normalizeArticle(article) {
 }
 
 export function normalizeCourse(course) {
-  course = {...course,
+  if (course.lessons_list) {
+    const lessons = [];
+    course.lessons_list.map((l, index) => {
+      lessons.push({...l, type: 'lesson'});
+      if (l.test) {
+        const user_access = l.user_finished;
+        const user_finished = l.test_result && l.test_result.success;
+        lessons.push({type: 'quiz', id: l.id, title: `Тест. Урок ${index+1}`, user_access, user_finished});
+      }
+    });
+    course.lessons = lessons;
+  }
+  course = {
+    ...course,
     authors: course.authors ? normalizeCourseAuthors(course.authors) : course.authors_list ? normalizeCourseAuthors(course.authors_list) : [],
   };
   return course;

@@ -21,11 +21,18 @@
       <div class="coursecard_brief">{{body_out}}</div>
 
       <div class="coursecard_controls">
-        <a href="#" class="button button-primary" v-if="isAuthorised">Начать</a>
+        <template v-if="isAuthorised">
+          <router-link v-if="user_course && user_course.finished" :to="{name: 'course', params: {slug: id}}" class="button button-danger button-success">Пройдено</router-link>
+          <router-link v-else-if="last_user_lesson && last_user_lesson.id" :to="{name: last_user_lesson.type, params: {slug: last_user_lesson.id}}" class="button button-primary">
+            <template v-if="user_course">Продолжить</template>
+            <template v-else>Начать</template>
+          </router-link>
+          <button v-else class="button button-danger button-disabled" disabled="">В разработке</button>
+        </template>
         <router-link :to="{name: 'course', params: {slug: id}}" class="button button-outline">Подробнее</router-link>
       </div>
-      <template v-if="progress">
-        <div class="coursecard_progress">Ваш прогресс: 0%</div>
+      <template v-if="user_course && user_course.progress">
+        <div class="coursecard_progress">Ваш прогресс: {{parseInt(user_course.progress)}}%</div>
       </template>
     </div>
   </article>
@@ -45,6 +52,7 @@
       body_in: String,
       body_out: String,
       duration: [String, Number],
+      last_user_lesson: Object,
       rating: [String, Number],
       is_published: [Boolean, String, Number],
       created_at: [String, Number, Date],
@@ -53,6 +61,7 @@
       authors: Array,
       studentCount: Number,
       progress: Number,
+      user_course: Object,
     },
     computed: {
       isAuthorised() {

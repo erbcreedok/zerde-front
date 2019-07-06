@@ -1,12 +1,14 @@
 <template>
   <div class="lesson page wrap">
     <div style="height: 200px" v-loading v-if="status==='loading'"></div>
+    <template v-if="status==='error'">
+      <div class="alert alert-danger lesson_alert">У вас нет доступа к этому занятию.</div>
+    </template>
     <template v-if="lesson">
     <router-link :to="{name: 'course', params: {slug: lesson.course_id}}" class="lesson_backlink">{{lesson.course_title}}</router-link>
     <h1 class="title lesson_title" :class="{'lesson_title-complete': lesson.user_finished}">{{lesson.title}}</h1>
 
      <p class="lesson_description" v-if="lesson.body_short" v-html="lesson.body_short"></p>
-
       <template v-if="!lesson.user_access">
         <div class="alert alert-danger lesson_alert">У вас нет доступа к этому занятию.</div>
       </template>
@@ -22,42 +24,27 @@
       </div>
 
       <div class="lesson_content">
-        <div class="lesson_content_wrap">
-          <div class="lesson_video">
-            <div class="video lesson_video">
-              <video id="lesson-video" controls ref="video" :poster="lesson.img_src">
-                <source :src="lesson.video_src">
-              </video>
-              <div class="video_pause">
-                <span class="video_pause_content">PLAY</span>
-              </div>
-            </div>
-          </div>
 
-          <div class="lesson_timecodes" v-if="schemeList.length">
-            <div class="lesson_timecodes_title">Содержание видео</div>
-
-            <div class="lesson_timecodes_wrap">
-              <div class="lesson_timecodes_item" v-for="(timing, index) in schemeList" :key="index" @click="setVideoTime(timing.time)">
-                <div class="lesson_timecodes_item_caption">{{timing.title}}</div>
-                <div class="lesson_timecodes_item_time">{{timing.timeString}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <router-view :lesson="lesson"/>
 
         <div class="lesson_controls">
           <template v-if="isAuthorised">
-            <button class="button button-primary" @click="finishLesson">Завершить</button>
-            <div class="lesson_rating">
-              <div class="lesson_rating_caption">Пожалуйста, оцените это занятие:</div>
-              <div class="voting">
-                <div class="voting_wrap">
-                  <button class="voting_button voting_button-dislike" @click="rateLesson(0)" :class="{'voting_button-selected': lesson.user_rate === 0}"></button>
-                  <button class="voting_button voting_button-like" @click="rateLesson(5)"  :class="{'voting_button-selected': lesson.user_rate === 5}"></button>
+            <template v-if="!lesson.user_finished">
+              <button class="button button-primary button-icon button-icon-left button-icon-checkmark" @click="finishLesson">Завершить</button>
+            </template>
+            <template v-else>
+              <router-link v-if="lesson.test" :to="{name: 'quiz', params: {slug: lesson.id}}" class="button button-primary button-icon button-icon-left button-icon-angle-right">Перейти к тесту</router-link>
+              <router-link v-else :to="{name: 'lesson', params: {slug: lesson.id - (-1)}}" class="button button-primary button-icon button-icon-left button-icon-angle-right">Следующий урок</router-link>
+              <div class="lesson_rating">
+                <div class="lesson_rating_caption">Пожалуйста, оцените это занятие:</div>
+                <div class="voting">
+                  <div class="voting_wrap">
+                    <button class="voting_button voting_button-dislike" @click="rateLesson(0)" :class="{'voting_button-selected': lesson.user_rate === 0}"></button>
+                    <button class="voting_button voting_button-like" @click="rateLesson(5)"  :class="{'voting_button-selected': lesson.user_rate === 5}"></button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </template>
           </template>
           <template v-else>
             <action-for-authorised action="завершить курс" />
@@ -70,8 +57,7 @@
   </template>
 
 <script>
-  import clService from "../../_services/cl.service";
-  import {getTimeString} from "../../_helpers";
+  import clService from '../../_services/cl.service'
   import ActionForAuthorised from '../../components/ui/ActionForAuthorised'
   import {capitalize} from '../../_filters/capitalize'
 
@@ -90,20 +76,6 @@
       isAuthorised() {
         return this.$store.state.auth.authorized;
       },
-      scheme() {
-        try {
-          return JSON.parse(this.lesson.scheme);
-        }
-        catch {
-          return {};
-        }
-      },
-      schemeList() {
-        return Object.keys(this.scheme).map(title => {
-          const time = this.scheme[title];
-          return {title, time, timeString: getTimeString(time)}
-        });
-      }
     },
     methods: {
       loadLesson(id = this.slug) {
@@ -115,16 +87,9 @@
           this.startLesson(id);
           this.startCourse(data.course_id);
           return data;
-        }).catch(err => {
+        }).catch(() => {
           this.status = 'error';
-          throw err;
         });
-      },
-      setVideoTime(time) {
-        const video = this.$refs.video;
-        if (video) {
-          video.currentTime = time;
-        }
       },
       startCourse(id = this.lesson ? this.lesson.course_id : undefined) {
         if(!id) return;
@@ -137,9 +102,15 @@
           clService.startLesson(id);
         }
       },
-      finishLesson(id = this.slug) {
+      finishLesson() {
+        const id = this.slug;
         if (this.isAuthorised) {
-          clService.startLesson(id);
+          clService.finishLesson(id).then(() => {
+            this.lesson.user_finished = true;
+            this.$notyf.success({
+              message: capitalize(this.$t('lesson finished'))
+            });
+          });
         } else {
           this.$notyf.error({
             message: capitalize(this.$t('authorisation required'))

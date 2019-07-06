@@ -15,6 +15,11 @@ const clService = {
       return handleCourseSuccess(data);
     });
   },
+  loadUserCourses(user_id) {
+    return client.get(`user/${user_id}/cl/courses`).then(handleResponse).then(({data}) => {
+      return handleCoursesSuccess(data);
+    });
+  },
   loadThemes() {
     return client.get(`cl/theme`).then(handleResponse).then(({data}) => {
       return data.themes.data;
@@ -33,13 +38,19 @@ const clService = {
       .then(({data}) => data.total);
   },
   loadLessonById(id) {
+    console.log(id);
     return client.get(`cl/lesson/${id}`)
-      .then(handleResponse)
       .catch(handleError)
+      .then(handleResponse)
       .then(({data}) => data);
   },
   startCourse(id) {
     return client.post(`user/course/start/${id}`)
+      .then(handleResponse)
+      .catch(handleError)
+  },
+  finishCourse(id) {
+    return client.post(`user/course/finish/${id}`)
       .then(handleResponse)
       .catch(handleError)
   },
@@ -59,7 +70,30 @@ const clService = {
       .catch(handleError)
       .then(({data}) => data.total);
   },
-
+  sendCommentToLesson(lesson_id, body) {
+    return client.post('cl-moderation/lesson/comment', {lesson_id, body})
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data.comment);
+  },
+  setLikeToLessonComment(comment_id, rate_value) {
+    return client.post(`cl-moderation/lesson/comment/${comment_id}/rate`, {rate_value})
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data.total);
+  },
+  loadQuizByLessonId(lesson_id) {
+    return client.get(`cl/tests/${lesson_id}`)
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data);
+  },
+  submitQuizResult(lesson_id, test_id, result) {
+    return client.post(`cl/tests/${lesson_id}/${test_id}`, {result})
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data.isTestSuccess);
+  },
 };
 
 function handleCoursesSuccess({courses}) {

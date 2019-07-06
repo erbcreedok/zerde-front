@@ -27,14 +27,14 @@
         fav_count: Number,
         type: String,
         category: String,
+        themes: Array,
         title: String,
         cover: String,
         wide: Boolean,
         inverse: Boolean,
         horizontal: Boolean,
         highlight: Boolean,
-        themes: Array,
         stacked: Boolean,
-      }
+      },
     }
 </script>

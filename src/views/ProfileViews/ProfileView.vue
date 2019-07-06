@@ -8,7 +8,9 @@
           </div>
           <div class="profile_user_info">
             <div class="profile_name">{{user.fullname}}</div>
-            <div class="profile_status">{{ $t('was online {val} ago', {val: lastActivity}) | capitalize }}</div>
+            <div class="profile_status" :class="{'profile_status-success': isOnline}">
+              {{ isOnline ? 'На сайте' : lastActivity ? $t('was online {val} ago', {val: lastActivity}) : $t('last seen a long time ago') | capitalize }}
+            </div>
           </div>
         </div>
 
@@ -33,7 +35,7 @@
             <router-link :to="{name: 'profile-main'}" class="menu_item menu_item-user">
               Профиль
             </router-link>
-
+            <router-link :to="{name: 'profile-courses'}" class="menu_item menu_item-course"> Курстар </router-link>
             <router-link :to="{name: 'profile-qa'}" class="menu_item menu_item-ask-question">
               Вопросы и ответы
               <span class="menu_counter">{{user.qa_count}}</span>
@@ -128,16 +130,19 @@
             return this.$t('{val} minute ::: {val} minutes', {val: minutes}, minutes);
           }
           else if (minutes < 60 * 24) {
-            return this.$t('{val} hour ::: {val} hours', {val: minutes / 60}, minutes / 60);
+            return this.$t('{val} hour ::: {val} hours', {val: Math.round(minutes / 60)}, Math.round(minutes / 60));
           }
           else if (minutes < 60 * 24 * 10) {
-            return this.$t('{val} day ::: {val} days', {val: minutes / 60 / 24}, minutes / 60 / 24);
+            return this.$t('{val} day ::: {val} days', {val: Math.round(minutes / 60 / 24)}, Math.round(minutes / 60 / 24));
           }
           else {
             return false;
           }
         }
         return false;
+      },
+      isOnline() {
+        return this.lastActivity === true;
       },
       isAuthorised() {
         return this.$store.state.auth.authorized;

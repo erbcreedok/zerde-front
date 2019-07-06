@@ -2062,6 +2062,18 @@ input:checked ~ .checkbox_label {
 .circleProgress_value:after {
   content: '%';
 }
+.circleProgress.circleProgress-success .circleProgress_value {
+  color: #0ABE07;
+}
+.circleProgress.circleProgress-success .circleProgress_circle {
+  stroke: #0ABE07;
+}
+.circleProgress.circleProgress-danger .circleProgress_value {
+  color: #D11010;
+}
+.circleProgress.circleProgress-danger .circleProgress_circle {
+  stroke: #D11010;
+}
 .progressBar {
   width: 100%;
   height: 6px;
@@ -6643,18 +6655,6 @@ a.coursecard_title:hover {
   left: 0;
   width: 100%;
   height: 100%;
-}
-.video_pause:before {
-  content: '';
-  pointer-events: none;
-  background: rgba(0, 0, 0, 0.3);
-}
-.video_pause:after {
-  content: 'batyr pidor';
-  color: white;
-  position: absolute;
-  width: 40px;
-  height: 40px;
 }
 /*
  * Quiz

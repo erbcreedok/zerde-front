@@ -76,7 +76,6 @@ export default [
   },
   {
     path: 'lesson/:slug',
-    name: 'lesson',
     props: true,
     component: () => import('../views/CLViews/Lesson.vue'),
     children: LessonRoutes,
