@@ -1,5 +1,5 @@
 <template>
-  <div class="circleProgress circleProgress-success" :class="{'circleProgress-success': success, 'circleProgress-danger': danger}" :style="{width: size+'px', height: size+'px'}">
+  <div class="circleProgress" :class="{'circleProgress-success': success, 'circleProgress-danger': danger}" :style="{width: size+'px', height: size+'px'}">
     <div class="circleProgress_value">{{text}}</div>
     <svg class="circleProgress_ring">
       <circle :stroke="bgColor" :r="r" :cx="c" :cy="c" :stroke-width="strokeWidth" fill="transparent"></circle>

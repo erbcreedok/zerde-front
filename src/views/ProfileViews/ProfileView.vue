@@ -68,25 +68,25 @@
           <div class="overlay" @click="menuVisible = false"></div>
         </div>
 
-        <div class="profile_tour" v-if="isOwnProfile">
-          <div class="profile_tour_header">Заполните свой профиль</div>
+        <!--<div class="profile_tour" v-if="isOwnProfile">-->
+          <!--<div class="profile_tour_header">Заполните свой профиль</div>-->
 
-          <div class="profile_tour_list">
-            <div class="profile_tour_item profile_tour_item-done">
-              Указать дату рождения
-            </div>
+          <!--<div class="profile_tour_list">-->
+            <!--<div class="profile_tour_item profile_tour_item-done">-->
+              <!--Указать дату рождения-->
+            <!--</div>-->
 
-            <div class="profile_tour_item">
-              Написать текст о себе
-              <div class="profile_tour_reward">+ 1000</div>
-            </div>
+            <!--<div class="profile_tour_item">-->
+              <!--Написать текст о себе-->
+              <!--<div class="profile_tour_reward">+ 1000</div>-->
+            <!--</div>-->
 
-            <div class="profile_tour_item">
-              Указать контакты
-              <div class="profile_tour_reward">+ 500</div>
-            </div>
-          </div>
-        </div>
+            <!--<div class="profile_tour_item">-->
+              <!--Указать контакты-->
+              <!--<div class="profile_tour_reward">+ 500</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
       </aside>
 
       <main class="profile_main">

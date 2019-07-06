@@ -1,8 +1,8 @@
 <template>
     <div class="page wrap">
         <main class="login_wrap">
-            <section class="login_section login_section-secondary" v-html="$t('signup by', {links})">
-            </section>
+            <!--<section class="login_section login_section-secondary" v-html="$t('signup by', {links})">-->
+            <!--</section>-->
 
             <form class="login_section login_form form" @submit.prevent="onSubmit" v-loading="status === 'loading'">
                 <template v-if="globalErrors.length">

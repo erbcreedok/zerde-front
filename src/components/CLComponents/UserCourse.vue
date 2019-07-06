@@ -3,7 +3,7 @@
     <div class="usercourse_title caption">
       <router-link :to="{name: 'course', params: {slug: this.id}}">Курс "{{title}}"</router-link>
     </div>
-    <div class="usercourse_controls">
+    <div class="usercourse_controls" v-if="progress">
       <div class="course_progress">
         <ui-progress :progress="progress" :success="user_course.finished"/>
         <div class="course_progress_stats">
@@ -25,7 +25,11 @@
     },
     computed: {
       progress() {
-        return this.user_course.progress - 0  >  100 ? 100 : this.user_course.progress - 0 ;
+        if (this.user_course) {
+          return this.user_course.progress - 0  >  100 ? 100 : this.user_course.progress - 0 ;
+        } else {
+          return false
+        }
       },
       passedLessons() {
         return (this.lessons_amount-0) * (this.progress / 100);
