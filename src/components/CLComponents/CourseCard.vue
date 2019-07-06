@@ -41,6 +41,7 @@
       img_preview: String,
       img_src: String,
       video: String,
+      video_src: String,
       body_in: String,
       body_out: String,
       duration: [String, Number],

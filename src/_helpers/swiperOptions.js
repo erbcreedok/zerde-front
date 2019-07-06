@@ -14,3 +14,13 @@ export const blogsSwiperOptions = {
     }
   }
 };
+
+export const blogsAutoPlayOptions = {
+  ...blogsSwiperOptions,
+  speed: 400,
+  preventClicks: false,
+  freeMode: true,
+  autoplay: {
+    delay: 1500,
+  }
+};

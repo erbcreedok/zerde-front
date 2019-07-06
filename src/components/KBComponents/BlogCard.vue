@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{name: 'article', params: {slug: id}}" class="blogcard" :class="{'blogcard-wide': size==='wide',  'blogcard-inverse': inverse, 'blogcard-h': horizontal}">
+    <router-link :to="{name: 'article', params: {slug: id}}" class="blogcard" :class="{'blogcard-wide': wide,  'blogcard-inverse': inverse, 'blogcard-h': horizontal, 'blogcard-hl': highlight, 'blogcard-stackedMobile': stacked}">
         <div class="blogcard_cover">
             <img :src="cover" alt="">
         </div>
@@ -29,10 +29,12 @@
         category: String,
         title: String,
         cover: String,
-        size: String,
+        wide: Boolean,
         inverse: Boolean,
         horizontal: Boolean,
+        highlight: Boolean,
         themes: Array,
+        stacked: Boolean,
       }
     }
 </script>

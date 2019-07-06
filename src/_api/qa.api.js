@@ -10,7 +10,7 @@ const qaApi = {
       themes: JSON.stringify(themes.map(t => t.id)),
     }).then(handleResponse);
   },
-  getQuestions(page=1, per_page=5, search='', themes=[], category='all'){
+  getQuestions(page=1, per_page=5, {search='', themes=[], category='all', orderBy, orderDir='DESC'} = {}){
     let route = '/question';
     let query = `?page=${page}&per_page=${per_page}`;
     switch (category) {
@@ -29,6 +29,9 @@ const qaApi = {
     }
     if (themes && themes.length) {
       query += '&themes='+JSON.stringify(themes);
+    }
+    if (orderBy) {
+      query += `&order_by[${encodeURI(orderBy)}]=${orderDir ? orderDir : 'DESC'}`
     }
     return client.get(`qa${route}${query}`).then(handleResponse);
   },

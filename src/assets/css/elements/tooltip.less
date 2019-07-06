@@ -37,12 +37,19 @@
 		.opacity(1);
 		visibility: visible;
 	}
-	&[data-tooltip-position='top']:after {
+	&[data-tooltip-position~='top']:after {
 		top: auto;
 		bottom: 100%;
 	}
 
-	&[data-tooltip-position='top']:hover:after {
+	&[data-tooltip-position~='top']:hover:after {
 		margin-bottom: .5rem;
+	}
+
+	&[data-tooltip-position~='right']:after {
+		transform: translateX(-10px)
+	}
+	&[data-tooltip-position~='left']:after {
+		transform: translateX(-100%)
 	}
 }

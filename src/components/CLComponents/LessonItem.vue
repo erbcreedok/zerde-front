@@ -1,5 +1,5 @@
 <template>
-  <a href="#" class="courcont_item" :class="{'courcont_item-done': done, 'courcont_item-locked': locked}">
+  <router-link :to="{name: 'lesson', params: {slug: id}}" class="courcont_item" :class="{'courcont_item-done': done, 'courcont_item-locked': !user_access}">
     <div class="courcont_item_wrap">
       <div class="courcont_item_icon"></div>
       <div class="courcont_item_title">{{title}}</div>
@@ -11,7 +11,7 @@
         <span class="courcont_item_timing_time">{{time.timeString}}</span>
       </li>
     </ul>
-  </a>
+  </router-link>
 </template>
 
 <script>
@@ -22,8 +22,10 @@
     props: {
       duration: [Number],
       title: String,
-      user_finished: Boolean,
+      user_finished: [Boolean, Number],
+      user_access: [Boolean, Number],
       scheme: [String, Array],
+      id: [Number, String],
     },
     computed: {
       durationString() {
@@ -38,9 +40,6 @@
       done() {
         return this.user_finished
       },
-      locked() {
-        return this.user_finished === null
-      }
     }
   }
 </script>

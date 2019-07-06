@@ -961,6 +961,10 @@
 		}
 	}
 
+	&_alert {
+		margin: 20px 0;
+	}
+
 	@media @v-t {
 		&_files + &_posts {
 			margin-top: 2rem;
@@ -976,12 +980,27 @@
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	overflow: hidden;
-	iframe, video {
+	iframe, video, &_pause:before {
 		position: absolute;
+		display: block;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
+	}
+	&_pause {
+		&:before {
+			content: '';
+			pointer-events: none;
+			background: rgba(0,0,0, .3);
+		}
+		&:after {
+			content: 'batyr pidor';
+			color: white;
+			position: absolute;
+			width: 40px;
+			height: 40px;
+		}
 	}
 }
 
@@ -1017,7 +1036,7 @@
 			}
 		}
 
-		&-danger {
+		&-danger, .circleProgress-danger {
 			.circleProgress_value, .quiz_result_stats span {
 				color: @c-danger;
 			}
@@ -1027,7 +1046,7 @@
 			}
 		}
 
-		&-success {
+		&-success, .circleProgress-success {
 			.circleProgress_value, .quiz_result_stats span {
 				color: @c-success;
 			}

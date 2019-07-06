@@ -17,7 +17,7 @@
         <li>{{$t('{count} subscriber ::: {count} subscribers', {count: question.fav_count}, question.fav_count)}}</li>
       </ul>
 
-      <div :data-tooltip="authorData.fullname" data-tooltip-position='top' class="qaCard_author">
+      <div v-if="authorData" :data-tooltip="authorData.fullname" data-tooltip-position='top' class="qaCard_author">
         <router-link :to="{name: 'user', params: {userId: authorData.id}}" v-if="authorData" class="qaCard_author avatar" style="display: block">
           <img v-if="authorData.avatar_src" :src="authorData.avatar_src" alt="">
         </router-link>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+  import userService from '../../_services/user.service'
+
   export default {
     props: {
       isSmall: Boolean,
@@ -41,11 +43,16 @@
     methods: {
       handleTagClick(e) {
         e.stopPropagation();
-      }
+      },
+      loadAuthor() {
+        userService.getUserById(this.question.user_id).then(user => {
+          this.authorData = user;
+        });
+      },
     },
     data() {
       return {
-        authorData: this.author ? {...this.author} : this.question.author ? {...this.question.author} : null
+        authorData: this.author ? {...this.author} : this.question.author ? {...this.question.author} : this.loadAuthor()
       }
     },
   }

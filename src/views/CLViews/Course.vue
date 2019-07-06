@@ -47,38 +47,29 @@
               <div class="dtable dtable-justify">
                 <div class="dtable_row">
                   <div class="dtable_col dtable_col-muted">Объём курса</div>
-                  <div class="dtable_col">8 занятий</div>
+                  <div class="dtable_col">{{$t('{v} занятие ::: {v} занатия ::: {v} занятии', {v: course.lessons_amount}, course.lessons_amount)}}</div>
                 </div>
                 <div class="dtable_row">
                   <div class="dtable_col dtable_col-muted">Продолжительность</div>
-                  <div class="dtable_col">40:25</div>
+                  <div class="dtable_col">{{durationString}}</div>
                 </div>
                 <div class="dtable_row">
                   <div class="dtable_col dtable_col-muted">Прошло человек</div>
-                  <div class="dtable_col">324</div>
+                  <div class="dtable_col">{{course.users_finished_amount}}</div>
                 </div>
                 <div class="dtable_row">
                   <div class="dtable_col dtable_col-muted">Оценка</div>
                   <div class="dtable_col">
-                    <div class="stars"><div style="width:90%"></div></div>
+                    <div class="stars"><div :style="{width: ratingPercent + '%'}"></div></div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="course_sidebar_section">
+            <div class="course_sidebar_section" v-if="course.users_started_ids.length">
               <div class="course_sidebar_title">Начали изучение курса</div>
               <div class="course_users">
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <a href="#" class="avatar course_users_item"><img src="https://thispersondoesnotexist.com/image?" alt=""></a>
-                <div class="course_users_counter">+ еще 242</div>
+                <user-avatar v-for="userId in course.users_started_ids.slice(0, 10)" :key="userId" :user-id="userId"/>
+                <div class="course_users_counter" v-if="course.users_started_ids.length > 10">+ еще {{course.users_started_ids.length - 10}}}</div>
               </div>
             </div>
           </div>
@@ -93,9 +84,11 @@
   import ActionForAuthorised from '../../components/ui/ActionForAuthorised'
   import CourseComments from '../../components/CLComponents/CourseComments'
   import LessonsList from '../../components/CLComponents/LessonsList'
+  import {getTimeString} from '../../_helpers'
+  import UserAvatar from '../../components/ui/UserAvatar'
 
   export default {
-    components: {LessonsList, CourseComments, ActionForAuthorised, CommentForm},
+    components: {UserAvatar, LessonsList, CourseComments, ActionForAuthorised, CommentForm},
     props: {
       slug: [String, Number],
     },
@@ -119,6 +112,15 @@
       isAuthorised() {
         return this.$store.state.auth.authorized;
       },
+      durationString() {
+        if (!this.course || !this.course.duration) return '00:00';
+        return getTimeString(this.course.duration);
+
+      },
+      ratingPercent() {
+        if (!this.course || !this.course.lessons_rating) return 0;
+        return this.course.lessons_rating/5 * 100
+      }
     },
     methods: {
       loadCourse(id = this.slug) {

@@ -1,0 +1,49 @@
+@import (reference) '../../../../../../../Downloads/Основа 2/assets/css/reference/lessmix';
+@import (reference) '../../../../../../../Downloads/Основа 2/assets/css/reference/var';
+@import (reference) '../../../../../../../Downloads/Основа 2/assets/css/reference/classes';
+
+.circleProgress {
+	position: relative;
+	.square(56px);
+
+	&_ring {
+		width: 100%;
+		height: 100%;
+		.transform(rotate(-90deg));
+	}
+
+	&_circle {
+		transition: 0.35s stroke-dashoffset;
+	}
+
+	&_value {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		.transform(translateX(-50%) translateY(-50%));
+
+		color: @c-primary;
+		font-size: .75rem;
+		font-weight: 600;
+		text-align: center;
+
+		&:after {
+			content: '%';
+		}
+	}
+}
+
+.progressBar {
+	width: 100%;
+	height: 6px;
+	.rounded(6px);
+	overflow: hidden;
+	background: @c-grey-10;
+
+	div {
+		max-width: 100%;
+		height: 100%;
+		.rounded(6px);
+		background: @c-primary;
+	}
+}

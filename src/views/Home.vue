@@ -2,192 +2,31 @@
     <div class="home">
         <hero/>
         <div class="wrap">
-            <section class="hp_section">
-                <div class="hp_title">Курсы и материалы</div>
+            <section class="hp_section" v-if="courses.length">
+                <div class="hp_title">Курсы</div>
+                <course-card v-for="course of courses" :key="course.id" v-bind="course"/>
+            </section>
+            <section class="hp_section" v-if="articles.length">
+                <div class="hp_title">Материалы</div>
 
-                <form class="hp_search textfield textfield-block">
-                    <input type="text" class="qa_search_field textfield_input" placeholder=" ">
+                <form class="hp_search textfield textfield-block" @submit.prevent="handleSubmit">
+                    <input type="text" class="qa_search_field textfield_input" v-model="search" placeholder=" ">
                     <label class="textfield_label">Ищите ответы на свои вопросы или интересующие материалы</label>
                     <button type="submit" class="textfield_button textfield_button-search"></button>
                 </form>
 
                 <div class="hp_content blog_grid blog_grid-static">
-                    <article class="blogcard blogcard-wide blogcard-hl blogcard-inverse">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Онлайн-курс</div>
-                            <a href="#" class="blogcard_title">Подготовка к открытию своего дела</a>
-
-                            <ul class="blog_stats blogcard_stats">Бесплатный онлайн-курс из 12 занятий</ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-inverse blogcard-stackedMobile">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Как не надо размещать рекламу у блогеров</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-inverse blogcard-stackedMobile">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Бизнес-словарь. Доход, выручка, прибыль – простыми словами.</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-wide blogcard-inverse blogcard-stackedMobile">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Первый шаг к тому, чтобы начать бизнес. Just do it!</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-wide blogcard-inverse blogcard-stackedMobile">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Золотое правило рекламы – знай своего клиента в лицо или история Malboro</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="quizblock">
-                        <div class="quizblock_illustration">
-                            <img src="/assets/img/illustration/quiz.png" alt="">
-                        </div>
-
-                        <div class="quizblock_content">
-                            <div class="quizblock_title">Готовы ли вы начать собственный бизнес?</div>
-
-                            <div class="quizblock_description">Реализовать давнюю мечту, заниматься тем, что действительно нравится, зарабатывать хорошие деньги и приносить людям радость с помощью своих замечательных и невероятно полезных товаров и услуг… Звучит здорово! А думали ли вы всерьез о том, насколько ваша бизнес-идея жизнеспособна, и есть ли у вас достаточно знаний и упорства для ее реализации?</div>
-
-                            <div class="quizblock_controls">
-                                <a href="#" class="button button-primary button-outline button-icon button-icon-right button-icon-arrow-right">Пройти тест</a>
-                                <span>15 вопросов &nbsp; • &nbsp; 3 минуты</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-inverse blogcard-stackedMobile">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum a aliquid hic reprehenderit quos harum amet!</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-inverse blogcard-stackedMobile">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum a aliquid hic reprehenderit quos harum amet!</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-inverse blogcard-stackedMobile">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum a aliquid hic reprehenderit quos harum amet!</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
-
-                    <article class="blogcard blogcard-inverse blogcard-stackedMobile">
-                        <div class="blogcard_cover">
-                            <img src="http://placehold.it/500x500" alt="">
-                        </div>
-
-                        <div class="blogcard_wrap">
-                            <div class="blogcard_type">Статья</div>
-                            <div class="blogcard_category">Личная эффективность</div>
-                            <a href="#" class="blogcard_title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum a aliquid hic reprehenderit quos harum amet!</a>
-
-                            <ul class="blog_stats blogcard_stats">
-                                <li class="blog_stat blog_stat-rating">13</li>
-                                <li class="blog_stat blog_stat-comments">1</li>
-                                <li class="blog_stat blog_stat-bookmarks">12</li>
-                            </ul>
-                        </div>
-                    </article>
+                    <blog-card v-for="(article, index) in articles" :key="article.id" v-bind="article" inverse :wide="index===2 || index===3" :stacked="index>0" :highlight="index===2"/>
                 </div>
 
-                <a href="#" class="hp_section_button button button-primary button-outline button-icon button-icon-right button-icon-arrow-right">Все материалы</a>
+                <router-link :to="{name: 'kb-all'}" class="hp_section_button button button-primary button-outline button-icon button-icon-right button-icon-arrow-right">Все материалы</router-link>
+            </section>
+            <section class="hp_section" v-if="questions.length">
+                <div class="hp_title">Ответы на вопросы сообщества</div>
+                <div class="hp_questions">
+                    <question-card v-for="question in questions" :key="question.id" :question="question" is-small/>
+                </div>
+                <router-link :to="{name: 'qa'}" class="hp_section_button button button-primary button-outline button-icon button-icon-right button-icon-arrow-right">Все вопросы</router-link>
             </section>
         </div>
     </div>
@@ -195,7 +34,58 @@
 
 <script>
     import Hero from "../components/Hero";
+    import clService from '../_services/cl.service'
+    import kbService from '../_services/kb.service'
+    import CourseCard from '../components/CLComponents/CourseCard'
+    import BlogCard from '../components/KBComponents/BlogCard'
+    import qaService from '../_services/qa.service'
+    import QuestionCard from '../components/QAComponents/QuestionCard'
     export default {
-      components: {Hero}
+      components: {QuestionCard, BlogCard, CourseCard, Hero},
+      data() {
+        return {
+          courses: [],
+          articles: [],
+          questions: [],
+          coursesStatus: 'loading',
+          articlesStatus: 'loading',
+          questionsStatus: 'loading',
+          search: '',
+        }
+      },
+      methods: {
+        loadCourses() {
+          this.coursesStatus = 'loading';
+          clService.loadCourses(1, 3).then(({courses}) => {
+            this.courses = courses;
+            this.coursesStatus = 'success';
+          });
+        },
+        loadArticles() {
+          this.articlesStatus = 'loading';
+          kbService.loadArticles(1, 6, {orderBy: 'rating'}).then(({articles}) => {
+            this.articlesStatus = 'success';
+            this.articles = articles;
+          });
+        },
+        loadQuestions() {
+          this.questionsStatus = 'loading';
+          qaService.getQuestions(1, 6, {orderBy: 'rating'}).then(({questions}) => {
+            this.questionsStatus = 'success';
+            this.questions = questions;
+          });
+        },
+        handleSubmit() {
+          this.$router.push({
+            name: 'kb-search',
+            query: {search: this.search},
+          });
+        }
+      },
+      mounted() {
+        this.loadCourses();
+        this.loadArticles();
+        this.loadQuestions();
+      },
     }
 </script>

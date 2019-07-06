@@ -13,9 +13,8 @@
       </div>
 
       <div class="courcont_progress_line">
-        <a v-for="lesson in finished" :key="lesson.id" href="#" class="courcont_progress_item courcont_progress_item-done"></a>
-        <a v-for="lesson in started" :key="lesson.id" href="#" class="courcont_progress_item courcont_progress_item-current"></a>
-        <span v-for="lesson in pristines" :key="lesson.id" class="courcont_progress_item"></span>
+        <router-link v-for="(lesson, index) in availables" :key="lesson.id" :to="{name: 'lesson', params: {slug: lesson.id}}" class="courcont_progress_item" :class="{'courcont_progress_item-done': lesson.user_finished, 'courcont_progress_item-current': !lesson.user_finished}" :data-tooltip="lesson.title" :data-tooltip-position="'top' + (index && index === lessons.length - 1 ? ' left' : '') + (!index ? ' right' : '') "></router-link>
+        <span v-for="lesson in unavailables" :key="lesson.id" class="courcont_progress_item" data-tooltip="Курс недоступен" :data-tooltip-position="'top' + (index && index === lessons.length - 1 ? ' left' : '') + (!index ? ' right' : '') "></span>
       </div>
     </div>
 
@@ -32,14 +31,14 @@
     },
     name: 'lessons-list',
     computed: {
+      availables() {
+        return this.lessons.filter(l => l.user_access);
+      },
+      unavailables() {
+        return this.lessons.filter(l => !l.user_access);
+      },
       finished() {
         return this.lessons.filter(l => l.user_finished);
-      },
-      started() {
-        return this.lessons.filter(l => l.user_finished === false);
-      },
-      pristines() {
-        return this.lessons.filter(l => l.user_finished === null);
       }
     },
   }

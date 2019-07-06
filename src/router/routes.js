@@ -87,4 +87,10 @@ export default [
     props: true,
     component: () => import('../views/CLViews/CL.vue'),
   },
+  {
+    path: 'quiz/:slug',
+    name: 'quiz',
+    props: true,
+    component: () => import('../views/CLViews/Quiz.vue'),
+  }
 ];

@@ -7,8 +7,8 @@ import {normalizeQuestion, normalizeQuestions, normalizeUsers} from './normalize
 import themesApi from '../_api/themes.api'
 
 const qaService = {
-  getQuestions(page=1, limit=5, {searchText="", themes=[], category}={}) {
-    return qaApi.getQuestions(page, limit, searchText, themes, category).then(handleQuestionsSuccess);
+  getQuestions(page=1, limit=5, {searchText: search="", themes=[], category={}, orderBy}) {
+    return qaApi.getQuestions(page, limit, {search, themes, category, orderBy}).then(handleQuestionsSuccess);
   },
   getQuestion(slug) {
     return qaApi.getQuestion(slug).then(({data}) => normalizeQuestion(data.question));

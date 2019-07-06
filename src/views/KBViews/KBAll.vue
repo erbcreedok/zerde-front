@@ -44,7 +44,6 @@
         this.status = 'loading';
         this.articles = [];
         kbService.loadArticles(page, per_page).then(({articles, totalCount}) => {
-          console.log(articles);
           this.status = 'success';
           this.articles = articles;
           this.totalCount = totalCount

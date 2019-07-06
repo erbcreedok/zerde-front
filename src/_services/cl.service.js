@@ -38,6 +38,28 @@ const clService = {
       .catch(handleError)
       .then(({data}) => data);
   },
+  startCourse(id) {
+    return client.post(`user/course/start/${id}`)
+      .then(handleResponse)
+      .catch(handleError)
+  },
+  startLesson(id) {
+    return client.post(`user/lesson/start/${id}`)
+      .then(handleResponse)
+      .catch(handleError)
+  },
+  finishLesson(id) {
+    return client.post(`user/lesson/finish/${id}`)
+      .then(handleResponse)
+      .catch(handleError)
+  },
+  rateLesson(lesson_id, rate_value=1) {
+    return client.post(`/cl-moderation/lesson/${lesson_id}/rate`, {rate_value})
+      .then(handleResponse)
+      .catch(handleError)
+      .then(({data}) => data.total);
+  },
+
 };
 
 function handleCoursesSuccess({courses}) {

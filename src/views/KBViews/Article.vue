@@ -17,9 +17,9 @@
                     <div class="post_date">{{article.created_at | moment('D MMMM YYYY')}}</div>
 
                     <ul class="blog_stats blog_stats-big post_stats">
-                        <li class="blog_stat blog_stat-comments">{{article.comments_count}}</li>
-                        <li class="blog_stat blog_stat-bookmarks">{{article.fav_count}}</li>
-                        <li class="blog_stat blog_stat-views">{{article.views}}</li>
+                        <li class="blog_stat blog_stat-comments" data-tooltip="комментариев">{{article.comments_count}}</li>
+                        <li class="blog_stat blog_stat-bookmarks" data-tooltip="сохранений">{{article.fav_count}}</li>
+                        <li class="blog_stat blog_stat-views" data-tooltip="просмотров">{{article.views}}</li>
                     </ul>
 
                     <div class="post_controls">

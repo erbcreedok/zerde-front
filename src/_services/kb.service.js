@@ -2,7 +2,7 @@ import client, {handleError, handleResponse} from '../_api'
 import {normalizeArticle, normalizeArticles} from './normalizers'
 
 const kbService = {
-  loadArticles(page=1, per_page=5, {search, themes, types, orderBy} = {}) {
+  loadArticles(page=1, per_page=5, {search, themes, types, orderBy, orderDir='DESC'} = {}) {
     let query = `?page=${page}&per_page=${per_page}`;
     if (search && search.length) {
       query += '&search=' + encodeURI(search);
@@ -14,7 +14,7 @@ const kbService = {
       query += '&types=' + encodeURI(JSON.stringify(types));
     }
     if (orderBy) {
-      query += `&order_by[${encodeURI(orderBy)}]=DESC`
+      query += `&order_by[${encodeURI(orderBy)}]=${orderDir ? orderDir : 'DESC'}`
     }
     return client.get(`kb/article${query}`).then(handleResponse).then(({data}) => {
       return handleArticlesSuccess(data);

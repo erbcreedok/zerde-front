@@ -21,5 +21,12 @@ export const handlePhoneFocus = (e) => {
 };
 
 export function getTimeString(seconds) {
-  return moment(seconds * 1000).format('m:ss');
+  if (seconds < 60 * 60) {
+    return moment.utc(seconds * 1000).format('m:ss');
+  } else {
+    return moment.utc(seconds * 1000).format('H:mm:ss');
+  }
 }
+
+window.moment = moment;
+window.gettime = getTimeString;
