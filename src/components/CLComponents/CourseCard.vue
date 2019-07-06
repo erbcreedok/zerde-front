@@ -31,8 +31,8 @@
         </template>
         <router-link :to="{name: 'course', params: {slug: id}}" class="button button-outline">Подробнее</router-link>
       </div>
-      <template v-if="user_course && user_course.progress">
-        <div class="coursecard_progress">Ваш прогресс: {{parseInt(user_course.progress)}}%</div>
+      <template v-if="progress">
+        <div class="coursecard_progress">Ваш прогресс: {{progress}}%</div>
       </template>
     </div>
   </article>
@@ -60,10 +60,15 @@
       lessons_amount: [Number, String],
       authors: Array,
       studentCount: Number,
-      progress: Number,
       user_course: Object,
     },
     computed: {
+      progress() {
+        if (this.user_course && this.user_course.progress) {
+          return (this.user_course.progress < 100) ? (this.user_course.progress - 0) : 100;
+        }
+        return null;
+      },
       isAuthorised() {
         return this.$store.state.auth.authorized;
       },
