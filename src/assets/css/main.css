@@ -238,9 +238,6 @@ html {
   line-height: 1.5rem;
   font-size: 0.875rem;
 }
-.alert a {
-  text-decoration: underline;
-}
 .alert a:hover {
   text-decoration: none;
 }

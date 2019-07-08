@@ -10,7 +10,7 @@
            :autocomplete="autocomplete"
            :required="required"
            @input="updateInput"
-           v-mask="mask"
+           v-mask="maskValue"
            :maxlength="maxLength"
            :minlength="minLength"
            :min="min"
@@ -75,6 +75,7 @@
       },
       translate: Boolean,
       capitalize: Boolean,
+      isPhone: Boolean,
     },
     data() {
       return {
@@ -82,6 +83,15 @@
       }
     },
     computed: {
+      maskValue() {
+        if (this.mask) {
+          return this.mask;
+        }
+        if (this.isPhone) {
+          return '+#(###)###-##-##'
+        }
+        return '';
+      },
       placeholderValue() {
         if (!this.label) return this.placeholder;
         return this.placeholder && this.focused ? this.placeholder : ' ';
@@ -103,12 +113,30 @@
       },
       handleFocus(e) {
         this.focused = true;
+        if (this.isPhone) {
+          this.handlePhoneFocus();
+        }
         this.$emit('focus', e);
       },
       handleBlur(e) {
         this.focused = false;
+        if (this.isPhone) {
+          this.handlePhoneBlur();
+        }
         this.$emit('blur', e);
-      }
+      },
+      handlePhoneFocus() {
+        if(this.value === '') {
+          console.log('123123');
+          this.$emit('input', '+7(7');
+        }
+      },
+      handlePhoneBlur() {
+        if(this.value.length < 5) {
+          console.log('remove phone val')
+          this.$emit('input', '');
+        }
+      },
     },
   }
 </script>

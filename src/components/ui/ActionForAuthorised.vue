@@ -8,13 +8,24 @@
   export default {
     props: {
       action: String,
+      buttonClass: {
+        type: String,
+        default: 'button-outline button-primary',
+      },
+      redirectTo: String,
     },
     computed: {
       authoriseButton() {
-        return `<a href="/${this.locale}/signin" class="button button-small button-outline button-primary">${capitalize(this.$t('authorise'))}</a>`
+        return `<a href="/${this.locale}/signin?fromPath=${this.fromPath}" class="button button-small ${this.buttonClass}">${capitalize(this.$t('authorise'))}</a>`
       },
       locale() {
         return i18nService.getCurrentLocale();
+      },
+      fromPath() {
+        if (this.redirectTo) {
+          return this.redirectTo;
+        }
+        return this.$route.path;
       },
     },
     methods: {

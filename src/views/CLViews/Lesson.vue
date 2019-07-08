@@ -5,53 +5,62 @@
       <div class="alert alert-danger lesson_alert">У вас нет доступа к этому занятию.</div>
     </template>
     <template v-if="lesson">
-    <router-link :to="{name: 'course', params: {slug: lesson.course_id}}" class="lesson_backlink">{{lesson.course_title}}</router-link>
-    <h1 class="title lesson_title" :class="{'lesson_title-complete': lesson.user_finished}">{{lesson.title}}</h1>
 
-     <p class="lesson_description" v-if="lesson.body_short" v-html="lesson.body_short"></p>
-      <template v-if="!lesson.user_access">
+      <router-link :to="{name: 'course', params: {slug: lesson.course_id}}" class="lesson_backlink">{{lesson.course_title}}</router-link>
+
+      <h1 class="title lesson_title" :class="{'lesson_title-complete': lesson.user_finished}">{{lesson.title}}</h1>
+
+      <p class="lesson_description" v-if="lesson.body_short" v-html="lesson.body_short"></p>
+
+      <template v-if="!isAuthorised">
+        <div class="alert alert-danger lesson_alert">
+          <action-for-authorised button-class="button-danger" action="получить доступ к занятиям" />
+        </div>
+      </template>
+
+      <template v-else-if="!lesson.user_access">
         <div class="alert alert-danger lesson_alert">У вас нет доступа к этому занятию.</div>
       </template>
 
       <template v-else>
-      <div class="lesson_tabs tabs">
-        <div class="tabs_list">
-          <router-link :to="{name: 'lesson-video'}" class="tabs_item">Видео</router-link>
-          <router-link :to="{name: 'lesson-text'}" class="tabs_item">Текст</router-link>
-          <router-link :to="{name: 'lesson-resources'}" class="tabs_item">Дополнительно</router-link>
-          <router-link :to="{name: 'lesson-comments'}" class="tabs_item">Комментарии</router-link>
+        <div class="lesson_tabs tabs">
+          <div class="tabs_list">
+            <router-link :to="{name: 'lesson-video'}" class="tabs_item">Видео</router-link>
+            <router-link :to="{name: 'lesson-text'}" class="tabs_item">Текст</router-link>
+            <router-link :to="{name: 'lesson-resources'}" class="tabs_item">Дополнительно</router-link>
+            <router-link :to="{name: 'lesson-comments'}" class="tabs_item">Комментарии</router-link>
+          </div>
         </div>
-      </div>
 
-      <div class="lesson_content">
+        <div class="lesson_content">
 
-        <router-view :lesson="lesson"/>
+          <router-view :lesson="lesson"/>
 
-        <div class="lesson_controls">
-          <template v-if="isAuthorised">
-            <template v-if="!lesson.user_finished">
-              <button class="button button-primary button-icon button-icon-left button-icon-checkmark" @click="finishLesson">Завершить</button>
-            </template>
-            <template v-else>
-              <router-link v-if="lesson.test" :to="{name: 'quiz', params: {slug: lesson.id}}" class="button button-primary button-icon button-icon-left button-icon-angle-right">Перейти к тесту</router-link>
-              <router-link v-else :to="{name: 'lesson', params: {slug: lesson.id - (-1)}}" class="button button-primary button-icon button-icon-left button-icon-angle-right">Следующий урок</router-link>
-              <div class="lesson_rating">
-                <div class="lesson_rating_caption">Пожалуйста, оцените это занятие:</div>
-                <div class="voting">
-                  <div class="voting_wrap">
-                    <button class="voting_button voting_button-dislike" @click="rateLesson(0)" :class="{'voting_button-selected': lesson.user_rate === 0}"></button>
-                    <button class="voting_button voting_button-like" @click="rateLesson(5)"  :class="{'voting_button-selected': lesson.user_rate === 5}"></button>
+          <div class="lesson_controls">
+            <template v-if="isAuthorised">
+              <template v-if="!lesson.user_finished">
+                <button class="button button-primary button-icon button-icon-left button-icon-checkmark" @click="finishLesson">Завершить</button>
+              </template>
+              <template v-else>
+                <router-link v-if="lesson.test" :to="{name: 'quiz', params: {slug: lesson.id}}" class="button button-primary button-icon button-icon-left button-icon-angle-right">Перейти к тесту</router-link>
+                <router-link v-else :to="{name: 'lesson', params: {slug: lesson.id - (-1)}}" class="button button-primary button-icon button-icon-left button-icon-angle-right">Следующий урок</router-link>
+                <div class="lesson_rating">
+                  <div class="lesson_rating_caption">Пожалуйста, оцените это занятие:</div>
+                  <div class="voting">
+                    <div class="voting_wrap">
+                      <button class="voting_button voting_button-dislike" @click="rateLesson(0)" :class="{'voting_button-selected': lesson.user_rate === 0}"></button>
+                      <button class="voting_button voting_button-like" @click="rateLesson(5)"  :class="{'voting_button-selected': lesson.user_rate === 5}"></button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </template>
             </template>
-          </template>
-          <template v-else>
-            <action-for-authorised action="завершить курс" />
-          </template>
+            <template v-else>
+              <action-for-authorised action="завершить курс" />
+            </template>
+          </div>
         </div>
-      </div>
-      </template>
+        </template>
       </template>
     </div>
   </template>

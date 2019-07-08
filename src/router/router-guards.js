@@ -8,7 +8,6 @@ export const requireAuth = (to, from, next)  => {
   if (store.state.auth.authorized) {
     next()
   } else {
-    console.log(from);
     next({name: 'signin', query: {from: to.name}})
   }
 };
@@ -30,7 +29,6 @@ export const checkLocale = (to, from, next) => {
 };
 
 export const requireOwnAuth = (to, from, next) => {
-  console.log({to, from, next},store.getters[USER + 'getUserId']);
   if (to.params.userId+'' === store.getters[USER + 'getUserId']+'') {
     next();
   } else {

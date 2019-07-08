@@ -14,7 +14,7 @@
 
                 <!--<ui-input class="textfield-block form_field" name="email" :label="capitalize($t('email'))" :placeholder="capitalize($t('enter email'))" v-model="data.email"/>-->
 
-                <ui-input class="textfield-block form_field" required name="phone" :label="capitalize($t('phone'))" :placeholder="capitalize($t('enter phone'))" v-model="data.phone" @focus="handlePhoneFocus" @blur="handlePhoneBlur" mask="+#(###)###-##-##"/>
+                <ui-input class="textfield-block form_field" required name="phone" :label="capitalize($t('phone'))" :placeholder="capitalize($t('enter phone'))" v-model="data.phone" is-phone/>
 
                 <ui-input class="textfield-block form_field" required name="password" :label="capitalize($t('password'))" :placeholder="capitalize($t('enter password'))"  type="password" v-model="data.password"/>
 
@@ -53,22 +53,24 @@
       }
     },
     computed: {
-      redirectTo() {
-        return this.$route.query && this.$route.query.from ? this.$route.query.from : 'home';
+      redirectName() {
+        return this.$route.query && this.$route.query.from ? this.$route.query.from : null;
       },
+      redirectPath() {
+        return this.$route.query && this.$route.query.fromPath ? this.$route.query.fromPath : null;
+      },
+      redirectTo() {
+        if (this.redirectPath) {
+          return this.redirectPath;
+        } else if (this.redirectName) {
+          return {name: this.redirectName}
+        } else {
+          return '/';
+        }
+      }
     },
     methods: {
       capitalize,
-      handlePhoneFocus() {
-        if(this.data.phone === '') {
-          this.data.phone = '+7(7';
-        }
-      },
-      handlePhoneBlur() {
-        if(this.data.phone.length < 5) {
-          this.data.phone = '';
-        }
-      },
       onSubmit() {
         this.status = 'loading';
         const phone = dismaskPhone(this.data.phone);
@@ -77,7 +79,7 @@
           .then(() => {
             this.status = 'success';
             this.globalErrors = [];
-            this.$router.push({name: this.redirectTo});
+            this.$router.push(this.redirectTo);
           })
           .catch(err => {
             this.status = 'error';

@@ -66,8 +66,6 @@
             <button class="skill"
                     v-for="specialization in user.specializations"
                     :key="specialization.id"
-                    :data-skill-id="specialization.id"
-                    @click="approveSpecialization(specialization)"
             >
               {{specialization.name}}
               <span class="skill_counter">{{specialization.approvers_count}}</span>

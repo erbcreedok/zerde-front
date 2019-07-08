@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{name: type, params: {slug: id}}" class="courcont_item" :class="{'courcont_item-quiz': type==='quiz', 'courcont_item-done': done, 'courcont_item-locked': !user_access}">
+  <router-link :to="{name: type, params: {slug: id}}" class="courcont_item" :class="{'courcont_item-quiz': type==='quiz', 'courcont_item-done': done, 'courcont_item-locked': !user_access || !isAuthorised}">
     <div class="courcont_item_wrap">
       <div class="courcont_item_icon"></div>
       <div class="courcont_item_title">{{title}}</div>
@@ -29,6 +29,9 @@
       id: [Number, String],
     },
     computed: {
+      isAuthorised() {
+        return this.$store.state.auth.authorized;
+      },
       durationString() {
         return this.duration ? getTimeString(this.duration) : '';
       },

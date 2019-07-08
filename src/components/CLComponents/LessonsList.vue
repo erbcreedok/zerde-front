@@ -6,6 +6,12 @@
       </div>
     </div>
 
+    <template v-if="!isAuthorised">
+      <div class="courcont_alert alert alert-warning">
+        <action-for-authorised button-class="button-warning" action="получить доступ к занятиям"/>
+      </div>
+    </template>
+
     <div class="courcont_progress">
       <div class="courcont_progress_captions">
         <span class="courcont_progress_caption courcont_progress_caption-success">Вы на {{finished.length + 1}} занятии</span>
@@ -24,8 +30,9 @@
 </template>
 <script>
   import LessonItem from './LessonItem'
+  import ActionForAuthorised from '../ui/ActionForAuthorised'
   export default {
-    components: {LessonItem},
+    components: {ActionForAuthorised, LessonItem},
     props: {
       lessons: {
         type: Array,
@@ -34,6 +41,9 @@
     },
     name: 'lessons-list',
     computed: {
+      isAuthorised() {
+        return this.$store.state.auth.authorized;
+      },
       lessonsList() {
         return this.lessons.map((l, index) => ({
           ...l,

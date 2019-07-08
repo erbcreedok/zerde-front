@@ -2,7 +2,7 @@
   <div class="wrapper">
     <p style="margin-bottom: 1rem">На ваш номер {{maskPhone}} был отправлен код подтверждения</p>
     <form ref="form" @submit.prevent="handleSubmit" style="margin: 0 auto 1rem; max-width: 200px; padding: 1rem 0">
-      <ui-input label="Введите код" style="font-size: 1.3rem; text-align: center; margin: 0 0 2rem" class="textfield-block form_field" v-model="code" @input="handleInput" :mask="maskInput" :max-length="length*2-1"></ui-input>
+      <ui-input :error="error" label="Введите код" style="font-size: 1.3rem; text-align: center; margin: 0 0 2rem" class="textfield-block form_field" v-model="code" @input="handleInput" :mask="maskInput" :max-length="length*2-1"></ui-input>
       <ui-button color="primary" style="width: 100%" ref="submit" type="submit">Ввести</ui-button>
     </form>
     <label style="font-size: 0.9rem;color: #888;">Не пришло SMS?
@@ -17,6 +17,7 @@
   import {dismaskNumber} from "../_helpers/stringManipulations";
   export default {
     props: {
+      error: String,
       phone: {
         type: String,
         required: true,

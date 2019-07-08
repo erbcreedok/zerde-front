@@ -111,4 +111,5 @@ export default {
   'home' : 'главная',
   'last seen a long time ago' : 'был(а) очень давно',
   'lesson finished' : 'урок завершен',
+  'wrong code' : 'неверный код',
 }

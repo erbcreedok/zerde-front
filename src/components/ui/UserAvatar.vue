@@ -37,7 +37,6 @@
       }
     },
     mounted() {
-      console.log('hi');
       this.loadUserProfile();
     },
   }

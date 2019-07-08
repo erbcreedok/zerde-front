@@ -5,13 +5,11 @@ const clService = {
   loadCourses(page=1, per_page=5) {
     let query = `?page=${page}&per_page=${per_page}`;
     return client.get(`cl/course${query}`).then(handleResponse).then(({data}) => {
-      console.log(data);
       return handleCoursesSuccess(data);
     });
   },
   loadCourseById(id) {
     return client.get(`cl/course/${id}`).then(handleResponse).then(({data}) => {
-      console.log(data);
       return handleCourseSuccess(data);
     });
   },
@@ -38,7 +36,6 @@ const clService = {
       .then(({data}) => data.total);
   },
   loadLessonById(id) {
-    console.log(id);
     return client.get(`cl/lesson/${id}`)
       .catch(handleError)
       .then(handleResponse)

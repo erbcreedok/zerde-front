@@ -111,4 +111,5 @@ export default {
   'home' : 'басты',
   'last seen a long time ago' : 'соңғы рет бұрыннан көрілген',
   'lesson finished' : 'сабақ аяқталды',
+  'wrong code' : 'қате код',
 }

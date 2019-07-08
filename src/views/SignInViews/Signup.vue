@@ -10,16 +10,17 @@
                 </template>
 
                 <ui-input class="textfield-block form_field"
+                          required
+                          show-required
                           v-for="input in inputs"
-                          :key="'input_' + input.name"
                           v-validate="input.validators"
+                          v-model="data[input.name]"
+                          :is-phone="input.type === 'phone'"
+                          :key="'input_' + input.name"
                           :error="status!=='clear' && fields[input.name] && fields[input.name].dirty && fields[input.name].touched ? errors.first(input.name) : ''"
                           :notification="capitalize(input.notification)"
                           :name="input.name"
                           :type="input.type ? input.type : ''"
-                          v-model="data[input.name]"
-                          required
-                          show-required
                           :label="capitalize($t(input.label ? input.label : input.name))"
                           :placeholder="capitalize($t(input.placeholder ? input.placeholder : `enter ${input.name}`))"
                           :mask="input.mask ? input.mask : ''"
@@ -31,7 +32,7 @@
             </form>
 
             <modal-block v-if="modalVisible" :visible.sync="modalVisible" title="Подтверждение номера телефона" with-header width="400px">
-                <PhoneConfirmationForm v-loading="modalStatus==='loading'"  :phone="data.phone" @resendSMS="resendSMS" @submit="confirmSMS"/>
+                <PhoneConfirmationForm v-loading="modalStatus==='loading'" :error="modalError" :phone="data.phone" @resendSMS="resendSMS" @submit="confirmSMS"/>
             </modal-block>
 
             <section class="login_section login_section-secondary">
@@ -62,6 +63,7 @@
       return {
         modalVisible: false,
         modalStatus: 'clean',
+        modalError: null,
         status: 'clear',
         data: {
           phone: '',
@@ -75,7 +77,6 @@
             name: 'phone',
             validators: 'required|length:16',
             type: 'phone',
-            mask: '+#(###)###-##-##',
           },
           {
             val: '',
@@ -119,16 +120,6 @@
     },
     methods: {
       capitalize,
-      handlePhoneFocus() {
-        if(this.data.phone === '') {
-          this.data.phone = '+7(7';
-        }
-      },
-      handlePhoneBlur() {
-        if(this.data.phone.length < 5) {
-          this.data.phone = '';
-        }
-      },
       resendSMS() {
         console.log('resend');
         this.modalVisible = false;
@@ -148,6 +139,7 @@
       },
       confirmSMS(code) {
         if(this.modalStatus==='loading') return;
+        this.modalError = null;
         const phone = this.rawPhone;
         this.modalStatus = 'loading';
         authService.confirmSMS(phone, code).then(res => {
@@ -162,6 +154,7 @@
           });
         }).catch(() => {
           this.modalStatus = 'error';
+          this.modalError = capitalize(this.$t('wrong code'));
         })
       },
       onSubmit() {
@@ -187,7 +180,7 @@
               status: 1,
             })
           }
-        })
+        });
       }
     },
   }

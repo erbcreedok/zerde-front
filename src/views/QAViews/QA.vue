@@ -107,6 +107,11 @@
         this.$router.push({...this.$route, query: {...this.$route.query, page: 1, category: 'all', search: value}});
       },
       loadQuestions(page=this.activePage, limit=this.perPage, {themes=this.theme, category=this.activeTab, searchText=this.searchText}={}) {
+        this.questions = [];
+        if (category === 'my' && !this.authorised) {
+          this.status = 'clean';
+          return false;
+        }
         if (page < 1) {
           this.$router.push({...this.$route, query: {...this.$route.query, page: 1}});
         }
@@ -114,7 +119,6 @@
           themes = [themes.id];
         }
         this.status = 'loading';
-        this.questions = [];
         qaService.getQuestions(page, limit, {category, themes, searchText}).then(({questions, totalCount}) => {
           this.status = 'success';
           this.questions = questions;
