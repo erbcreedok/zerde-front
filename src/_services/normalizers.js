@@ -161,10 +161,11 @@ export function normalizeContact(contact) {
 }
 
 export function normalizeArticle(article) {
+  console.log({article});
   article = {...article,
     created_at: moment(article.created_at),
     updated_at: moment(article.updated_at),
-    cover: article.cover ? article.cover : '/assets/img/blogpost_placeholder.jpg',
+    cover: article.img_src ? article.img_src : '/assets/img/blogpost_placeholder.jpg',
     category: article.themes && article.themes[0] && article.themes[0].name ? article.themes[0].name : '',
     author: article.author ? normalizeUser(article.author) : null,
     embed: article.video ? generateEmbedLink(article.video) : null,
