@@ -5,6 +5,7 @@ import {Validator} from "vee-validate";
 import _validators from "../_dictionaries/_validators";
 import 'moment/locale/kk';
 import 'moment/locale/ru';
+import client from '../_api'
 
 Validator.localize(_validators);
 
@@ -22,6 +23,7 @@ const i18nService = {
     Validator.localize(_validators);
     Validator.localize(locale);
     localStorage.setItem(LS_LOCALE, locale);
+    client.defaults.headers['X-Localization'] = locale;
   }
 };
 

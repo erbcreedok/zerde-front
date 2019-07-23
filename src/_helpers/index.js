@@ -1,4 +1,7 @@
+import Vue from 'vue';
 import moment from 'moment';
+import {DEFAULT_TITLE} from '../_types'
+import {capitalize} from '../_filters/capitalize'
 
 export const generateRandom = (min, max) => {
   if (!max) {
@@ -28,5 +31,7 @@ export function getTimeString(seconds) {
   }
 }
 
-window.moment = moment;
-window.gettime = getTimeString;
+
+export function setDocumentTitle(title='', translate=true, useDefaultTitle = true) {
+  document.title = (translate ? capitalize(Vue.prototype.$t(title)) : title) + (useDefaultTitle ? (title.length ? ' | ' : '') + DEFAULT_TITLE : '');
+}

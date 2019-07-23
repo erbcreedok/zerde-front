@@ -57,6 +57,8 @@
   import clService from '../../_services/cl.service'
   import GridLoader from 'vue-spinner/src/GridLoader'
   import PulseLoader from 'vue-spinner/src/PulseLoader'
+  import {setDocumentTitle} from '../../_helpers'
+  import {capitalize} from '../../_filters/capitalize'
   export default {
     components: {PulseLoader, GridLoader, QuizForm, UiProgress},
     props: {
@@ -118,6 +120,7 @@
           this.quiz = data;
           this.quizResult = data.previous_result ? data.previous_result.result : null;
           this.quizSuccess = data.previous_result ? !!data.previous_result.success : false;
+          setDocumentTitle(capitalize(this.$t('quiz')) + ' - ' + data.lesson_title, false);
           return data;
         }).catch(err => {
           this.status = 'error';
@@ -148,6 +151,10 @@
     },
     mounted() {
       this.loadQuiz();
-    }
+      setDocumentTitle('quiz');
+    },
+    beforeDestroy() {
+      setDocumentTitle();
+    },
   }
 </script>

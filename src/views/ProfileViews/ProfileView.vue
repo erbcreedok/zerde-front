@@ -100,6 +100,7 @@
   import userService from '../../_services/user.service'
   import moment from 'moment';
   import UiDescriptionIcon from '../../components/ui/UiDescriptionIcon'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {UiDescriptionIcon},
@@ -118,6 +119,7 @@
     },
     mounted() {
       this.loadUser();
+      setDocumentTitle('profile');
     },
     computed: {
       lastActivity() {
@@ -165,18 +167,23 @@
           userService.getMyProfile().then(user => {
             this.userState = 'success';
             this.user = user;
-            console.log(user);
+            setDocumentTitle('my profile');
           });
         } else {
           userService.getUserProfile(id).then(user => {
             this.userState = 'success';
             this.user = user;
+            setDocumentTitle(user.fullname, false);
           });
         }
+        userService.getUserAchievements(id);
       },
       handleUpdate() {
         this.loadUser();
       }
     },
+    beforeDestroy() {
+      setDocumentTitle();
+    }
   }
 </script>

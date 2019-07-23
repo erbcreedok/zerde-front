@@ -1,18 +1,13 @@
-import {requireAuth, unrequireAuth} from "./router-guards";
+import {requireAuth, unrequireAuth} from './router-guards'
 import profileRoutes from './childRoutes/profileRoutes'
-import KBRoutes from "./childRoutes/KBRoutes";
-import LessonRoutes from "./childRoutes/LessonRoutes";
+import KBRoutes from './childRoutes/KBRoutes'
+import LessonRoutes from './childRoutes/LessonRoutes'
 
 export default [
   {
     path: '',
     name: 'home',
     component: () => import('../views/Home.vue')
-  },
-  {
-    path: 'about',
-    name: 'about',
-    component: () => import('../views/About.vue')
   },
   {
     path: 'signin',

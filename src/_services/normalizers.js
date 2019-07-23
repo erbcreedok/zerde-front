@@ -161,7 +161,6 @@ export function normalizeContact(contact) {
 }
 
 export function normalizeArticle(article) {
-  console.log({article});
   article = {...article,
     created_at: moment(article.created_at),
     updated_at: moment(article.updated_at),

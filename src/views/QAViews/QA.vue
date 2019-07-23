@@ -46,6 +46,7 @@
   import UiSearchInput from '../../components/ui/UiSearchInput'
   import ListPagination from '../../components/ListPagination'
   import ActionForAuthorised from '../../components/ui/ActionForAuthorised'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {ActionForAuthorised, QaControls, QaSidebar, Tabs, ListPagination, QuestionCard, UiSearchInput},
@@ -130,8 +131,11 @@
       },
     },
     mounted() {
-      console.log(this.$route.query);
       this.loadQuestions();
+      setDocumentTitle('questions feed');
+    },
+    beforeDestroy() {
+      setDocumentTitle();
     },
     beforeRouteEnter(to, from, next) {
       if (to.query && to.query.theme) {

@@ -23,6 +23,7 @@
   import ListPagination from "../../components/ListPagination";
   import BlogCard from "../../components/KBComponents/BlogCard";
   import GridLoader from "vue-spinner/src/GridLoader";
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {GridLoader, BlogCard, ListPagination},
@@ -63,6 +64,10 @@
     },
     mounted() {
       this.loadArticles();
+      setDocumentTitle('knowledge base');
     },
+    beforeDestroy() {
+      setDocumentTitle();
+    }
   }
 </script>

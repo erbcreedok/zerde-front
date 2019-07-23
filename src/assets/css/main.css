@@ -1876,6 +1876,17 @@ input:checked ~ .checkbox_label {
     position: relative;
   }
 }
+@media (max-width: 600px) {
+  .modal-wrapper {
+    position: fixed;
+    z-index: 1000;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    overflow: auto;
+  }
+}
 .modal-visible {
   visibility: visible;
   opacity: 1;

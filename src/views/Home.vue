@@ -33,14 +33,16 @@
 </template>
 
 <script>
-    import Hero from "../components/Hero";
-    import clService from '../_services/cl.service'
-    import kbService from '../_services/kb.service'
-    import CourseCard from '../components/CLComponents/CourseCard'
-    import BlogCard from '../components/KBComponents/BlogCard'
-    import qaService from '../_services/qa.service'
-    import QuestionCard from '../components/QAComponents/QuestionCard'
-    export default {
+  import Hero from '../components/Hero'
+  import clService from '../_services/cl.service'
+  import kbService from '../_services/kb.service'
+  import CourseCard from '../components/CLComponents/CourseCard'
+  import BlogCard from '../components/KBComponents/BlogCard'
+  import qaService from '../_services/qa.service'
+  import QuestionCard from '../components/QAComponents/QuestionCard'
+  import {setDocumentTitle} from '../_helpers'
+
+  export default {
       components: {QuestionCard, BlogCard, CourseCard, Hero},
       data() {
         return {
@@ -86,6 +88,10 @@
         this.loadCourses();
         this.loadArticles();
         this.loadQuestions();
+        setDocumentTitle('home');
       },
+      beforeDestroy() {
+        setDocumentTitle();
+      }
     }
 </script>

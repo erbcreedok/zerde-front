@@ -18,6 +18,7 @@
     import clService from "../../_services/cl.service";
     import CourseCard from '../../components/CLComponents/CourseCard'
     import GridLoader from 'vue-spinner/src/GridLoader'
+    import {setDocumentTitle} from '../../_helpers'
 
     export default {
       components: {GridLoader, CourseCard},
@@ -38,6 +39,10 @@
       },
       mounted() {
         this.loadCourses();
-      }
+        setDocumentTitle('courses')
+      },
+      beforeDestroy() {
+        setDocumentTitle();
+      },
     }
 </script>

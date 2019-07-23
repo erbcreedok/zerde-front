@@ -19,8 +19,8 @@
       watch: {
         $route(to, from) {
           if (to.params.locale !== from.params.locale) {
+            this.setLocale(to.params.locale);
             window.location.reload();
-            // this.setLocale(to.params.locale);
           }
         },
       },

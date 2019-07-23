@@ -86,7 +86,7 @@
   import ActionForAuthorised from '../../components/ui/ActionForAuthorised'
   import CourseComments from '../../components/CLComponents/CourseComments'
   import LessonsList from '../../components/CLComponents/LessonsList'
-  import {getTimeString} from '../../_helpers'
+  import {getTimeString, setDocumentTitle} from '../../_helpers'
   import UserAvatar from '../../components/ui/UserAvatar'
   import GridLoader from 'vue-spinner/src/GridLoader'
 
@@ -110,6 +110,10 @@
     },
     mounted() {
       this.loadCourse();
+      setDocumentTitle('course')
+    },
+    beforeDestroy() {
+      setDocumentTitle();
     },
     computed: {
       isAuthorised() {
@@ -132,6 +136,7 @@
         return clService.loadCourseById(id).then(data => {
           this.status = 'success';
           this.course = data;
+          setDocumentTitle(data.title, false)
           return data;
         }).catch(err => {
           this.status = 'error';
@@ -139,7 +144,6 @@
         });
       },
       addToComments(comment) {
-        console.log(comment);
         this.freshComments.push(comment)
       },
     },

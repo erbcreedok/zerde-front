@@ -51,12 +51,12 @@
                 </template>
 
                 <div class="post_details post_details-bottom post_wrap">
-                    <div class="post_author" v-if="article.author">
+                    <router-link class="post_author" v-if="article.author" :to="{name: 'user', params: {userId: article.author.id}}">
                         <div class="avatar post_author_photo">
                             <img :src="article.author.avatar_src" alt="">
                         </div>
                         <div class="post_author_name">{{article.author.fullname}}</div>
-                    </div>
+                    </router-link>
 
                     <div class="post_controls">
                         <button class="post_controls_item button button-small button-secondary button-outline button-icon button-icon-left button-icon-share" @click="sharePost">Поделиться</button>
@@ -104,15 +104,16 @@
 </template>
 
 <script>
-  import kbService from "../../_services/kb.service";
-  import {capitalize} from "../../_filters/capitalize";
-  import copyToClipboard from "../../_helpers/copyToClipboard";
-  import UiRating from "../../components/ui/UIRating";
-  import ArticleComments from "../../components/KBComponents/ArticleComments";
-  import CommentForm from "../../components/CommentComponents/CommentForm";
-  import ActionForAuthorised from "../../components/ui/ActionForAuthorised";
-  import BlogCard from "../../components/KBComponents/BlogCard";
-  import {blogsSwiperOptions} from "../../_helpers/swiperOptions";
+  import kbService from '../../_services/kb.service'
+  import {capitalize} from '../../_filters/capitalize'
+  import copyToClipboard from '../../_helpers/copyToClipboard'
+  import UiRating from '../../components/ui/UIRating'
+  import ArticleComments from '../../components/KBComponents/ArticleComments'
+  import CommentForm from '../../components/CommentComponents/CommentForm'
+  import ActionForAuthorised from '../../components/ui/ActionForAuthorised'
+  import BlogCard from '../../components/KBComponents/BlogCard'
+  import {blogsSwiperOptions} from '../../_helpers/swiperOptions'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {BlogCard, ActionForAuthorised, CommentForm, ArticleComments, UiRating},
@@ -142,6 +143,10 @@
     mounted() {
       this.loadArticle();
       this.loadSimilars();
+      setDocumentTitle('article');
+    },
+    beforeDestroy() {
+      setDocumentTitle();
     },
     computed: {
       isAuthorised() {
@@ -158,6 +163,7 @@
         return kbService.loadArticleById(slug).then(data => {
           this.status = 'success';
           this.article = data;
+          setDocumentTitle(`${data.title} - ${this.$t('article')}`, false)
           return data;
         }).catch(err => {
           this.status = 'error';
@@ -166,7 +172,6 @@
       },
       loadSimilars(slug = this.slug) {
         kbService.loadSimilars(slug).then(articles => {
-          console.log(articles);
           this.similars = articles;
         });
       },
@@ -209,9 +214,8 @@
         });
       },
       addToComments(comment) {
-        console.log(comment);
         this.freshComments.push(comment)
       },
-    }
+    },
   }
 </script>

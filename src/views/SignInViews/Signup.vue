@@ -48,10 +48,11 @@
   import authService from '../../_services/auth.service'
   import Vue from 'vue'
   import VeeValidate from 'vee-validate'
-  import {capitalize} from "../../_filters/capitalize";
+  import {capitalize} from '../../_filters/capitalize'
   import {dismaskPhone} from '../../_helpers/stringManipulations'
   import ModalBlock from '../../components/ModalBlock'
   import PhoneConfirmationForm from '../../components/PhoneConfirmationForm'
+  import {setDocumentTitle} from '../../_helpers'
 
   Vue.use(VeeValidate, {
     mode: 'eager'
@@ -121,17 +122,14 @@
     methods: {
       capitalize,
       resendSMS() {
-        console.log('resend');
         this.modalVisible = false;
         this.status = 'loading';
         const phone = this.rawPhone;
         this.globalErrors = [];
-        authService.resendSMS(phone).then(res => {
-          console.log(res);
+        authService.resendSMS(phone).then(() => {
           this.status = 'success';
           this.modalVisible = true;
         }).catch(err => {
-          console.error(err);
           this.globalErrors.push(err);
           this.status = 'error';
           this.modalVisible = false;
@@ -142,8 +140,7 @@
         this.modalError = null;
         const phone = this.rawPhone;
         this.modalStatus = 'loading';
-        authService.confirmSMS(phone, code).then(res => {
-          console.log(res);
+        authService.confirmSMS(phone, code).then(() => {
           this.$notyf.success({
             message: capitalize(this.$t('user have been registered')),
           });
@@ -183,5 +180,11 @@
         });
       }
     },
+    mounted() {
+      setDocumentTitle('signup');
+    },
+    beforeDestroy() {
+      setDocumentTitle();
+    }
   }
 </script>

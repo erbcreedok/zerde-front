@@ -67,6 +67,7 @@
   import qaService from '../../_services/qa.service'
   import ModalBlock from '../../components/ModalBlock'
   import _ from 'lodash'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     name: 'qa-create',
@@ -124,7 +125,6 @@
         qaService.sendQuestion({...this.data}).then((question)=> {
           this.status = 'success';
           this.$router.push({name: 'qa-single', params: {slug: question.id.toString()}});
-          console.log(question);
         });
       },
       toggleTheme(theme) {
@@ -167,6 +167,7 @@
         this.swiper.slideTo(0, 1000, false);
       }
       this.loadThemes();
+      setDocumentTitle('ask question');
     },
   }
 </script>

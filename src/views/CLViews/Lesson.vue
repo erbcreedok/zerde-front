@@ -69,6 +69,7 @@
   import clService from '../../_services/cl.service'
   import ActionForAuthorised from '../../components/ui/ActionForAuthorised'
   import {capitalize} from '../../_filters/capitalize'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {ActionForAuthorised},
@@ -95,6 +96,7 @@
           this.lesson = data;
           this.startLesson(id);
           this.startCourse(data.course_id);
+          setDocumentTitle(data.title + ' - ' + capitalize(this.$t('lesson')), false);
           return data;
         }).catch(() => {
           this.status = 'error';
@@ -145,6 +147,10 @@
     },
     mounted() {
       this.loadLesson();
+      setDocumentTitle('lesson');
     },
+    beforeDestroy() {
+      setDocumentTitle();
+    }
   }
 </script>

@@ -54,10 +54,11 @@
   import UiInput from '../../components/ui/UiInputField'
   import authService from '../../_services/auth.service'
   import 'vue-loading-overlay/dist/vue-loading.css'
-  import {capitalize} from "../../_filters/capitalize";
+  import {capitalize} from '../../_filters/capitalize'
   import {dismaskPhone} from '../../_helpers/stringManipulations'
   import ModalBlock from '../../components/ModalBlock'
   import PhoneConfirmationForm from '../../components/PhoneConfirmationForm'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {PhoneConfirmationForm, ModalBlock, UiInput, UiButton},
@@ -103,8 +104,7 @@
         this.globalErrors = [];
         const phone = dismaskPhone(this.data.phone);
         authService.forgotPassword(phone)
-          .then(data => {
-            console.log(data);
+          .then(() => {
             this.status = 'success';
             this.modalVisible = true;
           })
@@ -116,8 +116,7 @@
       confirmSMS(code) {
         const phone = this.rawPhone;
         this.modalStatus = 'loading';
-        authService.verifyForgotPassword(phone, code).then(res => {
-          console.log(res);
+        authService.verifyForgotPassword(phone, code).then(() => {
           this.modalStatus = 'success';
           this.modalVisible = false;
           this.data.code = code;
@@ -128,11 +127,9 @@
       onSubmit() {
         this.globalErrors = [];
         if (this.data.password === this.data.c_password) {
-          console.log('good');
           this.status = 'loading';
           const phone = dismaskPhone(this.data.phone);
-          authService.resetPassword(phone, this.data.password, this.data.c_password, this.data.code).then(data => {
-            console.log(data);
+          authService.resetPassword(phone, this.data.password, this.data.c_password, this.data.code).then(() => {
             this.$notyf.success({
               message: `${capitalize(this.$t('password changed successfully'))}, ${this.$t('sign in again using the new password')}.`,
               duration: 6000,
@@ -144,6 +141,12 @@
           this.globalErrors = {code: 1, message: 'passwords aren\'t same'};
         }
       }
+    },
+    mounted() {
+      setDocumentTitle('restore password');
+    },
+    beforeDestroy() {
+      setDocumentTitle();
     }
   }
 </script>

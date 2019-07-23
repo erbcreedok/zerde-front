@@ -83,6 +83,7 @@
   import UiRating from "../../components/ui/UIRating";
   import copyToClipboard from '../../_helpers/copyToClipboard'
   import {capitalize} from '../../_filters/capitalize'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {UiRating, QaAnswers, QuestionCard},
@@ -109,6 +110,10 @@
     mounted() {
       this.loadQuestion();
       this.loadSimilars();
+      setDocumentTitle('question')
+    },
+    beforeDestroy() {
+      setDocumentTitle();
     },
     computed: {
       isAuthorised() {
@@ -125,9 +130,9 @@
         return qaService.getQuestion(slug).then(data => {
           this.status = 'success';
           this.question = data;
+          setDocumentTitle(data.title, false);
           return data;
         }).catch(err => {
-          console.log(err);
           this.status = 'error';
           throw err;
         })

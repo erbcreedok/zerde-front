@@ -35,8 +35,9 @@
   import UiInput from '../../components/ui/UiInputField'
   import authService from '../../_services/auth.service'
   import 'vue-loading-overlay/dist/vue-loading.css'
-  import {capitalize} from "../../_filters/capitalize";
+  import {capitalize} from '../../_filters/capitalize'
   import {dismaskPhone} from '../../_helpers/stringManipulations'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {UiInput, UiButton},
@@ -87,5 +88,11 @@
           })
       }
     },
+    mounted() {
+      setDocumentTitle('signin');
+    },
+    beforeDestroy() {
+      setDocumentTitle();
+    }
   }
 </script>

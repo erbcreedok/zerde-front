@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue'
 import {capitalize} from '../_filters/capitalize'
+import i18nService from '../_services/i18n.service'
 
 export const homeURL = 'http://academy-back.tk';
 
@@ -12,6 +13,7 @@ const client =  axios.create({
   baseURL: baseURLS[process.env.NODE_ENV] || 'http://academy-back.tk/api',
   headers: {
     'Content-Type': 'application/json',
+    'X-Localization': i18nService.getCurrentLocale(),
   }
 });
 

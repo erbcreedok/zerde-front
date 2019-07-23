@@ -57,6 +57,7 @@
   import BlogCard from '../../components/KBComponents/BlogCard'
   import {blogsAutoPlayOptions} from '../../_helpers/swiperOptions'
   import GridLoader from 'vue-spinner/src/GridLoader'
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {GridLoader, BlogCard, KbTags},
@@ -104,6 +105,10 @@
       this.loadBestArticles();
       this.loadLastArticles();
       this.loadThemes();
+      setDocumentTitle('knowledge base catalog');
+    },
+    beforeDestroy() {
+      setDocumentTitle();
     }
   }
 </script>

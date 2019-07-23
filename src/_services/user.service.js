@@ -1,5 +1,6 @@
 import usersMock from '../_mock/users.mock'
 import store from '../store'
+import client from '../_api'
 import {CLEAR, SET, USER} from '../_types/store-types'
 import userApi from '../_api/user.api'
 import {normalizeUser, normalizeUserProfile} from './normalizers'
@@ -41,6 +42,11 @@ const userService = {
   getUserProfile(id) {
     return userApi.getUserProfile(id).then(({user}) => {
       return normalizeUserProfile(user);
+    });
+  },
+  getUserAchievements(userID) {
+    return client.get(`user/achievements/${userID}`).then(({data}) => {
+      console.log(data.data.achievements);
     });
   },
   updateProfile(data) {

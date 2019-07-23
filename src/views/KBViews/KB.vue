@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-  import Tabs from "../../components/Tabs";
+  import Tabs from '../../components/Tabs'
 
   export default {
     components: {Tabs},

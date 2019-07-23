@@ -58,6 +58,7 @@
     import UiCheckbox from "../../components/ui/UiCheckbox";
     import UiToggle from "../../components/ui/UiToggle";
     import UiInputField from "../../components/ui/UiInputField";
+    import {setDocumentTitle} from '../../_helpers'
 
     export default {
       components: {UiInputField, UiToggle, UiCheckbox, GridLoader, BlogCard},
@@ -82,7 +83,6 @@
         debounce:_.debounce,
         scrollLoaderMethod() {
           if (this.totalCount <= this.articles.length) return;
-          console.log(this.totalCount, this.articles.length);
           this.activePage += 1;
         },
         loadArticles(page=this.activePage, per_page=this.perPage) {
@@ -93,14 +93,11 @@
             // types: this.selectedTypes,
             orderBy: this.selectedSort,
           };
-          console.log(page);
           kbService.loadArticles(page, per_page, options).then(({articles, totalCount}) => {
-            console.log(articles);
             this.status = 'success';
             this.articles.push(...articles);
             this.totalCount = totalCount;
-          }).catch(err => {
-            console.log(err);
+          }).catch(() => {
             this.status = 'error';
             this.$notyf.error({
               message: 'Произошла ошибка при загрузке данных',
@@ -123,7 +120,14 @@
               sort: this.checkedSort,
             }
           });
-        }
+        },
+        setDocumentSearchTitle(w = this.search) {
+          if (w && w.length) {
+            setDocumentTitle(this.$t('search {w} in knowledge base', {w: `"${w}"`}));
+          } else {
+            setDocumentTitle('search in knowledge base');
+          }
+        },
       },
       computed: {
         typedSearch() {
@@ -174,6 +178,7 @@
         typedSearch(to) {
           this.search = to;
           this.debounceLoading();
+          this.setDocumentSearchTitle(to);
         }
       },
       mounted() {
@@ -183,6 +188,10 @@
         this.checkedTypes = this.selectedTypes;
         this.checkedSort = this.selectedSort;
         this.search = this.typedSearch;
+        this.setDocumentSearchTitle();
       },
+      beforeDestroy() {
+        setDocumentTitle();
+      }
     }
 </script>

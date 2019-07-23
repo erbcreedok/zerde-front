@@ -29,6 +29,7 @@
   import BlogCard from "../../components/KBComponents/BlogCard";
   import GridLoader from "vue-spinner/src/GridLoader";
   import ActionForAuthorised from "../../components/ui/ActionForAuthorised";
+  import {setDocumentTitle} from '../../_helpers'
 
   export default {
     components: {ActionForAuthorised, GridLoader, BlogCard, ListPagination},
@@ -77,6 +78,10 @@
     },
     mounted() {
       this.loadArticles();
+      setDocumentTitle('knowledge base bookmark');
     },
+    beforeDestroy() {
+      setDocumentTitle();
+    }
   }
 </script>
