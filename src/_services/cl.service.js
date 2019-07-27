@@ -1,5 +1,5 @@
 import client, {handleError, handleResponse} from '../_api'
-import {normalizeCourse, normalizeCourses} from "./normalizers";
+import {normalizeCourse, normalizeCourses, normalizeLesson} from './normalizers'
 
 const clService = {
   loadCourses(page=1, per_page=5) {
@@ -39,7 +39,7 @@ const clService = {
     return client.get(`cl/lesson/${id}`)
       .catch(handleError)
       .then(handleResponse)
-      .then(({data}) => data);
+      .then(({data}) => normalizeLesson(data));
   },
   startCourse(id) {
     return client.post(`user/course/start/${id}`)

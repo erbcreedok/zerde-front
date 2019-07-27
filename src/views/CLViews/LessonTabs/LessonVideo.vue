@@ -2,9 +2,14 @@
   <div class="lesson_content_wrap">
     <div class="lesson_video">
       <div class="video lesson_video">
-        <video id="lesson-video" controls ref="video" :poster="lesson.img_src">
-          <source :src="lesson.video_src">
-        </video>
+        <template v-if="lesson.video_type==='URL'">
+          <embed-video-controller :link="lesson.video_src" ref="embed"/>
+        </template>
+        <template v-else>
+          <video id="lesson-video" controls ref="video" :poster="lesson.img_src">
+            <source :src="lesson.video_src"/>
+          </video>
+        </template>
       </div>
     </div>
 
@@ -23,16 +28,22 @@
 
 <script>
   import {getTimeString} from '../../../_helpers'
+  import EmbedVideoController from '../../../components/EmbedVideoController'
 
   export default {
+    components: {EmbedVideoController},
     props: {
       lesson: Object,
     },
     methods: {
       setVideoTime(time) {
         const video = this.$refs.video;
+        const embed = this.$refs.embed;
         if (video) {
           video.currentTime = time;
+        }
+        if (embed) {
+          embed.seekTo(time);
         }
       },
     },

@@ -2,6 +2,7 @@ import moment from 'moment';
 import userService from './user.service'
 import {getContactIconClass, getContactLabel, getContactLink} from '../_types/contact-types'
 import {homeURL} from "../_api";
+import {VIMEO_PRE, YOUTUBE_PRE} from '../_types'
 
 export function normalizeUser(user, save=true) {
   if (!user.fullname) {
@@ -192,20 +193,38 @@ export function normalizeCourse(course) {
   return course;
 }
 
-export function generateEmbedLink(link, type='video_out') {
+export function normalizeLesson(lesson) {
+  return {
+    ...lesson,
+    video_src: generateEmbedLink(lesson.video_src, 'lesson', (isVideoIn(lesson.video) ? 'video_in' : 'video_out')),
+    video_type: lesson.video_type ? lesson.video_type : (isVideoIn(lesson.video) ? 'file' : 'URL'),
+  };
+}
+
+export function isVideoIn(videoName) {
+  return videoName.indexOf('http') !== 0;
+}
+
+export function generateEmbedLink(link, entity='article', type='video_out') {
   if (type==='video_out') {
     if (link.indexOf('youtube.com/watch?v=') !== -1) {
       const code = link.split('youtube.com/watch?v=')[1].split('=')[0];
-      link = 'https://www.youtube.com/embed/' + code;
+      link = YOUTUBE_PRE + code;
     } else if (link.indexOf('youtu.be/') !== -1) {
       const code = link.split('youtu.be/')[1];
-      link = 'https://www.youtube.com/embed/' + code;
+      link = YOUTUBE_PRE + code;
+    } else if (link.indexOf('vimeo.com/video/') !== -1) {
+      const code = link.split('vimeo.com/video/')[1];
+      link = VIMEO_PRE + code;
+    } else if (link.indexOf('vimeo.com/') !== -1) {
+      const code = link.split('vimeo.com/')[1];
+      link = VIMEO_PRE + code;
     } else {
-      link = 'http://academy-back.tk/storage/kb/article/' + link;
+      link = 'http://academy-back.tk/storage/kb/' + entity +'/' + link;
     }
     return link;
   }
-  
+  return link;
 }
 
 export function normalizeArticles(articles = []) {

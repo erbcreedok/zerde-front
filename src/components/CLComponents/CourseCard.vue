@@ -18,7 +18,7 @@
         </li>
       </ul>
 
-      <div class="coursecard_brief">{{body_out}}</div>
+      <div class="coursecard_brief" v-html="body_out"></div>
 
       <div class="coursecard_controls">
         <template v-if="isAuthorised">

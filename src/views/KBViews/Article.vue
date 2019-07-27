@@ -38,7 +38,7 @@
 
                 <template v-if="article.type === 'video_out'">
                     <main class="post_content post_wrap typeset">
-                        <iframe :src="article.embed" width="100%" height="350px" frameborder="0"></iframe>
+                        <iframe :src="article.embed" width="100%" height="350px" frameborder="0" allowfullscreen></iframe>
                     </main>
                 </template>
 
