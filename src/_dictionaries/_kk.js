@@ -1,6 +1,7 @@
 export default {
   'questions and answers': 'сұрақтар мен жауаптар',
   knowledge: 'білім',
+  users:'қолданушылар',
   toRu: 'на русском',
   cabinet: 'жеке кабинет',
   signout: 'шығу',
