@@ -1,7 +1,7 @@
 <template>
 
 <div class="courses" >
-        <article class="qaCard" v-for="course in courses">
+        <article class="qaCard" v-for="(course,index) in courses" :key="index">
             <div class="qaCard_wrap">
                 <span>{{course.course_name}}</span>
                 <div class="caption">{{course.course_themes[0].name}}</div>
