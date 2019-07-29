@@ -7,7 +7,7 @@
             </div>
             <div class="users-navigation-search">
                 <form class="user-search textfield textfield-block">
-                    <input type="text" class="qa_search_field textfield_input" placeholder=" ">
+                    <input type="text" class="qa_search_field textfield_input" placeholder="" v-model="search">
                     <label class="textfield_label">Поиск по имени</label>
                     <button type="submit" class="textfield_button textfield_button-search"></button>
                 </form>
@@ -99,6 +99,7 @@ import axios from 'axios';
 export default{
     data(){
         return{
+            search:'',
             users:[]
         }
     },
@@ -108,6 +109,14 @@ export default{
         }
 
         )
+    },
+    watch:{
+        search:function (val){
+            axios.get('http://academy-back.tk/api/statistics/users/index?search='+val).then(response=>{
+                this.users=response.data.data.data   
+                console.log("searching",response)
+            })
+        }
     },
     methods:{
         userDetails(user){
