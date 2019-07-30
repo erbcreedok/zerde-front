@@ -4,8 +4,21 @@ import Vue from "vue";
 import {capitalize} from "../_filters/capitalize";
 
 const kbService = {
-  loadArticles(page=1, per_page=5,) {
+  loadArticles(page=1, per_page=5, {search, themes, types, orderBy} = {}) {
     let query = `?page=${page}&per_page=${per_page}`;
+    if (search && search.length) {
+      query += '&search=' + encodeURI(search);
+    }
+    if (themes && themes.length) {
+      query += '&themes=' + encodeURI(JSON.stringify(themes));
+    }
+    if (types && types.length) {
+      query += '&types=' + encodeURI(JSON.stringify(types));
+    }
+    console.log(orderBy);
+    if (orderBy) {
+      query += `&order_by[${encodeURI(orderBy)}]=DESC`
+    }
     return client.get(`kb/article${query}`).then(handleResponse).then(({data}) => {
       console.log(data);
       return handleArticlesSuccess(data);

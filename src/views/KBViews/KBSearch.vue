@@ -1,125 +1,47 @@
 <template>
     <div class="wrap">
-        <button class="bSearch_filters_toggle button button-block button-outline button-primary button-icon button-icon-left button-icon-filter">Параметры поиска</button>
+        <button class="bSearch_filters_toggle button button-block button-outline button-primary button-icon button-icon-left button-icon-filter" @click="searchVisible=true">Параметры поиска</button>
 
         <div class="bSearch">
-            <form class="bSearch_filters">
+            <form class="bSearch_filters" :class="{'bSearch_filters-visible': searchVisible}" @submit.prevent="submitFilters">
                 <div class="bSearch_filters_section">
-                    <div class="textfield textfield-block">
-                        <input type="text" class="qa_search_field textfield_input" placeholder=" ">
-                        <label class="textfield_label">Поиск по названию</label>
-                    </div>
+                    <ui-input-field v-model="search" class="textfield-block" label="Поиск по названию"/>
                 </div>
 
                 <div class="bSearch_filters_section">
                     <div class="bSearch_filters_title caption">Тема</div>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Старт бизнеса</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Операционка</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Персонал</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Финансы</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Маркетинг</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Продажи</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Личная эффективность</span>
-                    </label>
+                    <ui-checkbox block nowrap v-for="theme in themes" :key="theme.id" :label="theme.name" :data="theme.id" v-model="checkedThemes"/>
                 </div>
 
                 <div class="bSearch_filters_section">
                     <div class="bSearch_filters_title caption">Формат</div>
 
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Видео</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="checkbox" name="" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">Текст</span>
-                    </label>
+                    <ui-checkbox label="Видео" block nowrap v-model="checkedTypes" data="video"/>
+                    <ui-checkbox label="Текст" block nowrap v-model="checkedTypes" data="text"/>
                 </div>
 
                 <div class="bSearch_filters_section">
                     <div class="bSearch_filters_title caption">Сортировка</div>
 
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="radio" name="sort" value="" checked>
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">По рейтингу</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="radio" name="sort" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">По просмотрам</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="radio" name="sort" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">По дате добавления</span>
-                    </label>
-
-                    <label class="checkbox checkbox-nowrap checkbox-block">
-                        <input type="radio" name="sort" value="">
-                        <span class="checkbox_icon"></span>
-                        <span class="checkbox_label">По комментариям</span>
-                    </label>
+                    <ui-checkbox label="По рейтингу" block nowrap type="radio" data="rating" v-model="checkedSort"/>
+                    <ui-checkbox label="По просмотрам" block nowrap type="radio" data="views" v-model="checkedSort"/>
+                    <ui-checkbox label="По дате добавления" block nowrap type="radio" data="created_at" v-model="checkedSort"/>
+                    <ui-checkbox label="По комментариям" block nowrap type="radio" data="comments_count" v-model="checkedSort"/>
                 </div>
 
                 <div class="bSearch_filters_section">
                     <button type="submit" class="bSearch_filters_submit button button-primary button-block">Применить</button>
-
-                    <label class="bSearch_filters_thumbler">
-						<span class="checkbox">
-							<input type="checkbox" name="" value="" checked="">
-							<span class="checkbox_toggle"></span>
-						</span>
-                        <span>
-							Показывать рекомендованные материалы со сторонних ресурсов
-						</span>
-                    </label>
+                    <ui-toggle label="Показывать рекомендованные материалы со сторонних ресурсов" class="bSearch_filters_thumbler" v-model="thirdPartyResources"/>
                 </div>
             </form>
-            <div class="overlay"></div>
+            <div class="overlay" @click="searchVisible=false"></div>
 
             <main class="bSearch_results blog_grid-static">
                 <template v-if="status==='loading'">
                     <grid-loader color="#e3e3e3" style="text-align: center; margin: 1rem auto"/>
+                </template>
+                <template v-if="status==='success' && totalCount === 0">
+                    <h2 class="muted" style="text-align: center; width: 100%; padding: 20px;">Результатов нет</h2>
                 </template>
                 <blog-card v-for="(article, index) in articles" v-bind="article" :key="index" horizontal/>
                 <scroll-loader :loader-enable="status==='success' && totalCount > articles.length" :loader-method="debounce(scrollLoaderMethod, 1000)"/>
@@ -133,16 +55,27 @@
     import BlogCard from "../../components/KBComponents/BlogCard";
     import _ from "lodash";
     import GridLoader from "vue-spinner/src/GridLoader";
+    import UiCheckbox from "../../components/ui/UiCheckbox";
+    import UiToggle from "../../components/ui/UiToggle";
+    import UiInputField from "../../components/ui/UiInputField";
 
     export default {
-      components: {GridLoader, BlogCard},
+      components: {UiInputField, UiToggle, UiCheckbox, GridLoader, BlogCard},
       data() {
         return {
           articles: [],
+          themes: [],
           status: 'clean',
           totalCount: 0,
           perPage: 10,
           activePage: 1,
+          searchVisible: false,
+          checkedThemes: [],
+          checkedTypes: [],
+          checkedSort: null,
+          thirdPartyResources: false,
+          search: '',
+          debounceLoading: _.debounce(this.loadArticles, 300),
         }
       },
       methods: {
@@ -154,8 +87,14 @@
         },
         loadArticles(page=this.activePage, per_page=this.perPage) {
           this.status = 'loading';
+          const options = {
+            search: this.typedSearch,
+            themes: this.selectedThemes,
+            // types: this.selectedTypes,
+            orderBy: this.selectedSort,
+          };
           console.log(page);
-          kbService.loadArticles(page, per_page).then(({articles, totalCount}) => {
+          kbService.loadArticles(page, per_page, options).then(({articles, totalCount}) => {
             console.log(articles);
             this.status = 'success';
             this.articles.push(...articles);
@@ -168,14 +107,82 @@
             });
           });
         },
+        loadThemes() {
+          kbService.loadThemes().then(themes => {
+            this.themes = themes;
+          })
+        },
+        submitFilters() {
+          this.articles = [];
+          this.$router.push({
+            name: 'kb-search',
+            query: {
+              themes: JSON.stringify(this.checkedThemes),
+              types: JSON.stringify(this.checkedTypes),
+              search: this.search,
+              sort: this.checkedSort,
+            }
+          });
+        }
+      },
+      computed: {
+        typedSearch() {
+          try {
+            return this.$route.query['search'];
+          } catch {
+            return '';
+          }
+        },
+        selectedThemes() {
+          try {
+            return JSON.parse(this.$route.query['themes'].toString())
+          } catch {
+            return [];
+          }
+        },
+        selectedTypes() {
+          try {
+            return JSON.parse(this.$route.query['types'].toString())
+          } catch {
+            return [];
+          }
+        },
+        selectedSort() {
+          try {
+            return this.$route.query['sort'];
+          } catch {
+            return null;
+          }
+        },
       },
       watch: {
         activePage() {
           this.loadArticles();
         },
+        selectedThemes(to) {
+          this.checkedThemes = to;
+          this.debounceLoading();
+        },
+        selectedTypes(to) {
+          this.checkedTypes = to;
+          this.debounceLoading();
+        },
+        selectedSort(to) {
+          this.checkedSort = to;
+          this.debounceLoading();
+        },
+        typedSearch(to) {
+          this.search = to;
+          this.debounceLoading();
+        }
       },
       mounted() {
         this.loadArticles();
+        this.loadThemes();
+        this.checkedThemes = this.selectedThemes;
+        this.checkedTypes = this.selectedTypes;
+        this.checkedSort = this.selectedSort;
+        this.search = this.typedSearch;
       },
     }
 </script>

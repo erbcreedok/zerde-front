@@ -5,7 +5,7 @@
         </div>
 
         <div class="blogcard_wrap">
-            <div class="blogcard_type">Статья</div>
+            <div class="blogcard_type">{{type==='text' ? 'Статья' : 'Видео'}}</div>
             <div class="blogcard_category" v-if="category && category!==''">{{category}}</div>
             <router-link :to="{name: 'article', params: {slug: id}}" class="blogcard_title">{{title}}</router-link>
 
@@ -32,6 +32,7 @@
         size: String,
         inverse: Boolean,
         horizontal: Boolean,
+        themes: Array,
       }
     }
 </script>

@@ -54,9 +54,6 @@
         swiperOptions: blogsSwiperOptions
       }
     },
-    computed: {
-
-    },
     methods: {
       loadArticles() {
         this.status = 'loading';

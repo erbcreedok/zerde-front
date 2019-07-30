@@ -6,7 +6,7 @@
                     <router-link :to="tag.link" class="tag" @click="handleClick(tag)">{{tag.name}}</router-link>
                 </template>
                 <template v-else>
-                    <a class="tag" @click="handleClick(tag)">{{tag.name}}</a>
+                    <router-link :to="{name: 'kb-search', query: {themes: `[${tag.id}]`}}" class="tag">{{tag.name}}</router-link>
                 </template>
 
             </swiper-slide>

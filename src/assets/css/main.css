@@ -211,7 +211,7 @@ html {
 }
 @media (max-width: 600px) {
   .page {
-    padding-top: 5.5rem;
+    padding-top: 1.5rem;
   }
 }
 .page-post {
@@ -3561,11 +3561,6 @@ header {
   color: #fff;
   margin-bottom: 3rem;
 }
-@media (max-width: 600px) {
-  .hp_hero {
-    margin-top: 4rem;
-  }
-}
 .hp_hero_wrap {
   display: -webkit-flex;
   display: -moz-flex;
@@ -4423,7 +4418,6 @@ header {
   width: 744px;
   max-width: 100%;
   position: relative;
-  align-self: stretch;
 }
 @media (max-width: 1176px) {
   .bSearch_results {
