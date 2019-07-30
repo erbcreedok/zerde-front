@@ -28,7 +28,7 @@
           </div>
 
           <div class="lesson_controls">
-            <button v-if="!isSuccess" class="button button-primary" @click="quizBegin = true">Начать</button>
+            <button v-if="!isSuccess" class="button button-primary" @click="startQuiz(quiz.id)">Начать</button>
             <button v-else-if="!quiz.next_lesson" class="button button-success button-icon button-icon-left button-icon-checkmark" @click="finishCourse()">Закончить курс</button>
             <router-link v-else :to="{name: 'lesson', params: {slug: quiz.next_lesson - 0}}" class="button button-primary button-icon button-icon-left button-icon-angle-right">Следующий урок</router-link>
           </div>
@@ -146,6 +146,11 @@
         this.$router.push({name: 'course', params: {slug: this.quiz.course_id}});
         this.$notyf.success({
           message: 'Курс завершен'
+        });
+      },
+      startQuiz(id = this.quiz.id) {
+        clService.startQuiz(id).then(() => {
+          this.quizBegin = true
         });
       }
     },

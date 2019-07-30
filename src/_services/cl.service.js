@@ -79,6 +79,11 @@ const clService = {
       .catch(handleError)
       .then(({data}) => data.total);
   },
+  startQuiz(id) {
+    return client.post(`cl/tests/${id}`)
+      .then(handleResponse)
+      .catch(handleError)
+  },
   loadQuizByLessonId(lesson_id) {
     return client.get(`cl/tests/${lesson_id}`)
       .then(handleResponse)
