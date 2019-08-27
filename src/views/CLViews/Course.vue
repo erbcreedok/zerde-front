@@ -11,10 +11,14 @@
           <main class="course_description typeset" v-html="course.body_in">
           </main>
 
-          <section class="course_video" v-if="course.video">
-            <iframe :src="course.video" height="350px" width="100%"></iframe>
-          </section>
-
+          <template v-if="course.video_type==='URL'">
+            <embed-video-controller :link="course.video_src" ref="embed"/>
+          </template>
+          <template v-else>
+            <video id="lesson-video" controls ref="video" :poster="course.img_src">
+              <source :src="course.video_src"/>
+            </video>
+          </template>
           <lessons-list :lessons="course.lessons"/>
 
           <course-comments v-if="(course.comments_list && course.comments_list.length) || freshComments.length" :comments="course.comments_list" :fresh-comments="freshComments" :course_id="course.id" />
@@ -89,9 +93,12 @@
   import {getTimeString, setDocumentTitle} from '../../_helpers'
   import UserAvatar from '../../components/ui/UserAvatar'
   import GridLoader from 'vue-spinner/src/GridLoader'
+  import EmbedVideoController from "../../components/EmbedVideoController";
 
   export default {
-    components: {GridLoader, UserAvatar, LessonsList, CourseComments, ActionForAuthorised, CommentForm},
+    components: {
+      EmbedVideoController,
+      GridLoader, UserAvatar, LessonsList, CourseComments, ActionForAuthorised, CommentForm},
     props: {
       slug: [String, Number],
     },
@@ -136,7 +143,7 @@
         return clService.loadCourseById(id).then(data => {
           this.status = 'success';
           this.course = data;
-          setDocumentTitle(data.title, false)
+          setDocumentTitle(data.title, false);
           return data;
         }).catch(err => {
           this.status = 'error';

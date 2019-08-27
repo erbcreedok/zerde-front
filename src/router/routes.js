@@ -58,18 +58,6 @@ export default [
     children: KBRoutes,
   },
   {
-    path: 'us',
-    name:'us',
-    props: true,
-    component: () => import('../views/UserViews/Users.vue'),
-  },
-  {
-    path:'userDetail',
-    name:'userDetail',
-    component: () => import('../views/UserViews/UserDetail.vue'),
-    
-  },
-  {
     path: 'article/:slug',
     name: 'article',
     props: true,
