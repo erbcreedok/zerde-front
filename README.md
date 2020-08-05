@@ -1,4 +1,4 @@
-# academy
+# Zerde
 
 ## Project setup
 ```
